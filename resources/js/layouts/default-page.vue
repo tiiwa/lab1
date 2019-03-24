@@ -1,0 +1,49 @@
+<template>
+	<div id="main-wrapper"
+		class="container h-100">
+		<app-header/>
+		<div class="container-fluid">
+			<router-view/>
+		</div>
+		<app-footer/>
+	</div>
+</template>
+
+<script>
+import AppHeader from "./header.vue";
+import AppFooter from "./footer.vue";
+import helper from "../services/helper";
+
+export default {
+	components: {
+		AppHeader, AppFooter
+	},
+	mounted() {
+		if(!this.getAuthUser("email")){
+			helper.authUser().then(response => {
+				this.$store.dispatch("setAuthUserDetail",{
+					first_name: response.profile.first_name,
+					last_name: response.profile.last_name,
+					email: response.user.email,
+					avatar:response.profile.avatar
+				});
+			});
+		}
+	},
+	methods : {
+		notification(){
+			toastr.options = {
+				"positionClass": "toast-top-right"
+			};
+
+			$("[data-toastr]").on("click",function(){
+				var type = $(this).data("toastr"),message = $(this).data("message"),title = $(this).data("title");
+				toastr[type](message, title);
+			});
+		},
+		getAuthUser(name){
+			return this.$store.getters.getAuthUser(name);
+		}
+	},
+};
+</script>

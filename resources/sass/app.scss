@@ -1,0 +1,89 @@
+//Fonts
+//@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,700");
+@import "_variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~toastr/toastr.scss";
+
+/*******************
+Global Styles
+*******************/
+
+* {
+	outline: none;
+}
+
+body {
+	height: 100vh;
+	margin: 0;
+	overflow-x: hidden;
+	color: $font-color;
+	background-color: $body-bg;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+a {
+	color: $red;
+
+	&:hover {
+		color: $black;
+	}
+}
+
+#header,
+#footer {
+	height: $header-footer-height;
+	padding: 10px 150px;
+	background-color: $darker_blue;
+
+	a {
+		color: $white;
+
+		&:hover {
+			color: $red;
+		}
+	}
+}
+
+#header {
+	position: fixed;
+	left: 0;
+	width: 100%;
+	color: white;
+	text-align: center;
+	background-color: $darker-blue;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+	#navbar-logo {
+		width: 85px;
+		height: 40px;
+	}
+}
+
+#footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 15px;
+	color: white;
+	text-align: center;
+	background-color: $darker-blue;
+}
+
+.red-button {
+	padding: 10px 35px;
+	font-weight: normal;
+	color: $white;
+	text-align: center;
+	background-color: $red;
+	border: none;
+	border-radius: 50px;
+}

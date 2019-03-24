@@ -1,0 +1,15 @@
+{
+	"plugins": [
+		"stylelint-scss"
+	],
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-recess-order",
+		"stylelint-config-recommended-scss"
+	],
+	"rules": {
+		"no-empty-source": null,
+		"indentation": "tab",
+		"color-hex-length" : "long"
+	}
+}
