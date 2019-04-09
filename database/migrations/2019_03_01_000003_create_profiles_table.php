@@ -19,10 +19,11 @@ class CreateProfilesTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('gender')->nullable();
             $table->date('date_of_birth')->nullable();
+            $table->string('contact_email')->unique();
             $table->string('avatar')->nullable();
             $table->string('facebook_profile')->nullable();
             $table->string('twitter_profile')->nullable();
-            $table->string('google_plus_profile')->nullable();
+            $table->string('instagram_profile')->nullable();
             $table->timestamps();
         });
     }

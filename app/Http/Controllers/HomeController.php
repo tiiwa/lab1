@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrganizationResource;
+use App\Organization;
+
 class HomeController extends Controller
 {
     /**
@@ -17,6 +20,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return true;
+        $orgs = Organization::latest()->paginate();
+
+        return OrganizationResource::collection($orgs);
     }
 }

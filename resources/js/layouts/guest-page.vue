@@ -1,6 +1,6 @@
 <template>
 	<div id="main-wrapper"
-		class="container h-100"
+		class="container"
 		style="background-image:url(/images/background/background.png);">
 		<app-header/>
 		<div class="container-fluid">
@@ -44,8 +44,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.container-fluid {
-		height: 90%;
+	#main-wrapper {
+		padding-top: $header-footer-height + 20px;
+		padding-bottom: $header-footer-height + 20px;
+		background-attachment: fixed;
 	}
-
 </style>

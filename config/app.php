@@ -163,11 +163,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
-
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,

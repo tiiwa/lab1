@@ -1,6 +1,22 @@
 
-.container-fluid[data-v-203812a8] {
-  height: 90%;
+#main-wrapper[data-v-203812a8] {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background-attachment: fixed;
+}
+
+.organization-thumbnail[data-v-81516cca] {
+  padding: 20px;
+  margin: 20px;
+  background: #ffffff;
+  border-radius: 15px;
+}
+
+.organization-thumbnail[data-v-a3f052c4] {
+  padding: 20px;
+  margin: 20px;
+  background: #ffffff;
+  border-radius: 15px;
 }
 
 #wrapper[data-v-6517b581] {
@@ -17698,6 +17714,7 @@ a:hover {
 
 #header {
   position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
   color: white;

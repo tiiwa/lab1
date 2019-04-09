@@ -1,17 +1,28 @@
 <template>
 	<div class="home">
-		<h1>Hello Tiiwa</h1>
+		<div v-if="organizations">
+			<div v-for="org in organizations"
+				:key="org.id">
+				<organizationThumbnail :organization="org"/>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
+import organizationThumbnail from "../organizations/organizationThumbnail";
 
 export default {
+	name: "Home",
+
+	components: {
+		organizationThumbnail
+	},
 
 	data() {
 		return {
 			endpoint: "home",
-			home: true
+			organizations: null,
 		};
 	},
 
@@ -24,7 +35,7 @@ export default {
 				axios
 					.get("api/" + this.endpoint)
 					.then(({ data }) => {
-						this.home = data;
+						this.organizations = data.data;
 					})
 					.catch(error => {
 						toastr["error"](error.response.data.message);

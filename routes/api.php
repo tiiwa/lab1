@@ -24,15 +24,15 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/auth/user', 'AuthController@getAuthUser');
-
-    Route::get('/user', 'UserController@index');
+    Route::resource('/user', 'UserController@index');
     Route::post('/user/change-password', 'AuthController@changePassword');
     Route::post('/user/update-profile', 'UserController@updateProfile');
     Route::post('/user/update-avatar', 'UserController@updateAvatar');
     Route::post('/user/remove-avatar', 'UserController@removeAvatar');
     Route::delete('/user/{id}', 'UserController@destroy');
-    Route::get('/user/dashboard', 'UserController@dashboard');
 });
+
+Route::resource('org', 'OrganizationController');
 
 // Home
 Route::get('home', 'HomeController@index')->name('home');

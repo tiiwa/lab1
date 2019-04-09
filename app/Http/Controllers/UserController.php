@@ -2,47 +2,147 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
+use App\User;
 use Illuminate\Http\Request;
-use JWTAuth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
 
 class UserController extends Controller
 {
-    protected $avatar_path = 'images/users/';
-
-    public function index()
+    /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
     {
-        $users = \App\User::with('profile');
+        //$this->middleware('permission:list-users', ['only' => ['index']]);
+        //$this->middleware('permission:create-user,', ['only' => ['store']]);
+        //$this->middleware('permission:show-user,', ['only' => ['show']]);
+        //$this->middleware('permission:edit-user,', ['only' => ['update']]);
+        //$this->middleware('permission:delete-user,', ['only' => ['destroy']]);
+    }
 
-        if (request()->has('first_name')) {
-            $query->whereHas('profile', function ($q) use ($request) {
-                $q->where('first_name', 'like', '%'.request('first_name').'%');
-            });
+    protected $validationRules = [
+        'username' => 'nullable|alpha_num|unique:users,username|max:255',
+        'first_name' => 'nullable|regex:/[a-z\- ]+/i|max:255',
+        'last_name' => 'nullable|regex:/[a-z\- ]+/i|max:255',
+        'email' => 'email|unique:users,email|max:255',
+        'phone' => 'nullable|regex:/^[0-9\-\+\(\), ]+/|max:255',
+        'password' => 'min:6',
+    ];
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function index(Request $request)
+    {
+        $users = User::latest()->paginate();
+
+        return UserResource::collection($users);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\User $user
+     *
+     * @return \App\Http\Resources\UserResource
+     */
+    public function show($id)
+    {
+        $user = User::with(['profile'])->findOrFail($id);
+
+        return new UserResource($user);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \App\Http\Resources\UserResource|\Illuminate\Support\MessageBag
+     */
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), $this->validationRules);
+
+        if ($validator->fails()) {
+            return $validator->errors();
         }
 
-        if (request()->has('last_name')) {
-            $query->whereHas('profile', function ($q) use ($request) {
-                $q->where('last_name', 'like', '%'.request('last_name').'%');
-            });
+        $user = User::create([
+            'first_name' => request('first_name'),
+            'last_name' => request('last_name'),
+            'username' => request('username'),
+            'phone' => request('username'),
+            'email' => request('email'),
+            'status' => 'pending_activation',
+            'register_ip' => $request->ip(),
+        ]);
+
+        if (request('phone')) {
+            $phone = trim(request('phone'));
+            $phone = str_replace([' ', '(', ')'], '-', $phone); // remove space and brackets
+            $phone = preg_replace('/-+/', '-', $phone); // remove repeating dashes
+            $phone = trim($phone, '-');
+            $user->phone = $phone;
         }
 
-        if (request()->has('email')) {
-            $users->where('email', 'like', '%'.request('email').'%');
+        $user->password = bcrypt(request('password'));
+        $user->activation_token = Uuid::uuid4();
+
+        $groups = Group::findMany($request->input('groups'));
+        $user->groups()->attach($groups);
+
+        $user->save();
+
+        return new UserResource($user);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User                $user
+     *
+     * @return \App\Http\Resources\UserResource|\Illuminate\Support\MessageBag
+     */
+    public function update(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), $this->validationRules);
+
+        if ($validator->fails()) {
+            return $validator->errors();
         }
 
-        if (request()->has('status')) {
-            $users->whereStatus(request('status'));
+        if (request('phone')) {
+            $phone = trim(request('phone'));
+            $phone = str_replace([' ', '(', ')'], '-', $phone); // remove space and brackets
+            $phone = preg_replace('/-+/', '-', $phone); // remove repeating dashes
+            $phone = trim($phone, '-');
+            $user->update(['phone' => $phone]);
         }
 
-        if ('first_name' == request('sortBy') || 'last_name' == request('sortBy')) {
-            $users->with(['profile' => function ($q) {
-                $q->orderBy(request('sortBy'), request('order'));
-            }]);
-        } else {
-            $users->orderBy(request('sortBy'), request('order'));
-        }
+        $user->update($request->except('phone'));
 
-        return $users->paginate(request('pageLength'));
+        return response()->json(['message' => 'User updated!',
+            'data' => new UserResource($user->load(['profile'])), ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return string
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return response()->json('User Deleted.');
     }
 
     public function updateProfile(Request $request)
@@ -58,8 +158,8 @@ class UserController extends Controller
             return response()->json(['message' => $validation->messages()->first()], 422);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
-        $profile = $user->Profile;
+        $org = JWTAuth::parseToken()->authenticate();
+        $profile = $org->Profile;
 
         $profile->first_name = request('first_name');
         $profile->last_name = request('last_name');
@@ -70,7 +170,7 @@ class UserController extends Controller
         $profile->google_plus_profile = request('google_plus_profile');
         $profile->save();
 
-        return response()->json(['message' => 'Your profile has been updated!', 'user' => $user]);
+        return response()->json(['message' => 'Your profile has been updated!', 'org' => $org]);
     }
 
     public function updateAvatar(Request $request)
@@ -83,8 +183,8 @@ class UserController extends Controller
             return response()->json(['message' => $validation->messages()->first()], 422);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
-        $profile = $user->Profile;
+        $org = JWTAuth::parseToken()->authenticate();
+        $profile = $org->Profile;
 
         if ($profile->avatar && \File::exists($this->avatar_path.$profile->avatar)) {
             \File::delete($this->avatar_path.$profile->avatar);
@@ -106,9 +206,9 @@ class UserController extends Controller
 
     public function removeAvatar(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
+        $org = JWTAuth::parseToken()->authenticate();
 
-        $profile = $user->Profile;
+        $profile = $org->Profile;
         if (! $profile->avatar) {
             return response()->json(['message' => 'No avatar uploaded!'], 422);
         }
@@ -121,35 +221,5 @@ class UserController extends Controller
         $profile->save();
 
         return response()->json(['message' => 'Avatar removed!']);
-    }
-
-    public function destroy(Request $request, $id)
-    {
-        if (env('IS_DEMO')) {
-            return response()->json(['message' => 'You are not allowed to perform this action in this mode.'], 422);
-        }
-
-        $user = \App\User::find($id);
-
-        if (! $user) {
-            return response()->json(['message' => 'Couldnot find user!'], 422);
-        }
-
-        if ($user->avatar && \File::exists($this->avatar_path.$user->avatar)) {
-            \File::delete($this->avatar_path.$user->avatar);
-        }
-
-        $user->delete();
-
-        return response()->json(['success', 'message' => 'User deleted!']);
-    }
-
-    public function dashboard()
-    {
-        $users_count = \App\User::count();
-        $tasks_count = \App\Task::count();
-        $recent_incomplete_tasks = \App\Task::whereStatus(0)->orderBy('due_date', 'desc')->limit(5)->get();
-
-        return response()->json(compact('users_count', 'tasks_count', 'recent_incomplete_tasks'));
     }
 }

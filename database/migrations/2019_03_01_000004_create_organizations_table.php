@@ -19,8 +19,21 @@ class CreateOrganizationsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
-            $table->string('address')->nullable();
-            $table->string('size')->nullable();
+            $table->string('size_range')->nullable();
+            $table->string('legal_entity_type')->nullable();
+            $table->string('summary_of_needs')->nullable();
+            $table->string('audience')->nullable();
+            $table->string('inception_date')->nullable();
+            $table->string('target_locations')->nullable();
+            $table->string('sector')->nullable();
+            $table->string('services')->nullable();
+            $table->string('facebook_profile')->nullable();
+            $table->string('twitter_profile')->nullable();
+            $table->string('instagram_profile')->nullable();
+            $table->string('funding_status')->nullable();
+            $table->string('funding_type')->nullable();
+            $table->string('operating_language')->nullable();
+            $table->string('method_of_collection')->nullable();
             $table->timestamps();
         });
     }
