@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $orgs = Organization::latest()->paginate();
+        $orgs = Organization::all();
 
         return OrganizationResource::collection($orgs);
     }
