@@ -37454,7 +37454,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				var data = _ref.data;
 
 				_this.organization = data.data;
-				console.log("Function: , Line 65 this.organization (): ", _this.organization);
 			}).catch(function (error) {
 				toastr["error"](error.response.data.message);
 			});
