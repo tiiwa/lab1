@@ -1,6 +1,6 @@
 <?php
 
-$DATABASE_URL = parse_url('postgres://gjhqfsvbbtubjc:734240ef1ab9483a9061bb4c979bc09f84908064dd371e2b7c8ee3adeb5f9057@ec2-50-17-227-28.compute-1.amazonaws.com:5432/d14cnq7kqafmao');
+$DATABASE_URL = parse_url('mysql://yavcwcxo5d9r0na0:qleqmpvb56snjb0h@ol5tz0yvwp930510.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/j9r5ig9wycuomog2');
 
 return [
     /*
@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'pgsql'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $DATABASE_URL['host'],
+            'port' => $DATABASE_URL['port'],
+            'database' => ltrim($DATABASE_URL['path'], '/'),
+            'username' => $DATABASE_URL['user'],
+            'password' => $DATABASE_URL['pass'],
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
