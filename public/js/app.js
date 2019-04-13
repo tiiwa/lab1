@@ -37431,6 +37431,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -37474,110 +37497,148 @@ var render = function() {
     _vm.organization
       ? _c("div", { staticClass: "organization-thumbnail" }, [
           _c("div", { staticClass: "organization-details" }, [
-            _c("h3", { staticClass: "name" }, [
-              _vm._v(_vm._s(_vm.organization.name))
-            ]),
+            _vm.organization.name
+              ? _c("h3", { staticClass: "name" }, [
+                  _vm._v(_vm._s(_vm.organization.name))
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("p", { staticClass: "location" }, [
-              _vm._v(_vm._s(_vm.organization.location))
-            ]),
+            _vm.organization.location
+              ? _c("p", { staticClass: "location" }, [
+                  _vm._v(_vm._s(_vm.organization.location))
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("p", { staticClass: "description" }, [
-              _vm._v(_vm._s(_vm.organization.description))
-            ]),
+            _vm.organization.description
+              ? _c("p", { staticClass: "description" }, [
+                  _vm._v(_vm._s(_vm.organization.description))
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "people" }, [
-              _c("p", { staticClass: "director" }, [
-                _c("b", [_vm._v("Director: ")]),
-                _vm._v(
-                  _vm._s(_vm.organization.director[0].first_name) +
-                    " " +
-                    _vm._s(_vm.organization.director[0].last_name)
-                )
-              ]),
+              _vm.organization.director[0]
+                ? _c("p", { staticClass: "director" }, [
+                    _c("b", [_vm._v("Director: ")]),
+                    _vm._v(
+                      _vm._s(_vm.organization.director[0].first_name) +
+                        " " +
+                        _vm._s(_vm.organization.director[0].last_name)
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "poc" }, [
-                _c("b", [_vm._v("Contact Person: ")]),
-                _vm._v(
-                  _vm._s(_vm.organization.poc[0].first_name) +
-                    " " +
-                    _vm._s(_vm.organization.poc[0].last_name)
-                )
-              ])
+              _vm.organization.poc[0]
+                ? _c("p", { staticClass: "poc" }, [
+                    _c("b", [_vm._v("Contact Person: ")]),
+                    _vm._v(
+                      _vm._s(_vm.organization.poc[0].first_name) +
+                        " " +
+                        _vm._s(_vm.organization.poc[0].last_name)
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "contact" }, [
-              _c("p", { staticClass: "phone" }, [
-                _c("b", [_vm._v("Phone: ")]),
-                _vm._v(_vm._s(_vm.organization.phone))
-              ]),
+              _vm.organization.phone
+                ? _c("p", { staticClass: "phone" }, [
+                    _c("b", [_vm._v("Phone: ")]),
+                    _vm._v(_vm._s(_vm.organization.phone))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "email" }, [
-                _c("b", [_vm._v("Email: ")]),
-                _vm._v(_vm._s(_vm.organization.email))
-              ]),
+              _vm.organization.email
+                ? _c("p", { staticClass: "email" }, [
+                    _c("b", [_vm._v("Email: ")]),
+                    _vm._v(_vm._s(_vm.organization.email))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "website" }, [
-                _c("b", [_vm._v("Website: ")]),
-                _vm._v(_vm._s(_vm.organization.website))
-              ]),
+              _vm.organization.website
+                ? _c("p", { staticClass: "website" }, [
+                    _c("b", [_vm._v("Website: ")]),
+                    _vm._v(_vm._s(_vm.organization.website))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "size_range" }, [
-                _c("b", [_vm._v("Size Range: ")]),
-                _vm._v(_vm._s(_vm.organization.size_range))
-              ]),
+              _vm.organization.size_range
+                ? _c("p", { staticClass: "size_range" }, [
+                    _c("b", [_vm._v("Size Range: ")]),
+                    _vm._v(_vm._s(_vm.organization.size_range))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "legal_entity_type" }, [
-                _c("b", [_vm._v("Legal Entity Type: ")]),
-                _vm._v(_vm._s(_vm.organization.legal_entity_type))
-              ]),
+              _vm.organization.legal_entity_type
+                ? _c("p", { staticClass: "legal_entity_type" }, [
+                    _c("b", [_vm._v("Legal Entity Type: ")]),
+                    _vm._v(_vm._s(_vm.organization.legal_entity_type))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "summary_of_needs" }, [
-                _c("b", [_vm._v("Summary of Needs: ")]),
-                _vm._v(_vm._s(_vm.organization.summary_of_needs))
-              ]),
+              _vm.organization.summary_of_needs
+                ? _c("p", { staticClass: "summary_of_needs" }, [
+                    _c("b", [_vm._v("Summary of Needs: ")]),
+                    _vm._v(_vm._s(_vm.organization.summary_of_needs))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "audience" }, [
-                _c("b", [_vm._v("Audience: ")]),
-                _vm._v(_vm._s(_vm.organization.audience))
-              ]),
+              _vm.organization.audience
+                ? _c("p", { staticClass: "audience" }, [
+                    _c("b", [_vm._v("Audience: ")]),
+                    _vm._v(_vm._s(_vm.organization.audience))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "inception_date" }, [
-                _c("b", [_vm._v("Conception Date: ")]),
-                _vm._v(_vm._s(_vm.organization.inception_date))
-              ]),
+              _vm.organization.inception_date
+                ? _c("p", { staticClass: "inception_date" }, [
+                    _c("b", [_vm._v("Conception Date: ")]),
+                    _vm._v(_vm._s(_vm.organization.inception_date))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "target_locations" }, [
-                _c("b", [_vm._v("Target Locations: ")]),
-                _vm._v(_vm._s(_vm.organization.target_locations))
-              ]),
+              _vm.organization.target_locations
+                ? _c("p", { staticClass: "target_locations" }, [
+                    _c("b", [_vm._v("Target Locations: ")]),
+                    _vm._v(_vm._s(_vm.organization.target_locations))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "sector" }, [
-                _c("b", [_vm._v("Sector: ")]),
-                _vm._v(_vm._s(_vm.organization.sector))
-              ]),
+              _vm.organization.sector
+                ? _c("p", { staticClass: "sector" }, [
+                    _c("b", [_vm._v("Sector: ")]),
+                    _vm._v(_vm._s(_vm.organization.sector))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "services" }, [
-                _c("b", [_vm._v("Services: ")]),
-                _vm._v(_vm._s(_vm.organization.services))
-              ]),
+              _vm.organization.services
+                ? _c("p", { staticClass: "services" }, [
+                    _c("b", [_vm._v("Services: ")]),
+                    _vm._v(_vm._s(_vm.organization.services))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("p", { staticClass: "facebook_profile" }, [
-                _c("i", { staticClass: "fab fa-facebook" }),
+                _vm.organization.facebook_profile
+                  ? _c("i", { staticClass: "fab fa-facebook" })
+                  : _vm._e(),
                 _vm._v(
                   " " + _vm._s(_vm.organization.facebook_profile) + "\n\t\t\t\t"
                 )
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "twitter_profile" }, [
-                _c("i", { staticClass: "fab fa-twitter" }),
+                _vm.organization.twitter_profile
+                  ? _c("i", { staticClass: "fab fa-twitter" })
+                  : _vm._e(),
                 _vm._v(
                   " " + _vm._s(_vm.organization.twitter_profile) + "\n\t\t\t\t"
                 )
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "instagram_profile" }, [
-                _c("i", { staticClass: "fab fa-instagram" }),
+                _vm.organization.instagram_profile
+                  ? _c("i", { staticClass: "fab fa-instagram" })
+                  : _vm._e(),
                 _vm._v(
                   " " +
                     _vm._s(_vm.organization.instagram_profile) +
@@ -37585,25 +37646,33 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("p", { staticClass: "funding_status" }, [
-                _c("b", [_vm._v("Funding_status: ")]),
-                _vm._v(_vm._s(_vm.organization.funding_status))
-              ]),
+              _vm.organization.funding_status
+                ? _c("p", { staticClass: "funding_status" }, [
+                    _c("b", [_vm._v("Funding_status: ")]),
+                    _vm._v(_vm._s(_vm.organization.funding_status))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "funding_type" }, [
-                _c("b", [_vm._v("Funding_type: ")]),
-                _vm._v(_vm._s(_vm.organization.funding_type))
-              ]),
+              _vm.organization.funding_type
+                ? _c("p", { staticClass: "funding_type" }, [
+                    _c("b", [_vm._v("Funding_type: ")]),
+                    _vm._v(_vm._s(_vm.organization.funding_type))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "operating_language" }, [
-                _c("b", [_vm._v("Operating_language: ")]),
-                _vm._v(_vm._s(_vm.organization.operating_language))
-              ]),
+              _vm.organization.operating_language
+                ? _c("p", { staticClass: "operating_language" }, [
+                    _c("b", [_vm._v("Operating_language: ")]),
+                    _vm._v(_vm._s(_vm.organization.operating_language))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c("p", { staticClass: "method_of_collection" }, [
-                _c("b", [_vm._v("Method_of_collection: ")]),
-                _vm._v(_vm._s(_vm.organization.method_of_collection))
-              ])
+              _vm.organization.method_of_collection
+                ? _c("p", { staticClass: "method_of_collection" }, [
+                    _c("b", [_vm._v("Method_of_collection: ")]),
+                    _vm._v(_vm._s(_vm.organization.method_of_collection))
+                  ])
+                : _vm._e()
             ])
           ])
         ])
