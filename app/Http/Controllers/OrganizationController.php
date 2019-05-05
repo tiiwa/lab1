@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrganizationResource;
 use App\Organization;
+use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
 {
@@ -26,5 +27,12 @@ class OrganizationController extends Controller
         $org = Organization::with(['director', 'poc'])->findOrFail($id);
 
         return new OrganizationResource($org);
+    }
+
+    public function search(Request $request)
+    {
+        $orgs = Organization::search($request->search)->get();
+
+        return OrganizationResource::collection($orgs);
     }
 }

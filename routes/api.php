@@ -32,6 +32,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::delete('/user/{id}', 'UserController@destroy');
 });
 
+Route::get('/search', 'OrganizationController@search');
 Route::resource('org', 'OrganizationController');
 
 // Home
