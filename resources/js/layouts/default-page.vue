@@ -1,6 +1,7 @@
 <template>
 	<div id="main-wrapper"
 		class="container h-100">
+		<!-- //TODO: Swap out header for logged out user -->
 		<app-header/>
 		<div class="container-fluid">
 			<router-view/>
@@ -11,12 +12,13 @@
 
 <script>
 import AppHeader from "./header.vue";
+import GuestAppHeader from "./guest-header.vue";
 import AppFooter from "./footer.vue";
 import helper from "../services/helper";
 
 export default {
 	components: {
-		AppHeader, AppFooter
+		AppHeader, AppFooter, GuestAppHeader
 	},
 	mounted() {
 		if(!this.getAuthUser("email")){

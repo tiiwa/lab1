@@ -37,6 +37,12 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
+					<a id="add-company"
+						href="#"
+						class="red-button"
+						@click.prevent="logout">+ Add company</a>
+				</li>
+				<li>
 					<router-link :to="links.profile">
 						<template slot="button-content">
 							{{ getAuthUserFullName() }}
@@ -80,6 +86,9 @@ export default {
 				sessionStorage.clear();
 				this.$router.replace("/login");
 			});
+		},
+		routeToAddCompany() {
+			this.$router.replace("/org/create");
 		},
 		getAuthUserFullName() {
 			return this.$store.getters.getAuthUserFullName;

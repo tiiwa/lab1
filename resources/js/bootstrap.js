@@ -2,6 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import axios from "axios";
 import Form from "./services/Form";
+import VCalendar from "v-calendar";
+import VeeValidate from "vee-validate";
+
 
 window.Vue = Vue;
 Vue.use(VueRouter);
@@ -50,3 +53,10 @@ try {
 	// eslint-disable-next-line no-console
 	console.error("Error in requiring jquery");
 }
+
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar);
+Vue.use(VeeValidate, {
+	events: "change"
+});

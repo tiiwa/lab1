@@ -27,6 +27,12 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
+					<a id="add-company"
+						href="#"
+						class="white-button"
+						@click.prevent="routeToAddCompany">+ Add Company</a>
+				</li>
+				<li>
 					<router-link :to="'login'"
 						class="red-button">
 						Login
@@ -48,6 +54,11 @@ export default {
 				home: "/",
 			},
 		};
+	},
+	methods: {
+		routeToAddCompany() {
+			this.$router.replace("/org/create");
+		},
 	}
 };
 </script>

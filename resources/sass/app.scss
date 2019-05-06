@@ -7,6 +7,8 @@
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~toastr/toastr.scss";
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
+@import "multiselect.scss";
 
 /*******************
 Global Styles
@@ -21,7 +23,7 @@ body {
 	margin: 0;
 	overflow-x: hidden;
 	color: $font-color;
-	background-color: $body-bg;
+	background-color: $white;
 }
 
 html {
@@ -39,13 +41,12 @@ a {
 
 #header,
 #footer {
+	z-index: 10;
 	height: $header-footer-height;
 	padding: 10px 150px;
 	background-color: $darker_blue;
 
 	a {
-		color: $white;
-
 		&:hover {
 			color: $red;
 		}
@@ -57,9 +58,9 @@ a {
 	top: 0;
 	left: 0;
 	width: 100%;
-	color: white;
+	color: $dark-blue;
 	text-align: center;
-	background-color: $darker-blue;
+	background-color: $white;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 
 	#navbar-logo {
@@ -80,11 +81,79 @@ a {
 }
 
 .red-button {
-	padding: 10px 35px;
+	padding: 2px 30px;
+	margin: auto 5px;
 	font-weight: normal;
 	color: $white;
 	text-align: center;
 	background-color: $red;
 	border: none;
-	border-radius: 50px;
+	border-radius: 5px;
+}
+
+.white-button {
+	padding: 2px 30px;
+	font-weight: normal;
+	color: $dark-blue;
+	text-align: center;
+	border: 1px solid $dark-blue;
+	border-radius: 5px;
+}
+
+.page-section {
+	padding: 50px;
+	background-color: $white;
+	border: solid 1px #f0f0f0;
+	border-radius: 5px;
+}
+
+/*******************
+Form Styles
+*******************/
+
+.form-group {
+	.control-label {
+		margin-bottom: 0;
+		line-height: 2.2;
+	}
+}
+
+span.required {
+	color: $red;
+}
+
+.form-control::-webkit-input-placeholder { color: $placeholder_color; }  /* WebKit, Blink, Edge */
+.form-control::-moz-placeholder { color: $placeholder_color; }  /* Mozilla Firefox 19+ */
+.form-control::-ms-input-placeholder { color: $placeholder_color; }  /* Microsoft Edge */
+.form-control:-moz-placeholder { color: $placeholder_color; }  /* Mozilla Firefox 4 to 18 */
+.form-control:-ms-input-placeholder { color: $placeholder_color; }  /* Internet Explorer 10-11 */
+
+.multiselect__placeholder {
+	margin-bottom: 0;
+	color: $placeholder_color;
+}
+
+.multiselect__tags {
+	padding: 0.375rem 0.75rem;
+	border: 1px #ced4da solid;
+
+	i {
+		line-height: 0.8;
+	}
+}
+
+.multiselect__single {
+	padding: 0;
+	margin-bottom: 0;
+	line-height: 1.5;
+}
+
+.validation-error {
+	padding: 0;
+	margin-bottom: 0;
+	line-height: 2;
+
+	&::before {
+		content: "* ";
+	}
 }

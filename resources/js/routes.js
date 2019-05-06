@@ -20,14 +20,14 @@ let routes = [
 				children: [
 					// {
 					// 	path: "all",
-					// 	component: require("./views/lessons/allLessons.vue"),
-					// 	name: "allLessons"
+					// 	component: require("./views/organizations/allLessons.vue"),
+					// 	name: "allOrganizations"
 					// },
-					// {
-					// 	path: "create",
-					// 	component: require("./views/lessons/createLesson"),
-					// 	name: "createLesson"
-					// },
+					{
+						path: "create",
+						component: require("./views/organizations/createOrganization"),
+						name: "createOrganization"
+					},
 					{
 						path: ":org_id",
 						component: require("./views/organizations/showOrganization"),
@@ -35,8 +35,8 @@ let routes = [
 					},
 					// {
 					// 	path: ":lesson_id/edit",
-					// 	component: require("./views/lessons/editLesson"),
-					// 	name: "editLesson"
+					// 	component: require("./views/organizations/editLesson"),
+					// 	name: "editOrganizations"
 					// }
 				]
 			},
