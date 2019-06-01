@@ -34,7 +34,8 @@ class Organization extends Model
     {
         $orgs = $this->toArray();
 
-        return OrganizationResource::collection($orgs);
+        return $orgs;
+        // return OrganizationResource::collection($orgs);
     }
 
     public function director()

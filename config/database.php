@@ -1,6 +1,6 @@
 <?php
 
-$DATABASE_URL = parse_url('mysql://yavcwcxo5d9r0na0:qleqmpvb56snjb0h@ol5tz0yvwp930510.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/j9r5ig9wycuomog2');
+$DATABASE_URL = parse_url(env('DB_URL'));
 
 return [
     /*
@@ -40,6 +40,21 @@ return [
         ],
 
         'mysql' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
+        'mysql-heroku' => [
             'driver' => 'mysql',
             'host' => $DATABASE_URL['host'],
             'port' => $DATABASE_URL['port'],

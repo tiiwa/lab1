@@ -31,7 +31,7 @@ class OrganizationController extends Controller
 
     public function search(Request $request)
     {
-        $orgs = Organization::search($request->search)->get();
+        $orgs = Organization::search($request->q)->get();
 
         return OrganizationResource::collection($orgs);
     }
