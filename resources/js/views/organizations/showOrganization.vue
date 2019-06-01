@@ -51,13 +51,13 @@
 							class="fab fa-instagram"/> {{ organization.instagram_profile }}
 					</p>
 					<p v-if="organization.funding_status"
-						class="funding_status"><b>Funding_status: </b>{{ organization.funding_status }}</p>
+						class="funding_status"><b>Funding Status: </b>{{ organization.funding_status }}</p>
 					<p v-if="organization.funding_type"
-						class="funding_type"><b>Funding_type: </b>{{ organization.funding_type }}</p>
+						class="funding_type"><b>Funding Type: </b>{{ organization.funding_type }}</p>
 					<p v-if="organization.operating_language"
-						class="operating_language"><b>Operating_language: </b>{{ organization.operating_language }}</p>
+						class="operating_language"><b>Operating Language: </b>{{ organization.operating_language }}</p>
 					<p v-if="organization.method_of_collection"
-						class="method_of_collection"><b>Method_of_collection: </b>{{ organization.method_of_collection }}</p>
+						class="method_of_collection"><b>Method of Collection: </b>{{ organization.method_of_collection }}</p>
 				</div>
 			</div>
 		</div>

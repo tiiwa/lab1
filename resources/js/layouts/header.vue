@@ -6,7 +6,7 @@
 			<img id="navbar-logo"
 				:src="links.logo"
 				class="d-inline-block align-top navbar-brand"
-				alt="BV">
+				alt="Tiiwa">
 		</router-link>
 
 		<button class="navbar-toggler"
@@ -66,7 +66,7 @@ export default {
 	data() {
 		return {
 			links: {
-				logo: "/images/logo.svg",
+				logo: "/images/logo.png",
 				home: "/",
 				profile: "/profile",
 				logout: "/logout"

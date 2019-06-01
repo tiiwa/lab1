@@ -50,7 +50,7 @@ export default {
 	data() {
 		return {
 			links: {
-				logo: "/images/logo.svg",
+				logo: "/images/logo.png",
 				home: "/",
 			},
 		};

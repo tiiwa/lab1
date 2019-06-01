@@ -16,22 +16,40 @@
 					<h3>Your Information</h3>
 					<br>
 					
-					<!-- POC Name -->
+					<!-- POC First Name -->
 					<div class="form-group row">
-						<label for="poc_name"
-							class="col-md-3 control-label">Your Name</label>
+						<label for="poc_first_name"
+							class="col-md-3 control-label">Your First Name</label>
 						<input v-validate
-							id="poc_name"
-							:class="{'has-error': errors.has('poc_name') }"
-							v-model="orgForm.poc"
-							name="poc_name"
-							data-vv-as="submitter name"
+							id="poc_first_name"
+							:class="{'has-error': errors.has('poc_first_name') }"
+							v-model="orgForm.poc_first_name"
+							name="poc_first_name"
+							data-vv-as="submitter first name"
 							type="text"
 							class="col-md-9 form-control"
-							placeholder="Enter Your Name"
+							placeholder="Enter Your First Name"
 						>
-						<p v-if="errors.has('poc_name')"
-							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('poc_name') }}</p>
+						<p v-if="errors.has('poc_first_name')"
+							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('poc_first_name') }}</p>
+					</div>
+					
+					<!-- POC Last Name -->
+					<div class="form-group row">
+						<label for="poc_last_name"
+							class="col-md-3 control-label">Your Surname</label>
+						<input v-validate
+							id="poc_last_name"
+							:class="{'has-error': errors.has('poc_last_name') }"
+							v-model="orgForm.poc_last_name"
+							name="poc_last_name"
+							data-vv-as="submitter surname"
+							type="text"
+							class="col-md-9 form-control"
+							placeholder="Enter Your Surname"
+						>
+						<p v-if="errors.has('poc_last_name')"
+							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('poc_last_name') }}</p>
 					</div>
 					
 					<!-- POC Email -->
@@ -124,7 +142,7 @@
 					<div class="form-group row">
 						<label for="email"
 							class="col-md-3 control-label">Email</label>
-						<input v-validate="'{ rules: { required: this.isPhoneRequired }, email: true }'"
+						<input v-validate="{ required: isPhoneRequired , email: true }"
 							id="email"
 							:class="{'has-error': errors.has('email') }"
 							v-model="orgForm.email"
@@ -141,7 +159,7 @@
 					<div class="form-group row">
 						<label for="phone"
 							class="col-md-3 control-label">Phone</label>
-						<input v-validate="'{ rules: { required: this.isPhoneRequired } }'"
+						<input v-validate="{ required: isPhoneRequired }"
 							id="phone"
 							:class="{'has-error': errors.has('phone') }"
 							v-model="orgForm.phone"
@@ -158,7 +176,7 @@
 					<div class="form-group row">
 						<label for="website"
 							class="col-md-3 control-label">Website</label>
-						<input v-validate="'{ rules: { required: this.isWebsiteRequired, url: true } }'"
+						<input v-validate="{ required: isWebsiteRequired, url: true }"
 							id="website"
 							:class="{'has-error': errors.has('website') }"
 							v-model="orgForm.website"
@@ -446,23 +464,62 @@
 					<b>People</b>
 					<hr>
 					
-					<!-- Director -->
+					<b style="font-weight: 600;">Director</b>
+					<!-- Director First Name-->
 					<div class="form-group row">
-						<label for="director"
-							class="col-md-3 control-label">Director</label>
+						<label for="director_first_name"
+							class="col-md-3 control-label">First Name</label>
 						<input v-validate
-							id="director"
-							:class="{'has-error': errors.has('director') }"
-							v-model="orgForm.director"
-							name="director"
+							id="director_first_name"
+							:class="{'has-error': errors.has('director_first_name') }"
+							v-model="orgForm.director_first_name"
+							name="director_first_name"
 							type="text"
 							class="col-md-9 form-control"
-							placeholder="Enter Director's Name"
+							placeholder="Enter Director's First Name"
 						>
-						<p v-if="errors.has('director')"
+						<p v-if="errors.has('director_first_name')"
 							class="validation-error text-danger col-md-9 offset-md-3">
-							{{ errors.first('director') }}
+							{{ errors.first('director_first_name') }}
 						</p>
+					</div>
+					
+					<!-- Director Surname-->
+					<div class="form-group row">
+						<label for="director_last_name"
+							class="col-md-3 control-label">Surname</label>
+						<input v-validate
+							id="director_last_name"
+							:class="{'has-error': errors.has('director_last_name') }"
+							v-model="orgForm.director_last_name"
+							name="director_last_name"
+							type="text"
+							class="col-md-9 form-control"
+							placeholder="Enter Director's Surname"
+						>
+						<p v-if="errors.has('director_last_name')"
+							class="validation-error text-danger col-md-9 offset-md-3">
+							{{ errors.first('director_last_name') }}
+						</p>
+					</div>
+					
+					<!-- Director Email -->
+					<div class="form-group row">
+						<label for="director_email"
+							class="col-md-3 control-label">Email</label>
+						<input v-validate="'required'"
+							id="director_email"
+							:class="{'has-error': errors.has('director_email') }"
+							v-model="orgForm.director_email"
+							name="director_email"
+							data-vv-as="director email"
+							type="email"
+							class="col-md-9 form-control"
+							placeholder="Enter Director's Email"
+						>
+						<p v-if="errors.has('director_email')"
+							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('director_email')
+							}}</p>
 					</div>
 					
 					<!-- Page action buttons -->
@@ -518,29 +575,33 @@ export default {
 			organization: null,
 			orgForm: new Form({
 				autoReset: false,
-				name: "",
-				location: "",
-				description: "",
-				phone: "",
-				email: "",
-				website: "",
-				size_range: "",
-				legal_entity_type: "",
-				summary_of_needs: "",
-				audience: "",
-				inception_date: null,
-				target_locations: "",
-				sector: "",
-				services: "",
-				facebook_profile: "",
-				twitter_profile: "",
-				instagram_profile: "",
-				funding_status: "",
-				funding_type: "",
-				operating_language: "",
-				method_of_collection: "",
-				director: "",
-				poc: "",
+				name: "Drapes",
+				location: "Accra",
+				description: "A Web Company",
+				phone: "+233 123456789",
+				email: "a@dr.co",
+				website: "dr.co",
+				size_range: "5-15",
+				legal_entity_type: "For-Profit",
+				summary_of_needs: "Accounting, Admin",
+				audience: "Other Businesses",
+				inception_date: new Date("2012-04-03"),
+				target_locations: "Accra, Kumasi",
+				sector: "Computer Science",
+				services: "Web, Design",
+				facebook_profile: "https://www.facebook.com/drapesinc",
+				twitter_profile: "http://twitter.com/drapesinc",
+				instagram_profile: "https://www.instagram.com/drapesinc",
+				funding_status: "Fundraising",
+				funding_type: "Private Equity",
+				operating_language: [ "English", "French" ],
+				method_of_collection: "Online Form",
+				director_first_name: "Michael",
+				director_last_name: "Ann",
+				director_email: "michael@dr.co",
+				poc_first_name: "Yaw",
+				poc_last_name: "Owu",
+				poc_email: "yaw@dr.co",
 			}),
 			org_sizes: ["1-5", "5-15", "15-50", "50-500", "500-1000", "1000+"],
 			org_legal_entities: ["Non-Profit", "For-Profit", "Charitable", "Trust", "Foundation"],
@@ -609,13 +670,18 @@ export default {
 	
 	methods: {
 		submitOrg() {
+			this.isSaving = true;
 			axios
-				.post("/api/org/")
-				.then(({data}) => {
-					this.organization = data.data;
+				.post("/api/org", this.orgForm)
+				.then( response => {
+					this.isSaving = false;
+					this.organization = response.data;
+					toastr["success"](response.data.message);
 				})
 				.catch(error => {
+					lintf;
 					toastr["error"](error.response.data.message);
+					this.isSaving = false;
 				});
 		},
 		
