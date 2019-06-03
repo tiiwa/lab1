@@ -1,9 +1,9 @@
 <template>
 	<form>
-		<div class="input-group md-form form-sm form-1 pl-0">
+		<div class="input-group md-form form-sm form-1 pl-0 card-shadow">
 			<div class="input-group-prepend">
 				<span id="search-icon"
-					class="input-group-text purple lighten-3"><i class="fas fa-search text-white"
+					class="input-group-text purple lighten-3"><i class="fas fa-search"
 						aria-hidden="true"/></span>
 			</div>
 			<input
@@ -61,11 +61,6 @@ export default {
 					this.isLoading = false;
 				});
 		},
-		// to perform action on selected result
-		searchResult(result) {
-			this.search = result;
-			this.isOpen = false;
-		},
 		
 		clearSearch() {
 			this.$emit("clear-search");
@@ -80,17 +75,29 @@ export default {
 
 <style lang="scss" scoped>
 	.input-group {
-		background: rgba(0, 0, 0, 0.75);
+		padding: 10px;
+		color: $dark-blue;
+		background: rgb(246, 246, 246);
 		border-radius: 5px;
 
 		#search-icon {
 			background: none;
 			border: none;
+
+			i {
+				color: #071021;
+			}
 		}
 
 		input {
+			font-weight: bold;
+			color: #071021;
 			background: none;
 			border: none;
+
+			&::placeholder {
+				color: $dark-blue;
+			}
 		}
 	}
 </style>

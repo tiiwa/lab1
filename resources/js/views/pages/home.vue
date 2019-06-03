@@ -5,13 +5,23 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
+					<filter-box @search-results="setSearchResults"
+						@clear-search="clearSearch"/>
+					
+				</div>
+			
+				<div id="results-container"
+					class="col-md-6">
+					<p v-if="no_results"
+						id="no-results">No results found, try a different query.</p>
 					<div v-if="orgs">
-						<div v-for="org in organizations"
+						<div v-for="org in orgs"
 							:key="org.id">
 							<organizationThumbnail :organization="org"/>
 						</div>
 					</div>
 				</div>
+			
 			</div>
 		</div>
 	</div>
@@ -20,30 +30,33 @@
 <script>
 import organizationThumbnail from "../organizations/organizationThumbnail";
 import searchBar from "../../modules/searchBar";
+import filterBox from "../../modules/filterBox";
 
 export default {
 	name: "Home",
 
 	components: {
 		organizationThumbnail,
-		searchBar
+		searchBar,
+		filterBox
 	},
 
 	data() {
 		return {
 			endpoint: "home",
-			organizations: null,
-			default_orgs: null
+			organizations: [],
+			default_orgs: null,
+			no_results: false,
 		};
 	},
 	
 	computed: {
 		orgs(){
-			if (this.organizations === null || !this.organizations.length ){
-				return this.organizations;
+			if (this.no_results){
+				return this.default_orgs;
 			}
 			else {
-				return this.default_orgs;
+				return this.organizations;
 			}
 		}
 	},
@@ -67,7 +80,13 @@ export default {
 		},
 		
 		setSearchResults($results) {
-			this.organizations = $results;
+			if ($results === [] || $results.length === 0 ){
+				this.no_results = true;
+			} else {
+				this.no_results = false;
+				this.organizations = $results;
+			}
+			
 		},
 		
 		clearSearch() {
@@ -79,4 +98,13 @@ export default {
 
 
 <style lang="scss" scoped>
+	#results-container {
+		height: 700px;
+		overflow: scroll;
+	}
+
+	#no-results {
+		padding: 10px;
+		text-align: center;
+	}
 </style>

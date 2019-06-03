@@ -1,28 +1,20 @@
 <template>
 	<div>
 		<div v-if="organization"
-			class="organization-thumbnail"
+			class="organization-thumbnail card-shadow"
 			@click="routeToViewOrganization()">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-3">
-						<div id="organization-img">
-							<img src="/images/logo.png">
-						</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div id="organization-img">
+						<img src="/images/logo.png" >
 					</div>
-					<div class="col-md-9">
-						<div class="organization-details">
-							<h3 id="organization-name" 
-								class="name">{{ organization.name }}</h3>
-							<p id="organization-loc" 
-								class="location">{{ organization.location }}</p>
-								<!--<p class="description">{{ organization.description }}</p>-->
-								<!--<div class="contact">-->
-								<!--<p class="website">{{ organization.website }}</p>-->
-								<!--<p class="email">{{ organization.email }}</p>-->
-								<!--<p class="phone">{{ organization.phone }}</p>-->
-								<!--</div>-->
-						</div>
+				</div>
+				<div class="col-md-9">
+					<div class="organization-details">
+						<h3 id="organization-name"
+							class="name">{{ organization.name }}</h3>
+						<p id="organization-loc"
+							class="location">{{ organization.location }}</p>
 					</div>
 				</div>
 			</div>
@@ -73,7 +65,8 @@ export default {
 		background: $white;
 		border-radius: 15px;
 
-		#organization-img {
+		#organization-img img {
+			height: 40px;
 			border-radius: 50%;
 		}
 

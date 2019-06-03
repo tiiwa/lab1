@@ -6,7 +6,7 @@
 			<img id="navbar-logo"
 				:src="links.logo"
 				class="d-inline-block align-top navbar-brand"
-				alt="BV">
+				alt="Tiiwa">
 		</router-link>
 
 		<button class="navbar-toggler"
@@ -37,6 +37,12 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
+					<a id="add-company"
+						href="#"
+						class="red-button"
+						@click.prevent="logout">+ Add company</a>
+				</li>
+				<li>
 					<router-link :to="links.profile">
 						<template slot="button-content">
 							{{ getAuthUserFullName() }}
@@ -60,7 +66,7 @@ export default {
 	data() {
 		return {
 			links: {
-				logo: "/images/logo.svg",
+				logo: "/images/logo.png",
 				home: "/",
 				profile: "/profile",
 				logout: "/logout"
@@ -80,6 +86,9 @@ export default {
 				sessionStorage.clear();
 				this.$router.replace("/login");
 			});
+		},
+		routeToAddCompany() {
+			this.$router.replace("/org/create");
 		},
 		getAuthUserFullName() {
 			return this.$store.getters.getAuthUserFullName;

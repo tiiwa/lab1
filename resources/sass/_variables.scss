@@ -8,8 +8,11 @@ $white: #ffffff;
 $black: #000000;
 $red: #df4e55;
 $blue: #3e4a58;
-$dark-blue: #051220;
+$dark-blue: rgba(7, 16, 33, 0.41);
 $darker_blue: #050810;
 
+$placeholder_color: #adadad;
+
 // Widths & Heights
-$header-footer-height: 60px;
+$header-height: 60px;
+$footer-height: 40px;

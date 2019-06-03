@@ -45,8 +45,8 @@ export default {
 
 <style lang="scss" scoped>
 	#main-wrapper {
-		padding-top: $header-footer-height + 20px;
-		padding-bottom: $header-footer-height + 20px;
+		padding-top: $header-height + 20px;
+		padding-bottom: $footer-height + 20px;
 		background-attachment: fixed;
 	}
 </style>
