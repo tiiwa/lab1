@@ -7,19 +7,22 @@
 				<div class="col-md-6">
 					<filter-box @search-results="setSearchResults"
 						@clear-search="clearSearch"/>
-					
-				</div>
-			
-				<div id="results-container"
-					class="col-md-6">
-					<p v-if="no_results"
-						id="no-results">No results found, try a different query.</p>
-					<div v-if="orgs">
-						<div v-for="org in orgs"
-							:key="org.id">
-							<organizationThumbnail :organization="org"/>
+
+					<div id="results-container">
+						<p v-if="no_results"
+							id="no-results">No results found, try a different query.</p>
+						<div v-if="orgs">
+							<div v-for="org in orgs"
+								:key="org.id">
+								<organizationThumbnail :organization="org"/>
+							</div>
 						</div>
 					</div>
+					
+				</div>
+
+				<div class="col-md-6">
+					<map-component />
 				</div>
 			
 			</div>
@@ -31,6 +34,8 @@
 import organizationThumbnail from "../organizations/organizationThumbnail";
 import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
+import mapComponent from "../../modules/mapComponent";
+
 
 export default {
 	name: "Home",
@@ -38,7 +43,8 @@ export default {
 	components: {
 		organizationThumbnail,
 		searchBar,
-		filterBox
+		filterBox,
+		mapComponent,
 	},
 
 	data() {

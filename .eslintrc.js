@@ -9,7 +9,12 @@ module.exports = {
 		"plugin:vue/recommended"
 	],
 	"parserOptions": {
-		"sourceType": "module"
+		"sourceType": "module",
+		"ecmaVersion": 7,
+		"ecmaFeatures": {
+			"experimentalObjectRestSpread": true,
+			"experimentalDecorators": true,
+		}
 	},
 	"rules": {
 		"indent": [
