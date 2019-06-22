@@ -1,5 +1,5 @@
 <template>
-	<div class="discover-map-container"></div>
+	<div class="discover-map-container"/>
 </template>
 
 <script>
@@ -10,23 +10,23 @@ import googleMapsInit from "../gmaps";
 @Component({})
 export default class DiscoverMap extends Vue {
 	components = {};
-	
+
 	data() {
 		return { };
 	}
-	    
-    async mounted() {
-        try {
+	
+	async mounted() {
+		try {
 			const google = await googleMapsInit();
-            const map = new google.maps.Map(this.$el);
+			const map = new google.maps.Map(this.$el);
 
 			map.setCenter({lat: 4.5332659, lng: 16.9183376});
 			map.setZoom(4);
-        } catch (error) {
-        	console.error(error);
-        }
-    }
-};
+		} catch (error) {
+			console.error(error);
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>

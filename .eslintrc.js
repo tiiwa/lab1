@@ -5,15 +5,15 @@ module.exports = {
 		"es6": true
 	},
 	"extends": [
-		"eslint:recommended",
+		// "eslint:recommended",
 		"plugin:vue/recommended"
 	],
 	"parserOptions": {
+		"parser": "babel-eslint",
 		"sourceType": "module",
 		"ecmaVersion": 7,
 		"ecmaFeatures": {
-			"experimentalObjectRestSpread": true,
-			"experimentalDecorators": true,
+			"legacyDecorators": true
 		}
 	},
 	"rules": {

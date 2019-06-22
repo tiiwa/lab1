@@ -34,7 +34,7 @@
 import organizationThumbnail from "../organizations/organizationThumbnail";
 import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
-import mapComponent from "../../modules/mapComponent";
+import discoverMap from "../../modules/discoverMap";
 
 
 export default {
@@ -44,7 +44,7 @@ export default {
 		organizationThumbnail,
 		searchBar,
 		filterBox,
-		mapComponent,
+		discoverMap,
 	},
 
 	data() {
