@@ -4,8 +4,10 @@
 			class="organization-thumbnail card-shadow">
 			<div class="row organization-details">
 				<div class="col-md-2">
-					<div id="organization-img">
-						<img src="/images/blue_circle.png" >
+					<!-- To do: Get organization logo from database -->
+					<div id="organization-img"
+						@click="routeToViewOrganization()">
+						<!-- <img class="mx-auto d-block" src="/images/logo.png"> -->
 					</div>
 				</div>
 
@@ -18,17 +20,20 @@
 
 							<p v-if="organization.location"
 								id="location">
-								<!-- {{ organization.location }} -->
-								Ibadan, Nigeria
+								{{ organization.location }}
 							</p>
 
 							<img :src="organization_flag_url">
 						</div>
-						<div class="col-md-3">
-							<p id="save-later-text"
-								class="float-md-right">
-								Save for later
-							</p>
+						<div class="col-md-3 my-auto">
+							<button id="save-later-button"
+								class="btn float-md-right"
+								@click="saveOrganization()">
+								<span id="save-later-text">Save for later</span>
+								<i :class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', 'fa-lg align-middle']"
+								id="heart-icon"
+								/>
+							</button>
 						</div>
 					</div>
 					<div class="row">
@@ -158,7 +163,8 @@ export default {
 			organization: null,
 			organization_flag_url: null,
 			// To do: categories from actual source
-			categories: ["Food & Agriculture", "Food Scarcity"]
+			categories: ["Food & Agriculture", "Food Scarcity"],
+			organizationSaved: false
 		};
 	},
 
@@ -179,13 +185,18 @@ export default {
 				.then(({data}) => {
 					this.organization = data.data;
 
-					// To do: Get flag country code from database
+					// To do: Get flag country code from address
 					let country_code = "ng";
 					this.organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
 				})
 				.catch(error => {
 					toastr["error"](error.response.data.message);
 				});
+		},
+		// To do: Move to separate component. Used in thumbnail as well
+		saveOrganization() {
+			// To do: Connect to database
+			this.organizationSaved = !this.organizationSaved;
 		}
 	}
 
@@ -196,20 +207,27 @@ export default {
 
 	.organization-thumbnail {
 		padding: 50px;
+		padding-right: 100px;
 		margin: 20px;
 		background: $white;
-		border-radius: 15px;
+		border-radius: 3px;
 	}
 
 	.middle-col {
 		padding-left: 0;
 	}
 
-	#organization-img img {
-		position: relative;
+	#organization-img {
+		width: 120px;
 		height: 120px;
-		padding: 10px;
+		margin-top: auto;
+		margin-bottom: auto;
+		background-color: #0d2d4c;
 		border-radius: 50%;
+
+		img {
+			width: 80%;
+		}
 	}
 
 	#header-row {
@@ -241,7 +259,13 @@ export default {
 
 	#save-later-text {
 		display: inline-block;
-		margin: 2px;
+		margin-right: 10px;
+		margin-bottom: 2px;
+	}
+
+	#save-later-button {
+		padding: 0;
+		box-shadow: none;
 	}
 
 	#header-categories {
