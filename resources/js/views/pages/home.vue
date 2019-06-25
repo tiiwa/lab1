@@ -4,7 +4,7 @@
 			@clear-search="clearSearch"/>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<filter-box @search-results="setSearchResults"
 						@clear-search="clearSearch"/>
 
@@ -21,8 +21,8 @@
 					
 				</div>
 
-				<div class="col-md-6">
-					<map-component />
+				<div class="col-md-8">
+					<discover-map />
 				</div>
 			
 			</div>
