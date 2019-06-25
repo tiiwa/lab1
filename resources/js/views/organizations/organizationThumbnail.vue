@@ -5,6 +5,7 @@
 		>
 			<div class="row">
 				<div class="col-md-2">
+					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
 						@click="routeToViewOrganization()">
 						<!-- <img class="mx-auto d-block" src="/images/logo.png"> -->
@@ -36,9 +37,10 @@
 								</p>
 							</div>
 							<div class="col-md-3 my-auto">
-								<div v-if="!expand" 
+								<div v-if="!expand"
 									id="organization-categories"
 									class="float-md-right">
+									<!-- To do: Get images from database -->
 									<span class="dot"/>
 									<span class="dot"/>
 									<span class="dot"/>
@@ -46,20 +48,21 @@
 							</div>
 						</div>
 					</div>
-					<div v-if="expand" 
-						transition="fade" 
+					<div v-if="expand"
+						transition="fade"
 						class="row">
 						<div class="col-md-8 my-auto">
-							<div class="square"/>
-							<div class="square"/>
-							<div class="square"/>
+							<div class="preview-square"/>
+							<div class="preview-square"/>
+							<div class="preview-square"/>
 						</div>
 						<div class="col-md-4 my-auto">
-							<button id="save-button" 
+							<button id="save-button"
 								class="btn float-md-right"
 								@click="saveOrganization()">
 								<span id="save-text">Save</span>
 								<i :class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', ' align-middle']"
+								id="heart-icon"
 								/>
 							</button>
 
@@ -130,7 +133,7 @@ export default {
 			height: 50px;
 			margin-top: auto;
 			margin-bottom: auto;
-			background-color: rgb(58, 96, 179);
+			background-color: #0d2d4c;
 			border-radius: 50%;
 
 			img {
@@ -192,17 +195,17 @@ export default {
 			display: inline-block;
 			width: 3px;
 			height: 3px;
+			color: #091e35;
 			vertical-align: middle;
 			background-color: rgb(131, 131, 131);
 			border-radius: 50%;
 		}
 
-		// Temporary
-		.square {
+		.preview-square {
 			display: inline-block;
-			width: 60px;
-			height: 60px;
-			background-color: rgb(58, 96, 179);
+			width: 66px;
+			height: 66px;
+			background-color: #ff525b;
 		}
 	}
 </style>
