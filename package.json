@@ -47,6 +47,7 @@
 		"@fortawesome/fontawesome-free": "^5.8.1",
 		"axios": "^0.18",
 		"click-confirm": "^1.1.0",
+		"immutable": "^4.0.0-rc.12",
 		"jquery": "^3.4.1",
 		"js-cookie": "^2.2.0",
 		"laravel-vue-pagination": "^1.0.6",
