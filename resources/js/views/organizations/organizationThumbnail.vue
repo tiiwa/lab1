@@ -61,8 +61,8 @@
 								class="btn float-md-right"
 								@click="saveOrganization()">
 								<span id="save-text">Save</span>
-								<i :class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', ' align-middle']"
-								id="heart-icon"
+								<i id="heart-icon"
+									:class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', ' align-middle']"
 								/>
 							</button>
 
@@ -107,8 +107,6 @@ export default {
 
 		},
 		expandThumbnail() {
-			console.log("Expand");
-
 			// Flip expand property
 			this.expand = !this.expand;
 		},
