@@ -41,6 +41,7 @@ class OrganizationResource extends Resource
             'method_of_collection' => $this->method_of_collection,
             'director' => $this->director,
             'poc' => $this->poc,
+            'approved' => $this->approved,
             //'director' => new ProfileResource($this->whenLoaded(Profile::findOrFail($this->director->id))),
             //'poc' => new ProfileResource($this->whenLoaded('poc')),
         ];

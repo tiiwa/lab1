@@ -24,15 +24,11 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link"
-						href="#">Home <span class="sr-only">(current)</span></a>
+						href="/">Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link"
-						href="#">Users</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link"
-						href="#">Companies</a>
+						href="/dashboard">Dashboard</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -40,7 +36,7 @@
 					<a id="add-company"
 						href="#"
 						class="red-button"
-						@click.prevent="logout">+ Add company</a>
+						@click.prevent="routeToAddCompany">+ Add company</a>
 				</li>
 				<li>
 					<router-link :to="links.profile">
