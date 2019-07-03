@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Http\Resources\OrganizationResource;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
@@ -24,6 +25,18 @@ class Organization extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The "booting" method of the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('approved', function (Builder $builder) {
+            $builder->where('approved', '=', true);
+        });
+    }
 
     /**
      * Get the indexable data array for the model.
