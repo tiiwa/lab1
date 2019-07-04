@@ -31,15 +31,13 @@
 						</div>
 						<div class="row">
 							<div class="col-md-9">
-								<p id="organization-categories"
-									class="float-md-left">
+								<p class="organization-categories float-md-left">
 									{{ organization.sector }}
 								</p>
 							</div>
 							<div class="col-md-3 my-auto">
 								<div v-if="!expand"
-									id="organization-categories"
-									class="float-md-right">
+									class="organization-categories float-md-right">
 									<!-- To do: Get images from database -->
 									<span class="dot"/>
 									<span class="dot"/>
@@ -160,7 +158,7 @@ export default {
 			box-shadow: none;
 		}
 
-		#organization-categories {
+		.organization-categories {
 			padding: 5px;
 			padding-top: 0;
 			padding-bottom: 0;
