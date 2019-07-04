@@ -47,6 +47,13 @@ class OrganizationController extends Controller
         return OrganizationResource::collection($orgs);
     }
 
+    public function indexAll()
+    {
+        $orgs = Organization::withoutGlobalScopes()->latest()->paginate();
+
+        return OrganizationResource::collection($orgs);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -56,7 +63,7 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
-        $org = Organization::with(['director', 'poc'])->findOrFail($id);
+        $org = Organization::withoutGlobalScopes()->with(['director', 'poc'])->findOrFail($id);
 
         return new OrganizationResource($org);
     }
@@ -131,7 +138,7 @@ class OrganizationController extends Controller
      *
      * @return \App\Http\Resources\OrganizationResource|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, $device)
+    public function update(Request $request, $organization)
     {
         $validator = Validator::make($request->all(), $this->validationRules);
 
@@ -139,11 +146,29 @@ class OrganizationController extends Controller
             return $validator->errors();
         }
 
-        $device->update($request->all());
+        $organization->update($request->all());
 
         return response()->json([
             'message' => 'Organization updated!',
             'data' => new OrganizationResource($device->load(['group', 'contents', 'events', 'logs'])),
         ]);
+    }
+
+    public function approveOrganization($id)
+    {
+        $org = Organization::withoutGlobalScopes()->findOrFail($id);
+        $org->approved = true;
+        $org->save();
+
+        return response()->json(['message' => 'Organization approved!', 'data' => $org]);
+    }
+
+    public function disapproveOrganization($id)
+    {
+        $org = Organization::withoutGlobalScopes()->findOrFail($id);
+        $org->approved = false;
+        $org->save();
+
+        return response()->json(['message' => 'Organization disapproved!', 'data' => $org]);
     }
 }

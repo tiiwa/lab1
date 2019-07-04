@@ -1,13 +1,20 @@
 <template>
 	<div v-if="home"
 		class="home">
-		<h1>Hello Tiiwa</h1>
+		<organizationList/>
 	</div>
 </template>
 
 <script>
+import organizationList from "../admin/organizations";
 
 export default {
+	
+	name: "Dashboard",
+	
+	components: {
+		organizationList
+	},
 
 	data() {
 		return {

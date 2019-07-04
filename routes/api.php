@@ -33,6 +33,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 });
 
 Route::get('/search', 'OrganizationController@search');
+Route::get('/org/all', 'OrganizationController@indexAll');
+Route::get('/org/{id}/approve', 'OrganizationController@approveOrganization');
+Route::get('/org/{id}/disapprove', 'OrganizationController@disapproveOrganization');
 Route::resource('org', 'OrganizationController');
 
 // Home

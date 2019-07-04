@@ -24,10 +24,10 @@ export default {
 		if(!this.getAuthUser("email")){
 			helper.authUser().then(response => {
 				this.$store.dispatch("setAuthUserDetail",{
-					first_name: response.profile.first_name,
-					last_name: response.profile.last_name,
+					first_name: response.first_name,
+					last_name: response.last_name,
 					email: response.user.email,
-					avatar:response.profile.avatar
+					avatar:response.avatar
 				});
 			});
 		}
@@ -49,3 +49,11 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+	#main-wrapper {
+		padding-top: $header-height + 20px;
+		padding-bottom: $footer-height + 20px;
+		background-attachment: fixed;
+	}
+</style>

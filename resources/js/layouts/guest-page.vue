@@ -2,7 +2,8 @@
 	<div id="main-wrapper"
 		class="container"
 		style="background-image:url(/images/background/background.png);">
-		<app-header/>
+		<app-header-auth v-if="auth"/>
+		<app-header v-else/>
 		<div class="container-fluid">
 			<router-view/>
 		</div>
@@ -14,22 +15,42 @@
 
 import AppHeader from "./guest-header.vue";
 import AppFooter from "./footer.vue";
+import AppHeaderAuth from "./header.vue";
+import helper from "../services/helper";
+
 
 export default {
 
 	components: {
-		AppHeader, AppFooter
+		AppHeader,
+		AppFooter,
+		AppHeaderAuth
+	},
+	
+	data() {
+		return {
+			auth: false,
+		};
 	},
 
 	mounted() {
+		this.authCheck();
 		this.notification();
 	},
 
-	destroyed(){
-	},
 
 	methods : {
-		notification(){
+		authCheck() {
+			helper.check().then(response => {
+				if(!response){
+					this.auth = false;
+				} else {
+					this.auth = true;
+				}
+			});
+		},
+		
+		notification() {
 			toastr.options = {
 				"positionClass": "toast-top-right"
 			};

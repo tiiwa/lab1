@@ -40,5 +40,6 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'funding_type' => $faker->randomElement($array = ['Grants', 'Donations', 'Debt']),
         'operating_language' => $faker->randomElement($array = ['English ', 'French', 'Swahili']),
         'method_of_collection' => $faker->randomElement($array = ['Personal Contact ', 'Company Hub', 'Online Resource']),
+        'approved' => $faker->randomElement($array = [true, false]),
     ];
 });
