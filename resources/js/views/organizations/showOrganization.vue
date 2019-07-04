@@ -30,8 +30,8 @@
 								class="btn float-md-right"
 								@click="saveOrganization()">
 								<span id="save-later-text">Save for later</span>
-								<i :class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', 'fa-lg align-middle']"
-								id="heart-icon"
+								<i id="heart-icon"
+									:class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', 'fa-lg align-middle']"
 								/>
 							</button>
 						</div>
