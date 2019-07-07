@@ -5,11 +5,16 @@ module.exports = {
 		"es6": true
 	},
 	"extends": [
-		"eslint:recommended",
+		// "eslint:recommended",
 		"plugin:vue/recommended"
 	],
 	"parserOptions": {
-		"sourceType": "module"
+		"parser": "babel-eslint",
+		"sourceType": "module",
+		"ecmaVersion": 7,
+		"ecmaFeatures": {
+			"legacyDecorators": true
+		}
 	},
 	"rules": {
 		"indent": [

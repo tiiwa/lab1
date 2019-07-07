@@ -12,6 +12,7 @@ What things you need to install the software and how to install them
 - Git [https://git-scm.com/]
 - Composer [https://getcomposer.org/]
 - npm [https://www.npmjs.com/]
+- (Optional) docker and docker-compose [https://docs.docker.com/compose/gettingstarted/]
 
 ### Installing
 
@@ -56,9 +57,26 @@ What things you need to install the software and how to install them
         npm run prod #compile for production
         npm run watch #compile and watch for file changes
 
+- Setup Nginx Web server for SSL Termination
+        * To start the web server run:
+        ```bash
+        cd docker
+        docker-compose up -d
+        ```
+
+        * To stop the web server run:
+        ```bash
+        cd docker
+        docker-compose down
+        ```
+
+        Note that there are other web servers out there like Apache if you want.
+
 - Run the app
 
         php artisan serve
+
+
         
         
 ###Development Best Practice
