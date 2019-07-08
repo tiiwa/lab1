@@ -21,8 +21,12 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import Multiselect from "vue-multiselect";
-import debounce from "../services/debounce";
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapActions } = createNamespacedHelpers('search');
+
 
 export default {
 	
@@ -35,40 +39,19 @@ export default {
 	data() {
 		return {
 			search: "",
-			results: [],
-			isSearching: false,
 		};
 	},
 	
 	methods: {
+		...mapActions([
+			'searchByText'
+		]),
+
 		// when the input has been changed
-		onChange() {
-			if(this.search === ""){
-				this.clearSearch();
-			}
-			this.isSearching = true;
-			debounce({
-				method: "get",
-				url: `/api/search?q=${this.search}`,
-				timeout: 60000
-			})
-				.then(({ data }) => {
-					this.isSearching = false;
-					this.results = data.data;
-					this.$emit("search-results", data.data);
-				})
-				.catch(error => {
-					this.isLoading = false;
-				});
-		},
-		
-		clearSearch() {
-			this.$emit("clear-search");
-			this.search = "";
-			this.results = [];
-			this.isSearching = false;
-		},
-	}
+		onChange: _.debounce(function() {
+			this.searchByText(this.search);
+		}, 300),
+	},
 	
 };
 </script>
