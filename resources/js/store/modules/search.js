@@ -71,7 +71,9 @@ const actions = {
         commit('setSearchCompleted');
     },
 
-    advancedByFiltering: ({commit}, searchFilter) => {},
+    searchByFiltering: ({commit}, searchFilter) => {
+        console.log("searchByFiltering", searchFilter);
+    },
 
     // Add more search actions as app progresses
 };

@@ -7,7 +7,7 @@
 					Looking for a company in
 					<multiselect v-validate
 						id="country"
-						v-model="filterForm.location"
+						v-model="filterForm.data.location"
 						:options="org_countries"
 						:show-labels="false"
 						:allow-empty="false"
@@ -17,7 +17,7 @@
 					and working in
 					<multiselect v-validate
 						id="sector"
-						v-model="filterForm.sector"
+						v-model="filterForm.data.sector"
 						:options="org_sectors"
 						:show-labels="false"
 						:allow-empty="false"
@@ -29,7 +29,7 @@
 					Bringing
 					<multiselect v-validate
 						id="services"
-						v-model="filterForm.services"
+						v-model="filterForm.data.services"
 						:options="org_services"
 						:show-labels="false"
 						:allow-empty="false"
@@ -51,6 +51,9 @@
 
 <script>
 import Multiselect from "vue-multiselect";
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapActions } = createNamespacedHelpers('search');
 
 export default {
 	name: "FilterBox",
@@ -64,9 +67,11 @@ export default {
 			organizations: null,
 			filterForm:  new Form({
 				autoReset: false,
-				location: "",
-				sector: "",
-				services: "",
+				data: {
+					location: null,
+					sector: null,
+					services: null,
+				},
 			}),
 			org_countries: ["Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cameroon","Canary Islands","Cape Verde","Central African Republic","Ceuta","Chad","Comoros","Côte d'Ivoire","Democratic Republic of the Congo","Djibouti","Egypt","Equatorial Guinea","Eritrea","Ethiopia","Gabon","Gambia","Ghana","Guinea","Guinea-Bissau","Kenya","Lesotho","Liberia","Libya","Madagascar","Madeira","Malawi","Mali","Mauritania","Mauritius","Mayotte","Melilla","Morocco","Mozambique","Namibia","Niger","Nigeria","Republic of the Congo","Réunion","Rwanda","Saint Helena","São Tomé and Príncipe","Senegal","Seychelles","Sierra Leone","Somalia","South Africa","Sudan","Swaziland","Tanzania","Togo","Tunisia","Uganda","Western Sahara","Zambia","Zimbabwe",],
 			org_sectors: ["Graphic Design", "Professional Practice", "Finance & Investments",
@@ -79,25 +84,13 @@ export default {
 	},
 	
 	methods: {
+		...mapActions([
+			'searchByFiltering',
+		]),
+
 		// when the input has been changed
 		filter() {
-			if(this.search === ""){
-				this.clearSearch();
-			}
-			this.isSearching = true;
-			debounce({
-				method: "get",
-				url: `/api/search?q=${this.search}`,
-				timeout: 60000
-			})
-				.then(({ data }) => {
-					this.isSearching = false;
-					this.results = data.data;
-					this.$emit("search-results", data.data);
-				})
-				.catch(error => {
-					this.isLoading = false;
-				});
+			this.searchByFiltering({...this.filterForm.data});
 		},
 	}
 };
