@@ -36,28 +36,8 @@ export default {
 </script>
 
 
-
 <style lang="scss" scoped>
-
-	#filter-box-container {
-		width: 350px;
-		padding: 50px;
+	#no-results {
 		margin: 20px;
-		background: $white;
-		border-radius: 4px;
-	}
-
-	#sector {
-		font-size: 16px;
-	}
-
-	#filter-button {
-		padding: 10px 35px;
-	}
-
-	.multiselect {
-		float: left;
-		margin-top: 5px;
-		margin-bottom: 15px;
 	}
 </style>
