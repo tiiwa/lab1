@@ -1,8 +1,14 @@
 import createPersistedState from "vuex-persistedstate";
 import axios from 'axios';
 
+const SEARCH_SOURCES = {
+    SEARCH_BAR: "searchBar",
+    FILTER_BOX: "filterBox",
+};
+
 const EMPTY_STATE = {
     query: {
+        searchSource: SEARCH_SOURCES.SEARCH_BAR,
         searchText: "",
     },
     results: null,
@@ -41,6 +47,7 @@ const mutations = {
         // There is probably a better way.
 
         state.query.searchText = EMPTY_STATE.query.searchText;
+        state.query.searchSource = EMPTY_STATE.query.searchSource;
 
         state.results = EMPTY_STATE.results;
         state.type = EMPTY_STATE.type;
@@ -48,10 +55,16 @@ const mutations = {
         state.numPages = EMPTY_STATE.numPages;
         state.isSearching = EMPTY_STATE.isSearching;
     },
+
+    setSearchSource: (state, source) => {
+        state.query.searchSource = source;
+    }
 };
 
 const actions = {
-    searchByText: async ({commit}, searchText) => {   
+    searchByText: async ({commit}, searchText) => {
+        commit('setSearchSource', SEARCH_SOURCES.SEARCH_BAR);
+
         if (!searchText || searchText.trim() === "") {
             commit('setEmptyState');
             return;
@@ -72,6 +85,7 @@ const actions = {
     },
 
     searchByFiltering: ({commit}, searchFilter) => {
+        commit('setSearchSource', SEARCH_SOURCES.FILTER_BOX);
         console.log("searchByFiltering", searchFilter);
     },
 
@@ -79,7 +93,7 @@ const actions = {
 };
 
 const getters = {
-    getResultCountByCountry: state => {
+    resultCountByCountry: state => {
         const resultCountByCountryMapping = state.results.reduce((countries, result) => {
             const country = result.country;
 
@@ -97,6 +111,10 @@ const getters = {
             };
         });
     },
+
+    searchText: state => {
+        return state.query.searchText;
+    },
 };
 
 const plugins = [
@@ -110,4 +128,5 @@ export default {
     actions,
     getters,
     plugins,
+    SEARCH_SOURCES,
 };

@@ -8,10 +8,10 @@
 			</div>
 			<input
 				id="search-bar-input"
-				v-model="search"
 				type="text"
 				class="form-control col-xs-1"
 				placeholder="Search"
+				:value="searchText"
 				@input="onChange"
 				@keydown.down="onArrowDown"
 				@keydown.up="onArrowUp"
@@ -25,7 +25,7 @@ import _ from 'lodash';
 import Multiselect from "vue-multiselect";
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapActions } = createNamespacedHelpers('search');
+const { mapActions, mapState, mapGetters } = createNamespacedHelpers('search');
 
 
 export default {
@@ -35,11 +35,11 @@ export default {
 	components: {
 		Multiselect,
 	},
-	
-	data() {
-		return {
-			search: "",
-		};
+
+	computed: {
+		...mapGetters([
+			'searchText',
+		]),
 	},
 	
 	methods: {
@@ -48,8 +48,8 @@ export default {
 		]),
 
 		// when the input has been changed
-		onChange: _.debounce(function() {
-			this.searchByText(this.search);
+		onChange: _.debounce(function(e) {
+			this.searchByText(e.target.value);
 		}, 300),
 	},
 	

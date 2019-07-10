@@ -4,6 +4,7 @@
 
 <script>
 import Vue from "vue";
+import { createNamespacedHelpers } from 'vuex';
 import Component from "vue-class-component";
 import googleMapsInit from "../gmaps";
 import africanCountries from "./africanCountries";
@@ -12,6 +13,8 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
+
+const { mapActions } = createNamespacedHelpers('search');
 
 
 @Component({})
