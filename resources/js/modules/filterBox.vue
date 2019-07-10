@@ -101,10 +101,11 @@ export default {
 <style lang="scss" scoped>
 
 	#filter-box-container {
+		width: 350px;
 		padding: 50px;
 		margin: 20px;
 		background: $white;
-		border-radius: 15px;
+		border-radius: 4px;
 	}
 
 	#sector {
