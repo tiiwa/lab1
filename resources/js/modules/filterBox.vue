@@ -5,44 +5,42 @@
 			<div>
 				<h5 id="filter-box-a">
 					Looking for a company in
-					<multiselect v-validate
+					<filter-box-select
+						:class="['filter-box-select']"
 						id="country"
-						v-model="filterForm.data.location"
-						:options="org_countries"
-						:show-labels="false"
-						:allow-empty="false"
-						name="sector"
-						placeholder="Location"/>
+						:value="filterData.country"
+						:options="countryOptions"
+						:onSelect="onCountrySelect"
+						placeholder="LOCATION"/>
 					<br>
 					and working in
-					<multiselect v-validate
+					<filter-box-select
+						:class="['filter-box-select']"
 						id="sector"
-						v-model="filterForm.data.sector"
-						:options="org_sectors"
-						:show-labels="false"
-						:allow-empty="false"
-						name="sector"
-						placeholder="Sector"/>
+						:value="filterData.sector"
+						:options="sectorOptions"
+						:onSelect="onSectorSelect"
+						placeholder="SECTOR"/>.
 				</h5>
 				<br>
 				<h5 id="filter-box-b">
 					Bringing
-					<multiselect v-validate
+					<filter-box-select
+						:class="['filter-box-select']"
 						id="services"
-						v-model="filterForm.data.services"
-						:options="org_services"
-						:show-labels="false"
-						:allow-empty="false"
-						name="sector"
-						placeholder="Services"/>
+						:value="filterData.services"
+						:options="servicesOptions"
+						:onSelect="onServicesSelect"
+						placeholder="SERVICES"/>
 					<br>
 					to Africa.
 				</h5>
 				<br>
+
 				<button id="filter-button"
 					class="btn-primary"
 					@click="filter">
-					Find
+					Find <i class="fas fa-arrow-right"></i>
 				</button>
 			</div>
 		</div>
@@ -50,47 +48,69 @@
 </template>
 
 <script>
-import Multiselect from "vue-multiselect";
 import { createNamespacedHelpers } from 'vuex';
+import filterBoxSelect from "./filterBoxSelect";
+import africanCountries from "../services/africanCountries";
+import companySectors from "../services/companySectors";
+import companyServices from "../services/companyServices";
 
 const { mapActions } = createNamespacedHelpers('search');
 
+
 export default {
 	name: "FilterBox",
-	
+
 	components: {
-		Multiselect,
+		filterBoxSelect,
 	},
-	
+
 	data() {
 		return {
-			organizations: null,
-			filterForm:  new Form({
-				autoReset: false,
-				data: {
-					location: null,
-					sector: null,
-					services: null,
-				},
-			}),
-			org_countries: ["Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cameroon","Canary Islands","Cape Verde","Central African Republic","Ceuta","Chad","Comoros","Côte d'Ivoire","Democratic Republic of the Congo","Djibouti","Egypt","Equatorial Guinea","Eritrea","Ethiopia","Gabon","Gambia","Ghana","Guinea","Guinea-Bissau","Kenya","Lesotho","Liberia","Libya","Madagascar","Madeira","Malawi","Mali","Mauritania","Mauritius","Mayotte","Melilla","Morocco","Mozambique","Namibia","Niger","Nigeria","Republic of the Congo","Réunion","Rwanda","Saint Helena","São Tomé and Príncipe","Senegal","Seychelles","Sierra Leone","Somalia","South Africa","Sudan","Swaziland","Tanzania","Togo","Tunisia","Uganda","Western Sahara","Zambia","Zimbabwe",],
-			org_sectors: ["Graphic Design", "Professional Practice", "Finance & Investments",
-				"Metals & Base Metals", "Environmental Chemistry", "Computer Science", "Electrical & Electronics Engineering",
-				"Environmental Management", "Environmental Science", "World Trade Associations",],
-			org_services: ["Abortion Policy/Anti-Abortion","Abortion Policy/Pro-Abortion Rights","Accountants","Advertising/Public Relations","Aerospace, Defense Contractors","Agribusiness","Agricultural Services & Products","Agriculture","Air Transport","Air Transport Unions","Airlines","Alcoholic Beverages","Alternative Energy Production & Services","Architectural Services","Attorneys/Law Firms","Auto Dealers","Auto Dealers, Japanese","Auto Manufacturers","Automotive","Banking, Mortgage","Banks, Commercial","Banks, Savings & Loans","Bars & Restaurants","Beer, Wine & Liquor","Books, Magazines & Newspapers","Broadcasters, Radio/TV","Builders/General Contractors","Builders/Residential","Building Materials & Equipment","Building Trade Unions ","Business Associations","Business Services","Cable & Satellite TV Production & Distribution","Candidate Committees ","Candidate Committees, Democratic","Candidate Committees, Republican","Car Dealers","Car Dealers, Imports","Car Manufacturers","Casinos / Gambling","Cattle Ranchers/Livestock","Chemical & Related Manufacturing","Chiropractors","Civil Servants/Public Officials","Clergy & Religious Organizations ","Clothing Manufacturing","Coal Mining","Colleges, Universities & Schools","Commercial Banks","Commercial TV & Radio Stations","Communications/Electronics","Computer Software","Conservative/Republican","Construction","Construction Services","Construction Unions","Credit Unions","Crop Production & Basic Processing","Cruise Lines","Cruise Ships & Lines","Dairy","Defense","Defense Aerospace","Defense Electronics","Defense/Foreign Policy Advocates","Democratic Candidate Committees ","Democratic Leadership PACs","Democratic/Liberal ","Dentists","Doctors & Other Health Professionals","Drug Manufacturers","Education ","Electric Utilities","Electronics Manufacturing & Equipment","Electronics, Defense Contractors","Energy & Natural Resources","Entertainment Industry","Environment ","Farm Bureaus","Farming","Finance / Credit Companies","Finance, Insurance & Real Estate","Food & Beverage","Food Processing & Sales","Food Products Manufacturing","Food Stores","For-profit Education","For-profit Prisons","Foreign & Defense Policy ","Forestry & Forest Products","Foundations, Philanthropists & Non-Profits","Funeral Services","Gambling & Casinos","Gambling, Indian Casinos","Garbage Collection/Waste Management","Gas & Oil","Gay & Lesbian Rights & Issues","General Contractors","Government Employee Unions","Government Employees","Gun Control ","Gun Rights ","Health","Health Professionals","Health Services/HMOs","Hedge Funds","HMOs & Health Care Services","Home Builders","Hospitals & Nursing Homes","Hotels, Motels & Tourism","Human Rights ","Ideological/Single-Issue","Indian Gaming","Industrial Unions ","Insurance","Internet","Israel Policy","Labor","Lawyers & Lobbyists","Lawyers / Law Firms","Leadership PACs ","Liberal/Democratic","Liquor, Wine & Beer","Livestock","Lobbyists","Lodging / Tourism","Logging, Timber & Paper Mills","Manufacturing, Misc","Marine Transport","Meat processing & products","Medical Supplies","Mining","Misc Business","Misc Finance","Misc Manufacturing & Distributing ","Misc Unions ","Miscellaneous Defense","Miscellaneous Services","Mortgage Bankers & Brokers","Motion Picture Production & Distribution","Music Production","Natural Gas Pipelines","Newspaper, Magazine & Book Publishing","Non-profits, Foundations & Philanthropists","Nurses","Nursing Homes/Hospitals","Nutritional & Dietary Supplements","Oil & Gas","Other","Payday Lenders","Pharmaceutical Manufacturing","Pharmaceuticals / Health Products","Phone Companies","Physicians & Other Health Professionals","Postal Unions","Poultry & Eggs","Power Utilities","Printing & Publishing","Private Equity & Investment Firms","Pro-Israel ","Professional Sports, Sports Arenas & Related Equipment & Services","Progressive/Democratic","Public Employees","Public Sector Unions ","Publishing & Printing","Radio/TV Stations","Railroads","Real Estate","Record Companies/Singers","Recorded Music & Music Production","Recreation / Live Entertainment","Religious Organizations/Clergy","Republican Candidate Committees ","Republican Leadership PACs","Republican/Conservative ","Residential Construction","Restaurants & Drinking Establishments","Retail Sales","Retired ","Savings & Loans","Schools/Education","Sea Transport","Securities & Investment","Special Trade Contractors","Sports, Professional","Steel Production ","Stock Brokers/Investment Industry","Student Loan Companies","Sugar Cane & Sugar Beets","Teachers Unions","Teachers/Education","Telecom Services & Equipment","Telephone Utilities","Textiles ","Timber, Logging & Paper Mills","Tobacco","Transportation","Transportation Unions ","Trash Collection/Waste Management","Trucking","TV / Movies / Music","TV Production","Unions","Unions, Airline","Unions, Building Trades","Unions, Industrial","Unions, Misc","Unions, Public Sector","Unions, Teacher","Unions, Transportation","Universities, Colleges & Schools","Vegetables & Fruits","Venture Capital","Waste Management","Wine, Beer & Liquor","Women's Issues ",],
-			isSaving: false,
-			isDeleting: false,
+			filterData: {
+				country: null,
+				sector: null,
+				services: null,
+			},
+			sectorOptions: companySectors.toArray(),
+			servicesOptions: companyServices.toArray(),
 		};
 	},
-	
+
+	computed: {
+		/**
+		 * TODO(joshua): This is not nice. Refactor africanCountries.js
+		 * to fit the needs of all components. But this works for now.
+		 */
+		countryOptions: function() {
+			const countries = [];
+
+			Array.from(africanCountries.keys()).forEach(key =>
+				countries.push(africanCountries.get(key).name)
+			);
+
+			return countries.sort();
+		},
+	},
+
 	methods: {
 		...mapActions([
 			'searchByFiltering',
 		]),
 
-		// when the input has been changed
 		filter() {
-			this.searchByFiltering({...this.filterForm.data});
+			this.searchByFiltering({...this.filterData});
+		},
+
+		onCountrySelect(country) {
+			this.filterData.country = country;
+		},
+
+		onSectorSelect(sector) {
+			this.filterData.sector = sector;
+		},
+
+		onServicesSelect(services) {
+			this.filterData.services = services;
 		},
 	}
 };
@@ -101,24 +121,19 @@ export default {
 <style lang="scss" scoped>
 
 	#filter-box-container {
-		width: 350px;
+		width: 420px;
 		padding: 50px;
 		margin: 20px;
 		background: $white;
 		border-radius: 4px;
 	}
 
-	#sector {
-		font-size: 16px;
-	}
-
 	#filter-button {
-		padding: 10px 35px;
-	}
-
-	.multiselect {
-		float: left;
-		margin-top: 5px;
-		margin-bottom: 15px;
+		float: right;
+		height: 36px;
+		padding: 0 35px;
+		background-color: $red;
+		border: none;
+		border-radius: 3px;
 	}
 </style>
