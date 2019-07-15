@@ -12,10 +12,7 @@
 				class="form-control col-xs-1"
 				placeholder="Search"
 				:value="searchText"
-				@input="onChange"
-				@keydown.down="onArrowDown"
-				@keydown.up="onArrowUp"
-				@keydown.enter.prevent="onEnter">
+				@input="onChange">
 		</div>
 	</form>
 </template>
@@ -29,9 +26,9 @@ const { mapActions, mapState, mapGetters } = createNamespacedHelpers('search');
 
 
 export default {
-	
+
 	name: "SearchBar",
-	
+
 	components: {
 		Multiselect,
 	},
@@ -41,7 +38,7 @@ export default {
 			'searchText',
 		]),
 	},
-	
+
 	methods: {
 		...mapActions([
 			'searchByText'
@@ -52,7 +49,7 @@ export default {
 			this.searchByText(e.target.value);
 		}, 300),
 	},
-	
+
 };
 </script>
 
