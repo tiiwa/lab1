@@ -8,68 +8,48 @@
 			</div>
 			<input
 				id="search-bar-input"
-				v-model="search"
 				type="text"
 				class="form-control col-xs-1"
 				placeholder="Search"
-				@input="onChange"
-				@keydown.down="onArrowDown"
-				@keydown.up="onArrowUp"
-				@keydown.enter.prevent="onEnter">
+				:value="searchText"
+				@input="onChange">
 		</div>
 	</form>
 </template>
 
 <script>
+import _ from 'lodash';
 import Multiselect from "vue-multiselect";
-import debounce from "../services/debounce";
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapActions, mapState, mapGetters } = createNamespacedHelpers('search');
+
 
 export default {
-	
+
 	name: "SearchBar",
-	
+
 	components: {
 		Multiselect,
 	},
-	
-	data() {
-		return {
-			search: "",
-			results: [],
-			isSearching: false,
-		};
+
+	computed: {
+		...mapGetters([
+			'searchText',
+		]),
 	},
-	
+
 	methods: {
+		...mapActions([
+			'searchByText'
+		]),
+
 		// when the input has been changed
-		onChange() {
-			if(this.search === ""){
-				this.clearSearch();
-			}
-			this.isSearching = true;
-			debounce({
-				method: "get",
-				url: `/api/search?q=${this.search}`,
-				timeout: 60000
-			})
-				.then(({ data }) => {
-					this.isSearching = false;
-					this.results = data.data;
-					this.$emit("search-results", data.data);
-				})
-				.catch(error => {
-					this.isLoading = false;
-				});
-		},
-		
-		clearSearch() {
-			this.$emit("clear-search");
-			this.search = "";
-			this.results = [];
-			this.isSearching = false;
-		},
-	}
-	
+		onChange: _.debounce(function(e) {
+			this.searchByText(e.target.value);
+		}, 300),
+	},
+
 };
 </script>
 
