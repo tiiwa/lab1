@@ -6,8 +6,7 @@
 import Vue from "vue";
 import { createNamespacedHelpers } from 'vuex';
 import Component from "vue-class-component";
-import googleMapsInit from "../gmaps";
-import africanCountries from "./africanCountries";
+import africanCountries from "../services/africanCountries";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
@@ -106,8 +105,10 @@ export default class DiscoverMap extends Vue {
 
 <style lang="scss" scoped>
 .discover-map-container {
-	width: 100%;
-	height: 1000px;
-	margin-top: 16px;
+	position: absolute;
+	right: 0;
+	width: 60%;
+	min-width: 600px;
+	height: 800px;
 }
 </style>
