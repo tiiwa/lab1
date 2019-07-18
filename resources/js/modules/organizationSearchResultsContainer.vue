@@ -15,7 +15,7 @@ import organizationThumbnail from "../views/organizations/organizationThumbnail"
 
 export default {
     name: "OrganizationSearchResultsContainer",
-    
+
     components: {
         organizationThumbnail,
     },
@@ -37,7 +37,19 @@ export default {
 
 
 <style lang="scss" scoped>
+	#results-container {
+		width: 50%;
+		overflow-x: hidden;
+		overflow-y: scroll;
+	}
+
 	#no-results {
-		margin: 20px;
+		padding: 10px;
+	}
+
+	@media (max-width: $max-width-for-map) {
+		#results-container {
+			width: 100%;
+		}
 	}
 </style>

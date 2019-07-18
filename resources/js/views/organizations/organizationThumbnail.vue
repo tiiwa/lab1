@@ -120,7 +120,7 @@ export default {
 
 	.organization-thumbnail {
 		padding: 20px;
-		margin: 20px;
+		margin: 20px 2px;
 		background: $white;
 		border-radius: 3px;
 

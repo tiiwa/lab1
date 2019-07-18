@@ -43,15 +43,6 @@ export default {
 
 
 <style lang="scss" scoped>
-	#results-container {
-		overflow: scroll;
-	}
-
-	#no-results {
-		padding: 10px;
-		text-align: center;
-	}
-
 	.home-content {
 		position: relative;
 	}
