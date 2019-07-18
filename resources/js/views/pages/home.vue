@@ -2,13 +2,13 @@
 	<div class="home">
 		<search-bar/>
 		<section>
-			<discover-map />
+			<discover-map-container />
 
 			<div class="home-content aside">
 				<filter-box/>
 				<organization-search-results-container :results="orgs" />
 			</div>
-						
+
 		</section>
 	</div>
 </template>
@@ -16,7 +16,7 @@
 <script>
 import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
-import discoverMap from "../../modules/discoverMap";
+import discoverMapContainer from "../../modules/discoverMapContainer";
 import organizationSearchResultsContainer from "../../modules/organizationSearchResultsContainer";
 import { createNamespacedHelpers } from 'vuex';
 
@@ -29,10 +29,10 @@ export default {
 	components: {
 		searchBar,
 		filterBox,
-		discoverMap,
+		discoverMapContainer,
 		organizationSearchResultsContainer,
 	},
-	
+
 	computed: {
 		...mapState({
 			orgs: state => state.results,
