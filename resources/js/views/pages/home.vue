@@ -4,7 +4,7 @@
 		<section>
 			<discover-map-container />
 
-			<div class="home-content aside">
+			<div class="home-content">
 				<filter-box/>
 				<organization-search-results-container :results="orgs" />
 			</div>
@@ -43,10 +43,6 @@ export default {
 
 
 <style lang="scss" scoped>
-	section {
-		position: relative;
-	}
-
 	#results-container {
 		overflow: scroll;
 	}
