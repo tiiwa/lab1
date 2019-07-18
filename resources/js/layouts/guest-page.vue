@@ -1,7 +1,6 @@
 <template>
 	<div id="main-wrapper"
-		class="container"
-		style="background-image:url(/images/background/background.png);">
+		class="container">
 		<app-header-auth v-if="auth"/>
 		<app-header v-else/>
 		<div class="container-fluid">
@@ -26,7 +25,7 @@ export default {
 		AppFooter,
 		AppHeaderAuth
 	},
-	
+
 	data() {
 		return {
 			auth: false,
@@ -49,7 +48,7 @@ export default {
 				}
 			});
 		},
-		
+
 		notification() {
 			toastr.options = {
 				"positionClass": "toast-top-right"
