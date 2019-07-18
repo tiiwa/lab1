@@ -2,13 +2,16 @@
 	<div class="home">
 		<search-bar/>
 		<section>
-			<discover-map />
+			<discover-map-container
+				:isDisabled="mapDisabled"
+				:onMapModeChangeRequested="onMapModeChangeRequested"
+			/>
 
-			<div class="home-content aside">
+			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
 				<filter-box/>
 				<organization-search-results-container :results="orgs" />
 			</div>
-						
+
 		</section>
 	</div>
 </template>
@@ -16,7 +19,7 @@
 <script>
 import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
-import discoverMap from "../../modules/discoverMap";
+import discoverMapContainer from "../../modules/discoverMapContainer";
 import organizationSearchResultsContainer from "../../modules/organizationSearchResultsContainer";
 import { createNamespacedHelpers } from 'vuex';
 
@@ -29,38 +32,43 @@ export default {
 	components: {
 		searchBar,
 		filterBox,
-		discoverMap,
+		discoverMapContainer,
 		organizationSearchResultsContainer,
 	},
-	
+
+	data() {
+		return {
+			mapDisabled: false,
+		};
+	},
+
 	computed: {
 		...mapState({
 			orgs: state => state.results,
 		}),
+	},
+
+	methods: {
+		onMapModeChangeRequested: function() {
+			this.mapDisabled = !this.mapDisabled;
+		},
 	},
 };
 </script>
 
 
 <style lang="scss" scoped>
-	section {
-		position: relative;
-	}
-
-	#results-container {
-		overflow: scroll;
-	}
-
-	#no-results {
-		padding: 10px;
-		text-align: center;
-	}
-
 	.home-content {
-		position: relative;
+		width: 420px;
 	}
 
-	.aside {
-		width: 50%;
+	.no-map-mode {
+		width: 70%;
+	}
+
+	@media (max-width: $max-width-for-map) {
+		.home-content {
+			width: 100%;
+		}
 	}
 </style>

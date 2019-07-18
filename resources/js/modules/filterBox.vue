@@ -12,7 +12,6 @@
 						:options="countryOptions"
 						:onSelect="onCountrySelect"
 						placeholder="LOCATION"/>
-					<br>
 					and working in
 					<filter-box-select
 						:class="['filter-box-select']"
@@ -22,7 +21,6 @@
 						:onSelect="onSectorSelect"
 						placeholder="SECTOR"/>.
 				</h5>
-				<br>
 				<h5 id="filter-box-b">
 					Bringing
 					<filter-box-select
@@ -32,10 +30,8 @@
 						:options="servicesOptions"
 						:onSelect="onServicesSelect"
 						placeholder="SERVICES"/>
-					<br>
 					to Africa.
 				</h5>
-				<br>
 
 				<button id="filter-button"
 					class="btn-primary"
@@ -121,11 +117,10 @@ export default {
 <style lang="scss" scoped>
 
 	#filter-box-container {
-		width: 420px;
 		padding: 50px;
-		margin: 20px;
+		margin: 20px 0;
 		background: $white;
-		border-radius: 4px;
+		border-radius: 2px;
 	}
 
 	#filter-button {

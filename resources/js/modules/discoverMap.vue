@@ -1,5 +1,5 @@
 <template>
-	<div class="discover-map-container"/>
+	<div :class="['discover-map', isDisabled ? 'hidden' : '']"/>
 </template>
 
 <script>
@@ -16,13 +16,20 @@ import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 const { mapActions } = createNamespacedHelpers('search');
 
 
-@Component({})
+@Component({
+	props: {
+		isDisabled: {
+			type: Boolean,
+			default: false,
+		},
+	}
+})
 export default class DiscoverMap extends Vue {
 	components = {};
 	chart = null;
 	chartSeries = null;
 	chartSeriesDataMapping = new Map();
-	
+
 	mounted() {
 		am4core.useTheme(am4themes_animated);
 		this.chart = am4core.create(this.$el, am4maps.MapChart);
@@ -37,7 +44,7 @@ export default class DiscoverMap extends Vue {
 		this.chart.projection = new am4maps.projections.Mercator();
 		this._disableScrolling();
 		this._defineMapSeries();
-		
+
 		this.chartSeries.data = this._defineInitialSeriesData();
 
 		console.log(this.chartSeries.data);
@@ -62,7 +69,7 @@ export default class DiscoverMap extends Vue {
 		countries.forEach((country, index) => {
 			this.chartSeriesDataMapping.set(country, index);
 		});
-		
+
 		this.chartSeries.include = countries;
 
 		// country area look and behavior
@@ -79,7 +86,7 @@ export default class DiscoverMap extends Vue {
 			target: polygonTemplate,
 			min: am4core.color("#f6f6f6"),
 			minValue: 0,
-			max: am4core.color("#df4e55"), 
+			max: am4core.color("#df4e55"),
 			// Not quite sure how this will play out in our use case.
 			maxValue: 10,
 		});
@@ -104,11 +111,15 @@ export default class DiscoverMap extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.discover-map-container {
+.discover-map {
 	position: absolute;
 	right: 0;
 	width: 60%;
 	min-width: 600px;
 	height: 800px;
+
+	&.hidden {
+		display: none;
+	}
 }
 </style>
