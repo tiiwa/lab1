@@ -2,9 +2,12 @@
 	<div class="home">
 		<search-bar/>
 		<section>
-			<discover-map-container />
+			<discover-map-container
+				:isDisabled="mapDisabled"
+				:onMapModeChangeRequested="onMapModeChangeRequested"
+			/>
 
-			<div class="home-content">
+			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
 				<filter-box/>
 				<organization-search-results-container :results="orgs" />
 			</div>
@@ -33,10 +36,22 @@ export default {
 		organizationSearchResultsContainer,
 	},
 
+	data() {
+		return {
+			mapDisabled: false,
+		};
+	},
+
 	computed: {
 		...mapState({
 			orgs: state => state.results,
 		}),
+	},
+
+	methods: {
+		onMapModeChangeRequested: function() {
+			this.mapDisabled = !this.mapDisabled;
+		},
 	},
 };
 </script>
@@ -44,10 +59,16 @@ export default {
 
 <style lang="scss" scoped>
 	.home-content {
-		position: relative;
+		width: 420px;
 	}
 
-	.aside {
-		width: 50%;
+	.no-map-mode {
+		width: 70%;
+	}
+
+	@media (max-width: $max-width-for-map) {
+		.home-content {
+			width: 100%;
+		}
 	}
 </style>

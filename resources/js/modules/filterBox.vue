@@ -117,11 +117,10 @@ export default {
 <style lang="scss" scoped>
 
 	#filter-box-container {
-		width: 420px;
 		padding: 50px;
 		margin: 20px 0;
 		background: $white;
-		border-radius: 4px;
+		border-radius: 2px;
 	}
 
 	#filter-button {
@@ -131,11 +130,5 @@ export default {
 		background-color: $red;
 		border: none;
 		border-radius: 3px;
-	}
-
-	@media (max-width: $max-width-for-map) {
-		#filter-box-container {
-			width: 100%;
-		}
 	}
 </style>

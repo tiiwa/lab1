@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 	#results-container {
-		width: 50%;
+		min-width: 500px;
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
@@ -50,6 +50,7 @@ export default {
 	@media (max-width: $max-width-for-map) {
 		#results-container {
 			width: 100%;
+			min-width: unset;
 		}
 	}
 </style>

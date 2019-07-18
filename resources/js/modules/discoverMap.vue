@@ -1,5 +1,5 @@
 <template>
-	<div class="discover-map"/>
+	<div :class="['discover-map', isDisabled ? 'hidden' : '']"/>
 </template>
 
 <script>
@@ -16,7 +16,14 @@ import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 const { mapActions } = createNamespacedHelpers('search');
 
 
-@Component({})
+@Component({
+	props: {
+		isDisabled: {
+			type: Boolean,
+			default: false,
+		},
+	}
+})
 export default class DiscoverMap extends Vue {
 	components = {};
 	chart = null;
@@ -110,5 +117,9 @@ export default class DiscoverMap extends Vue {
 	width: 60%;
 	min-width: 600px;
 	height: 800px;
+
+	&.hidden {
+		display: none;
+	}
 }
 </style>
