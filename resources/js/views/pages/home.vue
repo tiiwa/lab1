@@ -60,6 +60,7 @@ export default {
 <style lang="scss" scoped>
 	.home-content {
 		width: 420px;
+		transition: all 250ms ease;
 	}
 
 	.no-map-mode {
