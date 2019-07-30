@@ -5,7 +5,6 @@
 			<discover-map-container
 				:isDisabled="mapDisabled"
 				:onMapModeChangeRequested="onMapModeChangeRequested"
-				:resultCountByCountry="resultCountByCountry"
 			/>
 
 			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
@@ -47,10 +46,6 @@ export default {
 		...mapState({
 			orgs: state => state.results,
 		}),
-
-		...mapGetters([
-			'resultCountByCountry',
-		]),
 	},
 
 	methods: {
