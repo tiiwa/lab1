@@ -4,6 +4,7 @@
 
 <script>
 import Vue from "vue";
+import { createNamespacedHelpers } from 'vuex';
 import Component from "vue-class-component";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -12,6 +13,8 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 
 import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
+
+const { mapGetters } = createNamespacedHelpers('search');
 
 
 export default {
@@ -23,11 +26,6 @@ export default {
 			default: false,
 
 		},
-
-		resultCountByCountry: {
-			type: Array,
-			default: null,
-		},
 	},
 
 	data() {
@@ -36,6 +34,12 @@ export default {
 			chartSeries: null,
 			chartSeriesDataMapping: new Map(),
 		};
+	},
+
+	computed: {
+		...mapGetters([
+			'resultCountByCountry',
+		]),
 	},
 
 	watch: {

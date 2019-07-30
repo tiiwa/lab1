@@ -6,9 +6,7 @@
 		</div>
 
 		<discover-map
-			:isDisabled="isDisabled"
-			:resultCountByCountry="resultCountByCountry"
-			/>
+			:isDisabled="isDisabled"/>
 	</div>
 </template>
 
@@ -35,11 +33,6 @@ export default {
 		onMapModeChangeRequested: {
 			type: Function,
 			default: () => {},
-		},
-
-		resultCountByCountry: {
-			type: Array,
-			default: null,
 		},
 	},
 
