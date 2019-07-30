@@ -5,6 +5,7 @@
 			<discover-map-container
 				:isDisabled="mapDisabled"
 				:onMapModeChangeRequested="onMapModeChangeRequested"
+				:resultCountByCountry="resultCountByCountry"
 			/>
 
 			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
@@ -23,7 +24,7 @@ import discoverMapContainer from "../../modules/discoverMapContainer";
 import organizationSearchResultsContainer from "../../modules/organizationSearchResultsContainer";
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState } = createNamespacedHelpers('search');
+const { mapState, mapGetters } = createNamespacedHelpers('search');
 
 
 export default {
@@ -46,6 +47,10 @@ export default {
 		...mapState({
 			orgs: state => state.results,
 		}),
+
+		...mapGetters([
+			'resultCountByCountry',
+		]),
 	},
 
 	methods: {

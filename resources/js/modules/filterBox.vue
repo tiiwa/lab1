@@ -46,11 +46,13 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import filterBoxSelect from "./filterBoxSelect";
-import africanCountries from "../services/africanCountries";
+import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
 import companySectors from "../services/companySectors";
 import companyServices from "../services/companyServices";
 
 const { mapActions } = createNamespacedHelpers('search');
+
+const COUNTRIES = Array.from(nameToCountryMapping.keys()).sort();
 
 
 export default {
@@ -75,16 +77,10 @@ export default {
 	computed: {
 		/**
 		 * TODO(joshua): This is not nice. Refactor africanCountries.js
-		 * to fit the needs of all components. But this works for now.
+		 * to fit the needs of all components. But this works for now. This is tech debt
 		 */
 		countryOptions: function() {
-			const countries = [];
-
-			Array.from(africanCountries.keys()).forEach(key =>
-				countries.push(africanCountries.get(key).name)
-			);
-
-			return countries.sort();
+			return COUNTRIES;
 		},
 	},
 

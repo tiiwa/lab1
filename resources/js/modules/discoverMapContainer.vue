@@ -5,7 +5,10 @@
 			<i v-else class="far fa-eye-slash"></i>
 		</div>
 
-		<discover-map :isDisabled="isDisabled"/>
+		<discover-map
+			:isDisabled="isDisabled"
+			:resultCountByCountry="resultCountByCountry"
+			/>
 	</div>
 </template>
 
@@ -32,6 +35,11 @@ export default {
 		onMapModeChangeRequested: {
 			type: Function,
 			default: () => {},
+		},
+
+		resultCountByCountry: {
+			type: Array,
+			default: null,
 		},
 	},
 

@@ -1,5 +1,6 @@
 import createPersistedState from "vuex-persistedstate";
 import axios from 'axios';
+import { nameToCountryMapping } from '../../services/africanCountries';
 
 const SEARCH_SOURCES = {
     SEARCH_BAR: "searchBar",
@@ -26,7 +27,7 @@ const mutations = {
     },
 
     setPerformingSearch: (state) => {
-        state.isSearching = true; 
+        state.isSearching = true;
     },
 
     setSearchCompleted: (state) => {
@@ -36,7 +37,7 @@ const mutations = {
     setSearchResults: (state, searchResults) => {
         state.results = searchResults;
 
-        // For now hard code this. The search Results Response 
+        // For now hard code this. The search Results Response
         // should provide these values.
         state.numPages = 1;
         state.page = 1;
@@ -94,19 +95,23 @@ const actions = {
 
 const getters = {
     resultCountByCountry: state => {
+        if (state.results === null) return [];
+
         const resultCountByCountryMapping = state.results.reduce((countries, result) => {
             const country = result.country;
 
             if (!countries[country]) {
                 countries[country] = 1;
             } else {
-                countries[country] = countries[country];
+                countries[country] = countries[country] + 1;
             }
+
+            return countries;
         }, {});
 
         return Object.keys(resultCountByCountryMapping).map(country => {
             return {
-                name: country,
+                id: nameToCountryMapping.get(country).iso2Code,
                 value: resultCountByCountryMapping[country],
             };
         });
