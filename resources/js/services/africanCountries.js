@@ -353,4 +353,13 @@ const countries = {
 	}
 };
 
-export default Map(countries);
+const nameToCountryMap = {};
+
+Object.keys(countries).forEach(key => {
+	const name = countries[key].name;
+	nameToCountryMap[name] = countries[key];
+});
+
+// This is tech debt for sure!
+export const iso2CodeToCountryMapping = Map(countries);
+export const nameToCountryMapping =  Map(nameToCountryMap);

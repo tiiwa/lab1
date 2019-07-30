@@ -20,7 +20,7 @@
 								<h3 id="organization-name"
 									class="name">{{ organization.name }}</h3>
 								<p id="organization-loc"
-									class="location">{{ organization.location }}</p>
+									class="location">{{ organizationLocation }}</p>
 							</div>
 							<div class="col-md-2">
 								<button class="btn"
@@ -89,6 +89,12 @@ export default {
 			expand: false,
 			organizationSaved: false
 		};
+	},
+
+	computed: {
+		organizationLocation() {
+			return `${this.organization.address}, ${this.organization.country}`;
+		}
 	},
 
 	mounted() {

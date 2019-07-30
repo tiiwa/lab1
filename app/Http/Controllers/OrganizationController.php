@@ -102,7 +102,8 @@ class OrganizationController extends Controller
 
         $organization = Organization::create([
             'name' => $request->name,
-            'location' => $request->location,
+            'address' => $request->address,
+            'country' => $request->country,
             'description' => $request->description,
             'phone' => $request->phone,
             'email' => $request->email,
