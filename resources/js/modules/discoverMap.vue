@@ -135,6 +135,8 @@ export default {
 			focusPolygonTemplate.strokeOpacity = 1;
 			focusPolygonTemplate.strokeWidth = 2;
 			focusPolygonTemplate.fillOpacity = 0;
+			focusPolygonTemplate.tooltipText = "{name}";
+			focusPolygonTemplate.fill = am4core.color("#f6f6f6");
 
 			this.amChartHitEvent = this.chartSeries.mapPolygons.template.events.on("hit", this.countrySelected);
 		},
@@ -167,6 +169,7 @@ export default {
 			if (newFocus === oldFocus) return;
 
 			this.focusPolygon.include = [newFocus];
+			this.focusPolygon.exclude = [oldFocus];
 			this.focusPolygon.data = [{ id: newFocus }]
 
 			this.focusPolygon.invalidateData();
