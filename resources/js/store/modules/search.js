@@ -12,8 +12,8 @@ const EMPTY_STATE = {
         searchSource: SEARCH_SOURCES.SEARCH_BAR,
         searchText: "",
     },
-    results: null,
-    type: "",
+    organizations: null,
+    countryInFocus: null,
     page: 1,
     numPages: 1,
     isSearching: false,
@@ -35,7 +35,7 @@ const mutations = {
     },
 
     setSearchResults: (state, searchResults) => {
-        state.results = searchResults;
+        state.organizations = searchResults;
 
         // For now hard code this. The search Results Response
         // should provide these values.
@@ -50,7 +50,7 @@ const mutations = {
         state.query.searchText = EMPTY_STATE.query.searchText;
         state.query.searchSource = EMPTY_STATE.query.searchSource;
 
-        state.results = EMPTY_STATE.results;
+        state.organizations = EMPTY_STATE.organizations;
         state.type = EMPTY_STATE.type;
         state.page = EMPTY_STATE.page;
         state.numPages = EMPTY_STATE.numPages;
@@ -59,7 +59,13 @@ const mutations = {
 
     setSearchSource: (state, source) => {
         state.query.searchSource = source;
-    }
+    },
+
+    setCountryInFocus: (state, country) => {
+        state.countryInFocus = nameToCountryMapping.get(country).iso2Code;
+
+        console.log(state.countryInFocus);
+    },
 };
 
 const actions = {
@@ -90,14 +96,18 @@ const actions = {
         console.log("searchByFiltering", searchFilter);
     },
 
+    searchByMapCountry: ({ commit }, country) => {
+        commit('setCountryInFocus', country);
+    },
+
     // Add more search actions as app progresses
 };
 
 const getters = {
     resultCountByCountry: state => {
-        if (state.results === null) return [];
+        if (state.organizations === null) return [];
 
-        const resultCountByCountryMapping = state.results.reduce((countries, result) => {
+        const resultCountByCountryMapping = state.organizations.reduce((countries, result) => {
             const country = result.country;
 
             if (!countries[country]) {
