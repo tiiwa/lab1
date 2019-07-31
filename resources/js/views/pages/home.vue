@@ -44,7 +44,7 @@ export default {
 
 	computed: {
 		...mapState({
-			orgs: state => state.results,
+			orgs: state => state.organizations,
 		}),
 	},
 

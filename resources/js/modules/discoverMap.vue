@@ -14,7 +14,7 @@ import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 
 import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
 
-const { mapGetters } = createNamespacedHelpers('search');
+const { mapActions, mapGetters, mapState } = createNamespacedHelpers('search');
 
 
 export default {
@@ -33,6 +33,8 @@ export default {
 			chart: null,
 			chartSeries: null,
 			chartSeriesDataMapping: new Map(),
+			amChartHitEvent: null,
+			focusPolygon: null,
 		};
 	},
 
@@ -40,11 +42,19 @@ export default {
 		...mapGetters([
 			'resultCountByCountry',
 		]),
+
+		...mapState({
+			countryInFocus: state => state.countryInFocus,
+		}),
 	},
 
 	watch: {
 		resultCountByCountry: function(newResult, oldResult) {
 			this.updateMapDisplay(newResult, oldResult);
+		},
+
+		countryInFocus: function(newFocus, oldFocus) {
+			this.updateMapFocus(newFocus, oldFocus);
 		},
 	},
 
@@ -67,10 +77,16 @@ export default {
 	beforeDestroy() {
 		if (this.chart) {
 			this.chart.dispose();
+			this.amChartHitEvent.dispose();
 		}
 	},
 
 	methods: {
+		...mapActions([
+			'searchByMapCountry',
+			'searchByText',
+		]),
+
 		disableScrolling: function() {
 			this.chart.maxZoomLevel = 1;
 			this.chart.seriesContainer.draggable = false;
@@ -107,6 +123,20 @@ export default {
 				max: am4core.color("#367cc9"),
 				minValue: 0,
 			});
+
+			this.focusPolygon = new am4maps.MapPolygonSeries();
+			this.focusPolygon.useGeodata = true;
+			this.focusPolygon.include = [];
+			this.focusPolygon.exclude = [];
+			this.chart.series.push(this.focusPolygon);
+
+			const focusPolygonTemplate = this.focusPolygon.mapPolygons.template;
+			focusPolygonTemplate.stroke = am4core.color("#df4e55");
+			focusPolygonTemplate.strokeOpacity = 1;
+			focusPolygonTemplate.strokeWidth = 2;
+			focusPolygonTemplate.fillOpacity = 0;
+
+			this.amChartHitEvent = this.chartSeries.mapPolygons.template.events.on("hit", this.countrySelected);
 		},
 
 		memoizeCountryMapping() {
@@ -131,6 +161,25 @@ export default {
 			});
 
 			this.chartSeries.invalidateData();
+		},
+
+		updateMapFocus(newFocus, oldFocus) {
+			if (newFocus === oldFocus) return;
+
+			this.focusPolygon.include = [newFocus];
+			this.focusPolygon.data = [{ id: newFocus }]
+
+			this.focusPolygon.invalidateData();
+
+			console.log(this.focusPolygon, this.focusPolygon.data);
+		},
+
+		countrySelected(event) {
+			const countryContext = event.target.dataItem.dataContext;
+
+			console.log(countryContext);
+			this.searchByMapCountry(countryContext.name);
+			this.searchByText(countryContext.name);
 		},
 	},
 };
