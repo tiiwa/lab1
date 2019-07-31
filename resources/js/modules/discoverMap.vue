@@ -12,7 +12,7 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 
-import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
+import { iso2CodeToCountryMapping } from "../services/africanCountries";
 
 const { mapActions, mapGetters, mapState } = createNamespacedHelpers('search');
 
@@ -181,7 +181,7 @@ export default {
 			const countryContext = event.target.dataItem.dataContext;
 
 			console.log(countryContext);
-			this.searchByMapCountry(countryContext.name);
+			this.searchByMapCountry(countryContext.id);
 			this.searchByText(countryContext.name);
 		},
 	},

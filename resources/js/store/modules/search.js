@@ -61,8 +61,8 @@ const mutations = {
         state.query.searchSource = source;
     },
 
-    setCountryInFocus: (state, country) => {
-        state.countryInFocus = nameToCountryMapping.get(country).iso2Code;
+    setCountryInFocus: (state, countryCode) => {
+        state.countryInFocus = countryCode;
 
         console.log(state.countryInFocus);
     },
@@ -83,6 +83,11 @@ const actions = {
         try {
             const response = await axios.get(`/api/search?q=${searchText}`, { timeout: 60000 });
             commit('setSearchResults', response.data.data);
+
+            // If the search backend tells us that this is
+            // a search for a country, then we should run this command
+            // here.
+            // commit('setCountryInFocus', <country>);
 
         } catch (error) {
             console.error("Error searching for", searchText, error);
