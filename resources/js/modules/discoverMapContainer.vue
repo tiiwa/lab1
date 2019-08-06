@@ -5,7 +5,8 @@
 			<i v-else class="far fa-eye-slash"></i>
 		</div>
 
-		<discover-map :isDisabled="isDisabled"/>
+		<discover-map
+			:isDisabled="isDisabled"/>
 	</div>
 </template>
 

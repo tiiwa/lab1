@@ -41,7 +41,7 @@ const countries = {
 	},
 	"CD": {
 		"iso2Code": "CD",
-		"name": "Congo, Dem. Rep.",
+		"name": "Democratic Republic of Congo",
 		"capitalCity": "Kinshasa",
 		"longitude": 15.3222,
 		"latitude": -4.325
@@ -55,14 +55,14 @@ const countries = {
 	},
 	"CG": {
 		"iso2Code": "CG",
-		"name": "Congo, Rep.",
+		"name": "Republic of Congo",
 		"capitalCity": "Brazzaville",
 		"longitude": 15.2662,
 		"latitude": -4.2767
 	},
 	"CI": {
 		"iso2Code": "CI",
-		"name": "Cote d'Ivoire",
+		"name": "Côte d'Ivoire",
 		"capitalCity": "Yamoussoukro",
 		"longitude": -4.0305,
 		"latitude": 5.332
@@ -90,7 +90,7 @@ const countries = {
 	},
 	"EG": {
 		"iso2Code": "EG",
-		"name": "Egypt, Arab Rep.",
+		"name": "Egypt",
 		"capitalCity": "Cairo",
 		"longitude": 31.2461,
 		"latitude": 30.0982
@@ -286,7 +286,7 @@ const countries = {
 	},
 	"SZ": {
 		"iso2Code": "SZ",
-		"name": "Eswatini",
+		"name": "eSwatini",
 		"capitalCity": "Mbabane",
 		"longitude": 31.4659,
 		"latitude": -26.5225
@@ -353,4 +353,13 @@ const countries = {
 	}
 };
 
-export default Map(countries);
+const nameToCountryMap = {};
+
+Object.keys(countries).forEach(key => {
+	const name = countries[key].name;
+	nameToCountryMap[name] = countries[key];
+});
+
+// This is tech debt for sure!
+export const iso2CodeToCountryMapping = Map(countries);
+export const nameToCountryMapping =  Map(nameToCountryMap);

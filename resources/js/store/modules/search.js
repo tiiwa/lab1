@@ -1,5 +1,6 @@
 import createPersistedState from "vuex-persistedstate";
 import axios from 'axios';
+import { nameToCountryMapping } from '../../services/africanCountries';
 
 const SEARCH_SOURCES = {
     SEARCH_BAR: "searchBar",
@@ -11,8 +12,8 @@ const EMPTY_STATE = {
         searchSource: SEARCH_SOURCES.SEARCH_BAR,
         searchText: "",
     },
-    results: null,
-    type: "",
+    organizations: null,
+    countryInFocus: null,
     page: 1,
     numPages: 1,
     isSearching: false,
@@ -26,7 +27,7 @@ const mutations = {
     },
 
     setPerformingSearch: (state) => {
-        state.isSearching = true; 
+        state.isSearching = true;
     },
 
     setSearchCompleted: (state) => {
@@ -34,9 +35,9 @@ const mutations = {
     },
 
     setSearchResults: (state, searchResults) => {
-        state.results = searchResults;
+        state.organizations = searchResults;
 
-        // For now hard code this. The search Results Response 
+        // For now hard code this. The search Results Response
         // should provide these values.
         state.numPages = 1;
         state.page = 1;
@@ -49,7 +50,7 @@ const mutations = {
         state.query.searchText = EMPTY_STATE.query.searchText;
         state.query.searchSource = EMPTY_STATE.query.searchSource;
 
-        state.results = EMPTY_STATE.results;
+        state.organizations = EMPTY_STATE.organizations;
         state.type = EMPTY_STATE.type;
         state.page = EMPTY_STATE.page;
         state.numPages = EMPTY_STATE.numPages;
@@ -58,7 +59,13 @@ const mutations = {
 
     setSearchSource: (state, source) => {
         state.query.searchSource = source;
-    }
+    },
+
+    setCountryInFocus: (state, countryCode) => {
+        state.countryInFocus = countryCode;
+
+        console.log(state.countryInFocus);
+    },
 };
 
 const actions = {
@@ -77,6 +84,11 @@ const actions = {
             const response = await axios.get(`/api/search?q=${searchText}`, { timeout: 60000 });
             commit('setSearchResults', response.data.data);
 
+            // If the search backend tells us that this is
+            // a search for a country, then we should run this command
+            // here.
+            // commit('setCountryInFocus', <country>);
+
         } catch (error) {
             console.error("Error searching for", searchText, error);
         }
@@ -89,24 +101,32 @@ const actions = {
         console.log("searchByFiltering", searchFilter);
     },
 
+    searchByMapCountry: ({ commit }, country) => {
+        commit('setCountryInFocus', country);
+    },
+
     // Add more search actions as app progresses
 };
 
 const getters = {
     resultCountByCountry: state => {
-        const resultCountByCountryMapping = state.results.reduce((countries, result) => {
+        if (state.organizations === null) return [];
+
+        const resultCountByCountryMapping = state.organizations.reduce((countries, result) => {
             const country = result.country;
 
             if (!countries[country]) {
                 countries[country] = 1;
             } else {
-                countries[country] = countries[country];
+                countries[country] = countries[country] + 1;
             }
+
+            return countries;
         }, {});
 
         return Object.keys(resultCountByCountryMapping).map(country => {
             return {
-                name: country,
+                id: nameToCountryMapping.get(country).iso2Code,
                 value: resultCountByCountryMapping[country],
             };
         });

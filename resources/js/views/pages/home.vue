@@ -23,7 +23,7 @@ import discoverMapContainer from "../../modules/discoverMapContainer";
 import organizationSearchResultsContainer from "../../modules/organizationSearchResultsContainer";
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState } = createNamespacedHelpers('search');
+const { mapState, mapGetters } = createNamespacedHelpers('search');
 
 
 export default {
@@ -44,7 +44,7 @@ export default {
 
 	computed: {
 		...mapState({
-			orgs: state => state.results,
+			orgs: state => state.organizations,
 		}),
 	},
 
