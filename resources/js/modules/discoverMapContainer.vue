@@ -1,12 +1,17 @@
 <template>
 	<div class="discover-map-container">
-		<div class="map-control-container card-shadow" @click="onMapControlClicked" role=text :aria-label="altText">
-			<i v-if="isDisabled" class="far fa-eye"></i>
-			<i v-else class="far fa-eye-slash"></i>
+		<div :aria-label="altText" 
+			class="map-control-container card-shadow" 
+			role="text" 
+			@click="onMapControlClicked">
+			<i v-if="isDisabled" 
+				class="far fa-eye"/>
+			<i v-else 
+				class="far fa-eye-slash"/>
 		</div>
 
 		<discover-map
-			:isDisabled="isDisabled"/>
+			:is-disabled="isDisabled"/>
 	</div>
 </template>
 

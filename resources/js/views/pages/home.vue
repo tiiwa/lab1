@@ -3,8 +3,8 @@
 		<search-bar/>
 		<section>
 			<discover-map-container
-				:isDisabled="mapDisabled"
-				:onMapModeChangeRequested="onMapModeChangeRequested"
+				:is-disabled="mapDisabled"
+				:on-map-mode-change-requested="onMapModeChangeRequested"
 			/>
 
 			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
@@ -21,9 +21,9 @@ import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
 import discoverMapContainer from "../../modules/discoverMapContainer";
 import organizationSearchResultsContainer from "../../modules/organizationSearchResultsContainer";
-import { createNamespacedHelpers } from 'vuex';
+import { createNamespacedHelpers } from "vuex";
 
-const { mapState, mapGetters } = createNamespacedHelpers('search');
+const { mapState, mapGetters } = createNamespacedHelpers("search");
 
 
 export default {

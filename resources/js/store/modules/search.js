@@ -1,152 +1,152 @@
 import createPersistedState from "vuex-persistedstate";
-import axios from 'axios';
-import { nameToCountryMapping } from '../../services/africanCountries';
+import axios from "axios";
+import { nameToCountryMapping } from "../../services/africanCountries";
 
 const SEARCH_SOURCES = {
-    SEARCH_BAR: "searchBar",
-    FILTER_BOX: "filterBox",
+	SEARCH_BAR: "searchBar",
+	FILTER_BOX: "filterBox",
 };
 
 const EMPTY_STATE = {
-    query: {
-        searchSource: SEARCH_SOURCES.SEARCH_BAR,
-        searchText: "",
-    },
-    organizations: null,
-    countryInFocus: null,
-    page: 1,
-    numPages: 1,
-    isSearching: false,
+	query: {
+		searchSource: SEARCH_SOURCES.SEARCH_BAR,
+		searchText: "",
+	},
+	organizations: null,
+	countryInFocus: null,
+	page: 1,
+	numPages: 1,
+	isSearching: false,
 };
 
 const state = Object.assign({}, EMPTY_STATE);
 
 const mutations = {
-    setSearch: (state, searchQuery) => {
-        state.query = searchQuery;
-    },
+	setSearch: (state, searchQuery) => {
+		state.query = searchQuery;
+	},
 
-    setPerformingSearch: (state) => {
-        state.isSearching = true;
-    },
+	setPerformingSearch: (state) => {
+		state.isSearching = true;
+	},
 
-    setSearchCompleted: (state) => {
-        state.isSearching = false;
-    },
+	setSearchCompleted: (state) => {
+		state.isSearching = false;
+	},
 
-    setSearchResults: (state, searchResults) => {
-        state.organizations = searchResults;
+	setSearchResults: (state, searchResults) => {
+		state.organizations = searchResults;
 
-        // For now hard code this. The search Results Response
-        // should provide these values.
-        state.numPages = 1;
-        state.page = 1;
-    },
+		// For now hard code this. The search Results Response
+		// should provide these values.
+		state.numPages = 1;
+		state.page = 1;
+	},
 
-    setEmptyState: (state) => {
-        // This feels like stress having to reset everything to default
-        // There is probably a better way.
+	setEmptyState: (state) => {
+		// This feels like stress having to reset everything to default
+		// There is probably a better way.
 
-        state.query.searchText = EMPTY_STATE.query.searchText;
-        state.query.searchSource = EMPTY_STATE.query.searchSource;
+		state.query.searchText = EMPTY_STATE.query.searchText;
+		state.query.searchSource = EMPTY_STATE.query.searchSource;
 
-        state.organizations = EMPTY_STATE.organizations;
-        state.type = EMPTY_STATE.type;
-        state.page = EMPTY_STATE.page;
-        state.numPages = EMPTY_STATE.numPages;
-        state.isSearching = EMPTY_STATE.isSearching;
-    },
+		state.organizations = EMPTY_STATE.organizations;
+		state.type = EMPTY_STATE.type;
+		state.page = EMPTY_STATE.page;
+		state.numPages = EMPTY_STATE.numPages;
+		state.isSearching = EMPTY_STATE.isSearching;
+	},
 
-    setSearchSource: (state, source) => {
-        state.query.searchSource = source;
-    },
+	setSearchSource: (state, source) => {
+		state.query.searchSource = source;
+	},
 
-    setCountryInFocus: (state, countryCode) => {
-        state.countryInFocus = countryCode;
+	setCountryInFocus: (state, countryCode) => {
+		state.countryInFocus = countryCode;
 
-        console.log(state.countryInFocus);
-    },
+		console.log(state.countryInFocus);
+	},
 };
 
 const actions = {
-    searchByText: async ({commit}, searchText) => {
-        commit('setSearchSource', SEARCH_SOURCES.SEARCH_BAR);
+	searchByText: async ({commit}, searchText) => {
+		commit("setSearchSource", SEARCH_SOURCES.SEARCH_BAR);
 
-        if (!searchText || searchText.trim() === "") {
-            commit('setEmptyState');
-            return;
-        }
+		if (!searchText || searchText.trim() === "") {
+			commit("setEmptyState");
+			return;
+		}
 
-        commit('setSearch', {searchText});
-        commit('setPerformingSearch');
+		commit("setSearch", {searchText});
+		commit("setPerformingSearch");
 
-        try {
-            const response = await axios.get(`/api/search?q=${searchText}`, { timeout: 60000 });
-            commit('setSearchResults', response.data.data);
+		try {
+			const response = await axios.get(`/api/search?q=${searchText}`, { timeout: 60000 });
+			commit("setSearchResults", response.data.data);
 
-            // If the search backend tells us that this is
-            // a search for a country, then we should run this command
-            // here.
-            // commit('setCountryInFocus', <country>);
+			// If the search backend tells us that this is
+			// a search for a country, then we should run this command
+			// here.
+			// commit('setCountryInFocus', <country>);
 
-        } catch (error) {
-            console.error("Error searching for", searchText, error);
-        }
+		} catch (error) {
+			console.error("Error searching for", searchText, error);
+		}
 
-        commit('setSearchCompleted');
-    },
+		commit("setSearchCompleted");
+	},
 
-    searchByFiltering: ({commit}, searchFilter) => {
-        commit('setSearchSource', SEARCH_SOURCES.FILTER_BOX);
-        console.log("searchByFiltering", searchFilter);
-    },
+	searchByFiltering: ({commit}, searchFilter) => {
+		commit("setSearchSource", SEARCH_SOURCES.FILTER_BOX);
+		console.log("searchByFiltering", searchFilter);
+	},
 
-    searchByMapCountry: ({ commit }, country) => {
-        commit('setCountryInFocus', country);
-    },
+	searchByMapCountry: ({ commit }, country) => {
+		commit("setCountryInFocus", country);
+	},
 
-    // Add more search actions as app progresses
+	// Add more search actions as app progresses
 };
 
 const getters = {
-    resultCountByCountry: state => {
-        if (state.organizations === null) return [];
+	resultCountByCountry: state => {
+		if (state.organizations === null) return [];
 
-        const resultCountByCountryMapping = state.organizations.reduce((countries, result) => {
-            const country = result.country;
+		const resultCountByCountryMapping = state.organizations.reduce((countries, result) => {
+			const country = result.country;
 
-            if (!countries[country]) {
-                countries[country] = 1;
-            } else {
-                countries[country] = countries[country] + 1;
-            }
+			if (!countries[country]) {
+				countries[country] = 1;
+			} else {
+				countries[country] = countries[country] + 1;
+			}
 
-            return countries;
-        }, {});
+			return countries;
+		}, {});
 
-        return Object.keys(resultCountByCountryMapping).map(country => {
-            return {
-                id: nameToCountryMapping.get(country).iso2Code,
-                value: resultCountByCountryMapping[country],
-            };
-        });
-    },
+		return Object.keys(resultCountByCountryMapping).map(country => {
+			return {
+				id: nameToCountryMapping.get(country).iso2Code,
+				value: resultCountByCountryMapping[country],
+			};
+		});
+	},
 
-    searchText: state => {
-        return state.query.searchText;
-    },
+	searchText: state => {
+		return state.query.searchText;
+	},
 };
 
 const plugins = [
-    createPersistedState({ storage: window.sessionStorage })
+	createPersistedState({ storage: window.sessionStorage })
 ];
 
 export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions,
-    getters,
-    plugins,
-    SEARCH_SOURCES,
+	namespaced: true,
+	state,
+	mutations,
+	actions,
+	getters,
+	plugins,
+	SEARCH_SOURCES,
 };

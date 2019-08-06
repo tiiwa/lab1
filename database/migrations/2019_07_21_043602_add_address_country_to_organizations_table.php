@@ -1,15 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddAddressCountryToOrganizationsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -24,8 +22,6 @@ class AddAddressCountryToOrganizationsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
@@ -41,6 +37,7 @@ class AddAddressCountryToOrganizationsTable extends Migration
     public static function getAfricanCountries()
     {
         $data = shell_exec('node ./getCountries.js names');
+
         return array_map('addslashes', json_decode($data));
     }
 }

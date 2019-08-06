@@ -6,29 +6,29 @@
 				<h5 id="filter-box-a">
 					Looking for a company in
 					<filter-box-select
-						:class="['filter-box-select']"
 						id="country"
+						:class="['filter-box-select']"
 						:value="filterData.country"
 						:options="countryOptions"
-						:onSelect="onCountrySelect"
+						:on-select="onCountrySelect"
 						placeholder="LOCATION"/>
 					and working in
 					<filter-box-select
-						:class="['filter-box-select']"
 						id="sector"
+						:class="['filter-box-select']"
 						:value="filterData.sector"
 						:options="sectorOptions"
-						:onSelect="onSectorSelect"
+						:on-select="onSectorSelect"
 						placeholder="SECTOR"/>.
 				</h5>
 				<h5 id="filter-box-b">
 					Bringing
 					<filter-box-select
-						:class="['filter-box-select']"
 						id="services"
+						:class="['filter-box-select']"
 						:value="filterData.services"
 						:options="servicesOptions"
-						:onSelect="onServicesSelect"
+						:on-select="onServicesSelect"
 						placeholder="SERVICES"/>
 					to Africa.
 				</h5>
@@ -36,7 +36,7 @@
 				<button id="filter-button"
 					class="btn-primary"
 					@click="filter">
-					Find <i class="fas fa-arrow-right"></i>
+					Find <i class="fas fa-arrow-right"/>
 				</button>
 			</div>
 		</div>
@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { createNamespacedHelpers } from "vuex";
 import filterBoxSelect from "./filterBoxSelect";
 import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
 import companySectors from "../services/companySectors";
 import companyServices from "../services/companyServices";
 
-const { mapActions } = createNamespacedHelpers('search');
+const { mapActions } = createNamespacedHelpers("search");
 
 const COUNTRIES = Array.from(nameToCountryMapping.keys()).sort();
 
@@ -86,7 +86,7 @@ export default {
 
 	methods: {
 		...mapActions([
-			'searchByFiltering',
+			"searchByFiltering",
 		]),
 
 		filter() {

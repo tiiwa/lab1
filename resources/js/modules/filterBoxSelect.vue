@@ -1,25 +1,22 @@
 <template>
-	<div :tabindex="tabIndex" v-on:focus="onSelectBoxFocus" v-on:click="onSelectBoxFocus" v-on:blur="onSelectBoxBlur" :class="['filter-box-select', ...classes]">
-        <div :class="[isActive ? 'active': '', 'filter-box-select-styled']">{{ selectDisplayValue }}</div>
-        <ul :class="[showOptions ? 'active': '', 'filter-box-select-options']">
-            <li v-for="option in selectOptions"
+	<div :tabindex="tabIndex" 
+		:class="['filter-box-select', ...classes]" 
+		@focus="onSelectBoxFocus" 
+		@click="onSelectBoxFocus" 
+		@blur="onSelectBoxBlur">
+		<div :class="[isActive ? 'active': '', 'filter-box-select-styled']">{{ selectDisplayValue }}</div>
+		<ul :class="[showOptions ? 'active': '', 'filter-box-select-options']">
+			<li v-for="option in selectOptions"
 				:key="option"
-				@click="onOptionClicked($event, option)"
-				:rel="option">{{ option }}</li>
-        </ul>
-    </div>
+				:rel="option"
+				@click="onOptionClicked($event, option)">{{ option }}</li>
+		</ul>
+	</div>
 </template>
 
 <script>
 export default {
 	name: "FilterBoxSelect",
-
-	data() {
-		return {
-			isActive: false,
-			showOptions: false,
-		};
-	},
 
 	props: {
 		onSelect: {
@@ -46,6 +43,13 @@ export default {
 			type: Array,
 			default: () => [],
 		}
+	},
+
+	data() {
+		return {
+			isActive: false,
+			showOptions: false,
+		};
 	},
 
 	computed: {

@@ -1,12 +1,14 @@
 <template>
 	<div id="results-container">
-		<p v-if="noResults" id="no-results">No results found, try a different query.</p>
+		<p v-if="noResults" 
+			id="no-results">No results found, try a different query.</p>
 		<div v-else>
-            <div v-for="org in results" :key="org.id">
-                <organizationThumbnail :organization="org"/>
-            </div>
-        </div>
-    </div>
+			<div v-for="org in results" 
+				:key="org.id">
+				<organizationThumbnail :organization="org"/>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -14,13 +16,13 @@ import organizationThumbnail from "../views/organizations/organizationThumbnail"
 
 
 export default {
-    name: "OrganizationSearchResultsContainer",
+	name: "OrganizationSearchResultsContainer",
 
-    components: {
-        organizationThumbnail,
-    },
+	components: {
+		organizationThumbnail,
+	},
 
-    props: {
+	props: {
 		results: {
 			type: Array,
 			default: null,
