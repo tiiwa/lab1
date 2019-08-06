@@ -18,7 +18,6 @@ $factory->define(App\Organization::class, function (Faker $faker) {
 
     return [
         'name' => $company,
-        'location' => $faker->address,
         'description' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'phone' => $faker->phoneNumber,
         'email' => $faker->companyEmail,
@@ -41,5 +40,7 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'operating_language' => $faker->randomElement($array = ['English ', 'French', 'Swahili']),
         'method_of_collection' => $faker->randomElement($array = ['Personal Contact ', 'Company Hub', 'Online Resource']),
         'approved' => $faker->randomElement($array = [true, false]),
+        'address' => $faker->address,
+        'country' => $faker->randomElement($array = ['Ghana', 'Nigeria', 'South Africa', 'Kenya']),
     ];
 });

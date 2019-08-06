@@ -1,6 +1,6 @@
 <template>
 	<form>
-		<div class="input-group md-form form-sm form-1 pl-0 card-shadow">
+		<div class="input-group md-form form-sm form-1 pl-0">
 			<div class="input-group-prepend">
 				<span id="search-icon"
 					class="input-group-text purple lighten-3"><i class="fas fa-search"
