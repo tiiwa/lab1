@@ -4,7 +4,7 @@
 
 <script>
 import Vue from "vue";
-import { createNamespacedHelpers } from 'vuex';
+import { createNamespacedHelpers } from "vuex";
 import Component from "vue-class-component";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -14,7 +14,7 @@ import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 
 import { iso2CodeToCountryMapping } from "../services/africanCountries";
 
-const { mapActions, mapGetters, mapState } = createNamespacedHelpers('search');
+const { mapActions, mapGetters, mapState } = createNamespacedHelpers("search");
 
 
 export default {
@@ -40,7 +40,7 @@ export default {
 
 	computed: {
 		...mapGetters([
-			'resultCountByCountry',
+			"resultCountByCountry",
 		]),
 
 		...mapState({
@@ -83,8 +83,8 @@ export default {
 
 	methods: {
 		...mapActions([
-			'searchByMapCountry',
-			'searchByText',
+			"searchByMapCountry",
+			"searchByText",
 		]),
 
 		disableScrolling: function() {
@@ -170,7 +170,7 @@ export default {
 
 			this.focusPolygon.include = [newFocus];
 			this.focusPolygon.exclude = [oldFocus];
-			this.focusPolygon.data = [{ id: newFocus }]
+			this.focusPolygon.data = [{ id: newFocus }];
 
 			this.focusPolygon.invalidateData();
 

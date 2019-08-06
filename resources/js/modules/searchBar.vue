@@ -8,21 +8,21 @@
 			</div>
 			<input
 				id="search-bar-input"
+				:value="searchText"
 				type="text"
 				class="form-control col-xs-1"
 				placeholder="Search"
-				:value="searchText"
 				@input="onChange">
 		</div>
 	</form>
 </template>
 
 <script>
-import _ from 'lodash';
+import _ from "lodash";
 import Multiselect from "vue-multiselect";
-import { createNamespacedHelpers } from 'vuex';
+import { createNamespacedHelpers } from "vuex";
 
-const { mapActions, mapState, mapGetters } = createNamespacedHelpers('search');
+const { mapActions, mapState, mapGetters } = createNamespacedHelpers("search");
 
 
 export default {
@@ -35,13 +35,13 @@ export default {
 
 	computed: {
 		...mapGetters([
-			'searchText',
+			"searchText",
 		]),
 	},
 
 	methods: {
 		...mapActions([
-			'searchByText'
+			"searchByText"
 		]),
 
 		// when the input has been changed
