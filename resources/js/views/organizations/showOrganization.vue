@@ -6,8 +6,10 @@
 				<div class="col-md-2">
 					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
+						:class="{ dummy: !organization.logo }"
 						@click="routeToViewOrganization()">
-						<!-- <img class="mx-auto d-block" src="/images/logo.png"> -->
+						<img :src="organization.logo"
+							class="mx-auto d-block" >
 					</div>
 				</div>
 
@@ -217,16 +219,22 @@ export default {
 		padding-left: 0;
 	}
 
+	.dummy {
+		background-color: #0d2d4c;
+	}
+
 	#organization-img {
+		display: table-cell;
+		float: none;
 		width: 120px;
 		height: 120px;
 		margin-top: auto;
 		margin-bottom: auto;
-		background-color: #0d2d4c;
+		vertical-align: middle;
 		border-radius: 50%;
 
 		img {
-			width: 80%;
+			width: 90%;
 		}
 	}
 

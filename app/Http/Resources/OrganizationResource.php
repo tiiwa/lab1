@@ -18,6 +18,7 @@ class OrganizationResource extends Resource
     {
         return [
             'id' => $this->id,
+            'logo' => $this->logo,
             'name' => $this->name,
             'address' => $this->address,
             'country' => $this->country,

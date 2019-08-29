@@ -12,6 +12,7 @@ class OrganizationController extends Controller
 {
     protected $validationRules = [
         'name' => 'required',
+        'logo' => 'nullable',
         'location' => 'required',
         'description' => 'required',
         'phone' => 'nullable',
