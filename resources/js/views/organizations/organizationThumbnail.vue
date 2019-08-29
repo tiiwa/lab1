@@ -7,8 +7,11 @@
 				<div class="col-md-2">
 					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
+						:class="{ dummy: !organization.logo }"
+						class="mx-auto cente"
 						@click="routeToViewOrganization()">
-						<!-- <img class="mx-auto d-block" src="/images/logo.png"> -->
+						<img :src="organization.logo"
+							class="mx-auto d-block">
 					</div>
 				</div>
 				<div class="col-md-10 my-auto"
@@ -50,11 +53,12 @@
 					<div v-if="expand"
 						transition="fade"
 						class="row">
-						<div class="col-md-8 my-auto">
+						<!-- Use for showing sample images -->
+						<!-- <div class="col-md-8 my-auto">
 							<div class="preview-square"/>
 							<div class="preview-square"/>
 							<div class="preview-square"/>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -84,6 +88,9 @@ export default {
 	computed: {
 		organizationLocation() {
 			return `${this.organization.address}, ${this.organization.country}`;
+		},
+		organizationHasLogo() {
+			return this.organization.logo != null;
 		}
 	},
 
@@ -121,17 +128,24 @@ export default {
 		border-radius: 2px;
 
 		#organization-img {
+			display: table-cell;
+			float: none;
 			width: 50px;
 			height: 50px;
-			margin-top: auto;
-			margin-bottom: auto;
-			background-color: #0d2d4c;
+			vertical-align: middle;
 			border-radius: 50%;
 
 			img {
-				width: 80%;
-				// height: 30px;
+				width: 90%;
 			}
+		}
+
+		.dummy {
+			// width: 50px;
+			// height: 50px;
+			// margin-top: auto;
+			// margin-bottom: auto;
+			background-color: #828283;
 		}
 
 		#organization-name {
