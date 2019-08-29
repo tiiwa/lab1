@@ -9,7 +9,7 @@ class OrganizationsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Organization::class, 5)->create()->each(function ($org) {
+        factory(App\Organization::class, 40)->create()->each(function ($org) {
             $profile = factory(App\Profile::class)->create();
             $org->people()->attach($profile->id, ['role' => 'director']);
             $profile = factory(App\Profile::class)->create();

@@ -42,5 +42,6 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'approved' => $faker->randomElement($array = [true, false]),
         'address' => $faker->address,
         'country' => $faker->randomElement($array = ['Ghana', 'Nigeria', 'South Africa', 'Kenya']),
+        'logo' => $faker->randomElement($array = ['https://tiiwalab1.localhost/storage/logo1.png', 'https://tiiwalab1.localhost/storage/logo2.png', null]),
     ];
 });
