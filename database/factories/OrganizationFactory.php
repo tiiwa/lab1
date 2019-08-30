@@ -13,6 +13,8 @@ use Faker\Generator as Faker;
 |
 */
 
+$data = shell_exec('node resources/js/services/getCountries.js names');
+$this->countries = (array) json_decode($data);
 $factory->define(App\Organization::class, function (Faker $faker) {
     $company = $faker->company;
 
@@ -20,7 +22,7 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'name' => $company,
         'description' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'phone' => $faker->phoneNumber,
-        'email' => $faker->companyEmail,
+        'email' => $faker->unique()->companyEmail,
         'website' => $faker->domainName,
         'target_locations' => $faker->address,
         'size_range' => $faker->randomElement($array = ['1-5', '5-15', '15-50', '50-500', '500-1000', '1000+']),
@@ -42,5 +44,6 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'approved' => $faker->randomElement($array = [true, false]),
         'address' => $faker->address,
         'country' => $faker->randomElement($array = ['Ghana', 'Nigeria', 'South Africa', 'Kenya']),
+        'country' => $faker->randomElement($array = $this->countries),
     ];
 });
