@@ -5,6 +5,7 @@ import { nameToCountryMapping } from "../../services/africanCountries";
 const SEARCH_SOURCES = {
 	SEARCH_BAR: "searchBar",
 	FILTER_BOX: "filterBox",
+	MAP: "map",
 };
 
 const EMPTY_STATE = {
@@ -89,11 +90,6 @@ const actions = {
 			const response = await axios.get(`/api/search?q=${searchText}`, { timeout: 60000 });
 			commit("setSearchResults", response.data.data);
 
-			// If the search backend tells us that this is
-			// a search for a country, then we should run this command
-			// here.
-			// commit('setCountryInFocus', <country>);
-
 		} catch (error) {
 			console.error("Error searching for", searchText, error);
 		}
@@ -119,8 +115,26 @@ const actions = {
 
 	},
 
-	searchByMapCountry: ({ commit }, country) => {
-		commit("setCountryInFocus", country);
+	searchByMapCountry: async ({ commit }, country) => {
+		commit("setEmptyState");
+		commit("setSearchSource", SEARCH_SOURCES.MAP);
+		commit("setCountryInFocus", country.id);
+		commit("setPerformingSearch");
+
+		const searchFilter = {
+			country: country.name,
+		};
+
+		try {
+			const response = await axios.post("/api/search", { searchFilter, timeout: 60000 });
+
+			commit("setSearchResults", response.data.data);
+		} catch (error) {
+			console.error("Error running search filter", error);
+		}
+
+		commit("setSearchCompleted");
+
 	},
 
 	// Add more search actions as app progresses

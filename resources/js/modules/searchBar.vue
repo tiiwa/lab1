@@ -1,5 +1,5 @@
 <template>
-	<form>
+	<form @submit.prevent="search">
 		<div class="input-group md-form form-sm form-1 pl-0">
 			<div class="input-group-prepend">
 				<span id="search-icon"
@@ -8,11 +8,11 @@
 			</div>
 			<input
 				id="search-bar-input"
-				:value="searchText"
+				v-model="searchBarText"
 				type="text"
 				class="form-control col-xs-1"
 				placeholder="Search"
-				@input="onChange">
+				@input="search">
 		</div>
 	</form>
 </template>
@@ -32,6 +32,12 @@ export default {
 	components: {
 		Multiselect,
 	},
+	
+	data() {
+		return {
+			searchBarText: "",
+		};
+	},
 
 	computed: {
 		...mapGetters([
@@ -45,8 +51,8 @@ export default {
 		]),
 
 		// when the input has been changed
-		onChange: _.debounce(function(e) {
-			this.searchByText(e.target.value);
+		search: _.debounce(function(e) {
+			this.searchByText(this.searchBarText);
 		}, 300),
 	},
 
