@@ -7,13 +7,16 @@ use App\Organization;
 use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class OrganizationController extends Controller
 {
     protected $validationRules = [
         'name' => 'required',
         'logo' => 'nullable',
-        'location' => 'required',
+        'address' => 'required',
+        'country' => 'required',
         'description' => 'required',
         'phone' => 'nullable',
         'email' => 'nullable|unique:organizations',
@@ -76,23 +79,45 @@ class OrganizationController extends Controller
         return OrganizationResource::collection($orgs);
     }
 
-    public function filter(Request $request)
+    public function filter(Request $request) {
+	    $orgs = ( new Organization() )->newQuery();
+
+	    if ( $request->has( 'searchFilter.country' ) && null != $request->input( 'searchFilter.country' ) ) {
+		    $orgs->where( 'country', $request->input( 'searchFilter.country' ) );
+	    }
+
+	    if ( $request->has( 'searchFilter.industry' ) && null != $request->input( 'searchFilter.industry' ) ) {
+		    $orgs->where( 'industry', $request->input( 'searchFilter.industry' ) );
+	    }
+
+	    if ( $request->has( 'searchFilter.impact_area' ) && null != $request->input( 'searchFilter.impact_area' ) ) {
+		    $orgs->where( 'impact_area', $request->input( 'searchFilter.impact_area' ) );
+	    }
+
+	    return OrganizationResource::collection( $orgs->get() );
+    }
+
+    private function saveLogo(String $logoBase64)
     {
-        $orgs = (new Organization())->newQuery();
+        $url = null;
 
-        if ($request->has('searchFilter.country') && null != $request->input('searchFilter.country')) {
-            $orgs->where('country', $request->input('searchFilter.country'));
+        if (preg_match('/^data:image\/(\w+);base64,/', $logoBase64)) {
+            $data = substr($logoBase64, strpos($logoBase64, ',') + 1);
+
+            $data = base64_decode($data);
+
+            // TO DO: Change to S3 when
+            if(env('APP_ENV') == 'local')
+            {
+                Storage::disk('public')->put("test.png", $data);
+                $url = env('APP_URL').Storage::url("test.png");
+            } else
+            {
+                Log::warn('S3 has not been setup');
+            }
         }
 
-        if ($request->has('searchFilter.industry') && null != $request->input('searchFilter.industry')) {
-            $orgs->where('industry', $request->input('searchFilter.industry'));
-        }
-
-        if ($request->has('searchFilter.impact_area') && null != $request->input('searchFilter.impact_area')) {
-            $orgs->where('impact_area', $request->input('searchFilter.impact_area'));
-        }
-
-        return OrganizationResource::collection($orgs->get());
+        return $url;
     }
 
     /**
@@ -120,8 +145,16 @@ class OrganizationController extends Controller
             'contact_email' => $request->director_email,
         ]);
 
+        // Attempt to store logo and get url
+        $logoUrl = null;
+        if($request->logo != null)
+        {
+            $logoUrl = $this->saveLogo($request->logo);
+        }
+
         $organization = Organization::create([
             'name' => $request->name,
+            'logo' => $logoUrl,
             'address' => $request->address,
             'country' => $request->country,
             'description' => $request->description,
