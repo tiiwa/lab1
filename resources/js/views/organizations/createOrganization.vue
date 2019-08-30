@@ -157,9 +157,9 @@
 							<label class="btn btn-primary">
 								Click to Upload
 								<input type="file"
-									@change="addLogo"
 									style="display: none;"
 									accept="image/*"
+									@change="addLogo"
 								>
 							</label>
 						</div>
@@ -168,12 +168,12 @@
 						>
 							<div class="logo-display mx-auto">
 								<img :src="orgForm.logo"
-									class="mx-auto d-block"/>
+									class="mx-auto d-block">
 							</div>
 							<br>
-							<button @click="removeLogo"
-								type="button"
+							<button type="button"
 								class="btn btn-secondary"
+								@click="removeLogo"
 							>
 								Remove Logo
 							</button>
@@ -743,14 +743,13 @@ export default {
 			if (files.length>0) {
 				// Create a new FileReader to read this image and convert to base64 format
 				var reader = new FileReader();
-				console.log("CREATRED READER");
 
 				// Define a callback function to run, when FileReader finishes its job
 				reader.onload = (e) => {
 					// Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
 					// Read image as base64 and set to imageData
 					this.orgForm.logo = e.target.result;
-				}
+				};
 
 				// Start the reader job - read file as a data url (base64 format)
 				reader.readAsDataURL(file);
