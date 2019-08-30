@@ -17,13 +17,12 @@
 						class="row">
 						<div class="col-md-9 middle-col">
 							<h4 v-if="organization.name"
-								id="name">{{ organization.name }}</h4>
-
+								id="name">{{ organization.name }}
+							</h4>
 							<p v-if="organization.location"
 								id="location">
 								{{ organization.location }}
 							</p>
-
 							<img :src="organizationFlagUrl">
 						</div>
 						<div class="col-md-3 my-auto">
@@ -165,7 +164,6 @@ export default {
 	data() {
 		return {
 			organization: null,
-			organization_flag_url: null,
 			organizationSaved: false
 		};
 	},
