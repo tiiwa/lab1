@@ -150,28 +150,34 @@
 
 					<!-- Logo -->
 					<div class="form-group row">
-						<label class="col-md-3 control-label">Logo</label>
+						<label class="col-md-3 control-label mx-auto my-auto">Logo</label>
 						<div v-if="!orgForm.logo"
-							class="col-md-9"
+							class="col-md-9 text-center"
 						>
-							<input type="file"
-								@change="addLogo"
-								accept="image/*"
+							<label class="btn btn-primary">
+								Click to Upload
+								<input type="file"
+									@change="addLogo"
+									style="display: none;"
+									accept="image/*"
+								>
+							</label>
+						</div>
+						<div v-else
+							class="col-md-9 text-center"
+						>
+							<div class="logo-display mx-auto">
+								<img :src="orgForm.logo"
+									class="mx-auto d-block"/>
+							</div>
+							<br>
+							<button @click="removeLogo"
+								type="button"
+								class="btn btn-secondary"
 							>
+								Remove Logo
+							</button>
 						</div>
-						<div v-else>
-							<img :src="orgForm.logo" />
-							<button @click="removeLogo">Remove image</button>
-						</div>
-						<!-- <div class="logo-display text-center mx-auto my-auto">
-							<span class="d-block my-auto">Click button to upload logo</span>
-						</div>
-						<input type="file"
-							id="file"
-							ref="myFiles"
-							class="custom-file-input"
-							@change="previewFiles"
-						> -->
 					</div>
 
 					<br>
@@ -780,12 +786,12 @@ export default {
 
 <style lang="scss" scoped>
 	.logo-display {
-		display: table-cell;
 		float: none;
-		width: 120px;
-		height: 120px;
-		vertical-align: middle;
-		background-color: #e1e1e1;
+		width: 70%;
 		border-radius: 50%;
+
+		img {
+			width: 100%;
+		}
 	}
 </style>
