@@ -152,13 +152,12 @@ export default {
 		#organization-img {
 			display: table-cell;
 			float: none;
-			width: 50px;
-			height: 50px;
+			width: 100%;
 			vertical-align: middle;
 			border-radius: 50%;
 
 			img {
-				width: 90%;
+				width: 100%;
 			}
 		}
 
