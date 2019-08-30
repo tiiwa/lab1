@@ -22,10 +22,11 @@
 								<p id="organization-loc"
 									class="location">{{ organizationLocation }}</p>
 							</div>
-							<div class="col-md-2">
-								<button class="btn"
+							<div class="col-md-2 my-auto">
+								<button id="expand-button"
+									class="btn float-md-right"
 									@click="routeToViewOrganization()">
-									<i class="fas fa-external-link-alt fa-xs float-right"/>
+									<i class="fas fa-external-link-alt fa-sm float-right"/>
 								</button>
 							</div>
 						</div>
@@ -53,17 +54,6 @@
 							<div class="preview-square"/>
 							<div class="preview-square"/>
 							<div class="preview-square"/>
-						</div>
-						<div class="col-md-4 my-auto">
-							<button id="save-button"
-								class="btn float-md-right"
-								@click="saveOrganization()">
-								<span id="save-text">Save</span>
-								<i id="heart-icon"
-									:class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', ' align-middle']"
-								/>
-							</button>
-
 						</div>
 					</div>
 				</div>
@@ -159,7 +149,7 @@ export default {
 			font-size: 10px;
 		}
 
-		#save-button {
+		#expand-button {
 			padding-right: 6px;
 			box-shadow: none;
 		}
