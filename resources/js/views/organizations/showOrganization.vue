@@ -4,7 +4,6 @@
 			class="organization-thumbnail card-shadow">
 			<div class="row organization-details">
 				<div class="col-md-2">
-					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
 						:class="{ dummy: !organization.logo }"
 						@click="routeToViewOrganization()">
