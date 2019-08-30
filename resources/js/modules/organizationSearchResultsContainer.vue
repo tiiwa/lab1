@@ -1,9 +1,11 @@
 <template>
 	<div id="results-container">
-		<p v-if="noResults" 
+		<i v-if="isSearching"
+			class="fas fa-circle-notch fa-spin"/>
+		<p v-if="noResults"
 			id="no-results">No results found, try a different query.</p>
 		<div v-else>
-			<div v-for="org in results" 
+			<div v-for="org in results"
 				:key="org.id">
 				<organizationThumbnail :organization="org"/>
 			</div>
@@ -13,7 +15,9 @@
 
 <script>
 import organizationThumbnail from "../views/organizations/organizationThumbnail";
+import { createNamespacedHelpers } from "vuex";
 
+const { mapState, mapGetters } = createNamespacedHelpers("search");
 
 export default {
 	name: "OrganizationSearchResultsContainer",
@@ -28,8 +32,11 @@ export default {
 			default: null,
 		},
 	},
-
 	computed: {
+		...mapState({
+			isSearching: state => state.isSearching,
+		}),
+		
 		noResults: function() {
 			return this.results && this.results.length === 0;
 		},
@@ -41,6 +48,7 @@ export default {
 <style lang="scss" scoped>
 	#results-container {
 		min-width: 500px;
+		max-height: 70vh;
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}

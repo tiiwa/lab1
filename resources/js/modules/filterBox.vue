@@ -114,7 +114,6 @@ export default {
 
 	#filter-box-container {
 		padding: 50px;
-		margin: 20px 0;
 		background: $white;
 		border-radius: 2px;
 	}

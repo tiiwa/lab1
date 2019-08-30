@@ -75,6 +75,25 @@ class OrganizationController extends Controller
         return OrganizationResource::collection($orgs);
     }
 
+    public function filter(Request $request)
+    {
+        $orgs = (new Organization())->newQuery();
+
+        if ($request->has('searchFilter.country') && null != $request->input('searchFilter.country')) {
+            $orgs->where('country', $request->input('searchFilter.country'));
+        }
+
+        if ($request->has('searchFilter.sector') && null != $request->input('searchFilter.sector')) {
+            $orgs->where('sector', $request->input('searchFilter.sector'));
+        }
+
+        if ($request->has('searchFilter.service') && null != $request->input('searchFilter.service')) {
+            $orgs->where('service', $request->input('searchFilter.service'));
+        }
+
+        return OrganizationResource::collection($orgs->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -151,7 +170,7 @@ class OrganizationController extends Controller
 
         return response()->json([
             'message' => 'Organization updated!',
-            'data' => new OrganizationResource($device->load(['group', 'contents', 'events', 'logs'])),
+            'data' => new OrganizationResource($organization->load(['group', 'contents', 'events', 'logs'])),
         ]);
     }
 

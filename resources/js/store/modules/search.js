@@ -17,6 +17,7 @@ const EMPTY_STATE = {
 	page: 1,
 	numPages: 1,
 	isSearching: false,
+	isEmpty: true,
 };
 
 const state = Object.assign({}, EMPTY_STATE);
@@ -24,14 +25,17 @@ const state = Object.assign({}, EMPTY_STATE);
 const mutations = {
 	setSearch: (state, searchQuery) => {
 		state.query = searchQuery;
+		state.isEmpty = false;
 	},
 
 	setPerformingSearch: (state) => {
 		state.isSearching = true;
+		state.isEmpty = false;
 	},
 
 	setSearchCompleted: (state) => {
 		state.isSearching = false;
+		state.isEmpty = false;
 	},
 
 	setSearchResults: (state, searchResults) => {
@@ -41,6 +45,7 @@ const mutations = {
 		// should provide these values.
 		state.numPages = 1;
 		state.page = 1;
+		state.isEmpty = false;
 	},
 
 	setEmptyState: (state) => {
@@ -55,16 +60,16 @@ const mutations = {
 		state.page = EMPTY_STATE.page;
 		state.numPages = EMPTY_STATE.numPages;
 		state.isSearching = EMPTY_STATE.isSearching;
+		state.isEmpty = EMPTY_STATE.isEmpty;
 	},
 
 	setSearchSource: (state, source) => {
 		state.query.searchSource = source;
+		state.isEmpty = false;
 	},
 
 	setCountryInFocus: (state, countryCode) => {
 		state.countryInFocus = countryCode;
-
-		console.log(state.countryInFocus);
 	},
 };
 
@@ -96,9 +101,22 @@ const actions = {
 		commit("setSearchCompleted");
 	},
 
-	searchByFiltering: ({commit}, searchFilter) => {
+	searchByFiltering: async ({commit}, searchFilter) => {
+		commit("setEmptyState");
 		commit("setSearchSource", SEARCH_SOURCES.FILTER_BOX);
-		console.log("searchByFiltering", searchFilter);
+		commit("setCountryInFocus", searchFilter.country);
+		commit("setPerformingSearch");
+
+		try {
+			const response = await axios.post("/api/search", { searchFilter, timeout: 60000 });
+
+			commit("setSearchResults", response.data.data);
+		} catch (error) {
+			console.error("Error running search filter", error);
+		}
+
+		commit("setSearchCompleted");
+
 	},
 
 	searchByMapCountry: ({ commit }, country) => {
