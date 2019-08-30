@@ -172,13 +172,13 @@ export default {
 
 	computed: {
 		organizationFlagUrl() {
-				var country = this.organization.country;
-				console.log(country);
-				console.log(nameToCountryMapping);
-				var country_code = nameToCountryMapping.get(country).iso2Code;
-				var organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
+			var country = this.organization.country;
+			console.log(country);
+			console.log(nameToCountryMapping);
+			var country_code = nameToCountryMapping.get(country).iso2Code;
+			var organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
 
-				return organization_flag_url;
+			return organization_flag_url;
 		}
 	},
 
