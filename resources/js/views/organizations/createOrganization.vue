@@ -743,7 +743,6 @@ export default {
 			if (files.length>0) {
 				// Create a new FileReader to read this image and convert to base64 format
 				var reader = new FileReader();
-				console.log("CREATRED READER");
 
 				// Define a callback function to run, when FileReader finishes its job
 				reader.onload = (e) => {
