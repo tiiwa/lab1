@@ -5,7 +5,6 @@
 		>
 			<div class="row">
 				<div class="col-md-2">
-					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
 						:class="{ dummy: !organization.logo }"
 						class="mx-auto cente"
