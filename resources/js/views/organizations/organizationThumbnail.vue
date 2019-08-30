@@ -22,7 +22,11 @@
 								<h3 id="organization-name"
 									class="name">{{ organization.name }}</h3>
 								<p id="organization-loc"
-									class="location">{{ organizationLocation }}</p>
+									class="location">
+									{{ organizationLocation }}
+									<img :src="organizationFlagUrl">
+								</p>
+
 							</div>
 							<div class="col-md-2">
 								<button class="btn"
@@ -74,7 +78,11 @@
 	</div>
 </template>
 
+
 <script>
+
+import { nameToCountryMapping } from "../../services/africanCountries";
+
 export default {
 
 	name: "OrganizationThumbnail",
@@ -97,8 +105,14 @@ export default {
 		organizationLocation() {
 			return `${this.organization.address}, ${this.organization.country}`;
 		},
-		organizationHasLogo() {
-			return this.organization.logo != null;
+		organizationFlagUrl() {
+			var country = this.organization.country;
+			console.log(country);
+			console.log(nameToCountryMapping);
+			var country_code = nameToCountryMapping.get(country).iso2Code;
+			var organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
+
+			return organization_flag_url;
 		}
 	},
 
