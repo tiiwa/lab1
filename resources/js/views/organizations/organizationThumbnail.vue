@@ -5,10 +5,12 @@
 		>
 			<div class="row">
 				<div class="col-md-2">
-					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
+						:class="{ dummy: !organization.logo }"
+						class="mx-auto cente"
 						@click="routeToViewOrganization()">
-						<!-- <img class="mx-auto d-block" src="/images/logo.png"> -->
+						<img :src="organization.logo"
+							class="mx-auto d-block">
 					</div>
 				</div>
 				<div class="col-md-10 my-auto"
@@ -20,7 +22,11 @@
 								<h3 id="organization-name"
 									class="name">{{ organization.name }}</h3>
 								<p id="organization-loc"
-									class="location">{{ organizationLocation }}</p>
+									class="location">
+									{{ organizationLocation }}
+									<img :src="organizationFlagUrl">
+								</p>
+
 							</div>
 							<div class="col-md-2">
 								<button class="btn"
@@ -49,11 +55,12 @@
 					<div v-if="expand"
 						transition="fade"
 						class="row">
-						<div class="col-md-8 my-auto">
+						<!-- Use for showing sample images -->
+						<!-- <div class="col-md-8 my-auto">
 							<div class="preview-square"/>
 							<div class="preview-square"/>
 							<div class="preview-square"/>
-						</div>
+						</div> -->
 						<div class="col-md-4 my-auto">
 							<button id="save-button"
 								class="btn float-md-right"
@@ -63,7 +70,6 @@
 									:class="[organizationSaved ? 'fas fa-heart' : 'far fa-heart', ' align-middle']"
 								/>
 							</button>
-
 						</div>
 					</div>
 				</div>
@@ -72,7 +78,11 @@
 	</div>
 </template>
 
+
 <script>
+
+import { nameToCountryMapping } from "../../services/africanCountries";
+
 export default {
 
 	name: "OrganizationThumbnail",
@@ -94,6 +104,15 @@ export default {
 	computed: {
 		organizationLocation() {
 			return `${this.organization.address}, ${this.organization.country}`;
+		},
+		organizationFlagUrl() {
+			var country = this.organization.country;
+			console.log(country);
+			console.log(nameToCountryMapping);
+			var country_code = nameToCountryMapping.get(country).iso2Code;
+			var organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
+
+			return organization_flag_url;
 		}
 	},
 
@@ -131,17 +150,23 @@ export default {
 		border-radius: 2px;
 
 		#organization-img {
-			width: 50px;
-			height: 50px;
-			margin-top: auto;
-			margin-bottom: auto;
-			background-color: #0d2d4c;
+			display: table-cell;
+			float: none;
+			width: 100%;
+			vertical-align: middle;
 			border-radius: 50%;
 
 			img {
-				width: 80%;
-				// height: 30px;
+				width: 100%;
 			}
+		}
+
+		.dummy {
+			// width: 50px;
+			// height: 50px;
+			// margin-top: auto;
+			// margin-bottom: auto;
+			background-color: #828283;
 		}
 
 		#organization-name {

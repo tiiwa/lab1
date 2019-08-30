@@ -4,10 +4,11 @@
 			class="organization-thumbnail card-shadow">
 			<div class="row organization-details">
 				<div class="col-md-2">
-					<!-- To do: Get organization logo from database -->
 					<div id="organization-img"
+						:class="{ dummy: !organization.logo }"
 						@click="routeToViewOrganization()">
-						<!-- <img class="mx-auto d-block" src="/images/logo.png"> -->
+						<img :src="organization.logo"
+							class="mx-auto d-block" >
 					</div>
 				</div>
 
@@ -16,14 +17,13 @@
 						class="row">
 						<div class="col-md-9 middle-col">
 							<h4 v-if="organization.name"
-								id="name">{{ organization.name }}</h4>
-
+								id="name">{{ organization.name }}
+							</h4>
 							<p v-if="organization.location"
 								id="location">
 								{{ organization.location }}
 							</p>
-
-							<img :src="organization_flag_url">
+							<img :src="organizationFlagUrl">
 						</div>
 						<div class="col-md-3 my-auto">
 							<button id="save-later-button"
@@ -85,7 +85,7 @@
 									</p>
 								</div>
 							</div>
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-md-12">
 									<div v-for="category in categories"
 										:key="category">
@@ -95,7 +95,7 @@
 										</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -154,6 +154,9 @@
 </template>
 
 <script>
+
+import { nameToCountryMapping } from "../../services/africanCountries";
+
 export default {
 
 	name: "OrganizationDetail",
@@ -161,18 +164,21 @@ export default {
 	data() {
 		return {
 			organization: null,
-			organization_flag_url: null,
-			// To do: categories from actual source
-			categories: ["Food & Agriculture", "Food Scarcity"],
 			organizationSaved: false
 		};
 	},
 
-	// computed: {
-	// 	categories(){
-	// 			return this.categories;
-	// 	}
-	// },
+	computed: {
+		organizationFlagUrl() {
+				var country = this.organization.country;
+				console.log(country);
+				console.log(nameToCountryMapping);
+				var country_code = nameToCountryMapping.get(country).iso2Code;
+				var organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
+
+				return organization_flag_url;
+		}
+	},
 
 	mounted() {
 		this.fetch();
@@ -184,10 +190,6 @@ export default {
 				.get("/api/org/" + this.$route.params.org_id)
 				.then(({data}) => {
 					this.organization = data.data;
-
-					// To do: Get flag country code from address
-					let country_code = "ng";
-					this.organization_flag_url = "https://www.countryflags.io/" + country_code + "/flat/16.png";
 				})
 				.catch(error => {
 					toastr["error"](error.response.data.message);
@@ -217,16 +219,22 @@ export default {
 		padding-left: 0;
 	}
 
+	.dummy {
+		background-color: #0d2d4c;
+	}
+
 	#organization-img {
+		display: table-cell;
+		float: none;
 		width: 120px;
 		height: 120px;
 		margin-top: auto;
 		margin-bottom: auto;
-		background-color: #0d2d4c;
+		vertical-align: middle;
 		border-radius: 50%;
 
 		img {
-			width: 80%;
+			width: 90%;
 		}
 	}
 
