@@ -79,22 +79,38 @@ class OrganizationController extends Controller
         return OrganizationResource::collection($orgs);
     }
 
-    private function saveLogo(String $logoBase64)
+    private function generateFileName(String $orgName, String $fileType)
+    {
+        // Replace white space and comma with underscore in organization name
+        $orgName = preg_replace('/\s+/', '', $orgName);
+        $orgName = str_replace(",", '', $orgName);
+
+        // Generate file name
+        $fileName = "Logo_".$orgName.date('_m-d-Y_hi').'.'.$fileType;
+
+        return $fileName;
+    }
+
+    private function saveLogo(String $logoBase64, String $orgName)
     {
         $url = null;
 
         if (preg_match('/^data:image\/(\w+);base64,/', $logoBase64)) {
-            $data = substr($logoBase64, strpos($logoBase64, ',') + 1);
 
-            $data = base64_decode($data);
+            // Seperate image data from image type
+            list($fileMimeType, $data) = explode(';', $logoBase64);
+            $data = substr($data, strpos($data, ',') + 1);
+            $fileType = substr($fileMimeType, strpos($fileMimeType, '/') + 1);
 
-            // TO DO: Change to S3 when
-            if ('local' == env('APP_ENV')) {
-                Storage::disk('public')->put('test.png', $data);
-                $url = env('APP_URL').Storage::url('test.png');
-            } else {
-                Log::warn('S3 has not been setup');
-            }
+            $data = base64_decode($data); // Decode image from base64
+            $fileType = strtolower($fileType); // jpg, png, gif
+            $fileName = $this->generateFileName($orgName, $fileType); // Generate filename
+
+            // Store organization logo on disk
+            Storage::put($fileName, $data);
+
+            // Retrieve url to store in database
+            $url = Storage::url($fileName);
         }
 
         return $url;
@@ -128,7 +144,7 @@ class OrganizationController extends Controller
         // Attempt to store logo and get url
         $logoUrl = null;
         if (null != $request->logo) {
-            $logoUrl = $this->saveLogo($request->logo);
+            $logoUrl = $this->saveLogo($request->logo, $request->name);
         }
 
         $organization = Organization::create([
