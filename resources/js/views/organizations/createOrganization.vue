@@ -741,13 +741,11 @@ export default {
 			var file = files[0];
 
 			if (files.length>0) {
-				// Create a new FileReader to read this image and convert to base64 format
 				var reader = new FileReader();
 
 				// Define a callback function to run, when FileReader finishes its job
 				reader.onload = (e) => {
-					// Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-					// Read image as base64 and set to imageData
+					// Read image as base64 and set to logo object
 					this.orgForm.logo = e.target.result;
 				};
 
