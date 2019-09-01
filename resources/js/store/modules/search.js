@@ -8,6 +8,13 @@ const SEARCH_SOURCES = {
 	MAP: "map",
 };
 
+const SORT_KEYS = {
+	NAME: "Name",
+	COUNTRY: "Country",
+	INDUSTRY: "Industry",
+	IMPACT_AREA: "Services"
+};
+
 const EMPTY_STATE = {
 	query: {
 		searchSource: SEARCH_SOURCES.SEARCH_BAR,
@@ -72,6 +79,31 @@ const mutations = {
 	setCountryInFocus: (state, countryCode) => {
 		state.countryInFocus = countryCode;
 	},
+
+	sortByName: (state) => {
+		console.log("Sorting");
+		state.organizations = state.organizations.sort(function(a, b) {
+			var textA = a.name.toUpperCase();
+			var textB = b.name.toUpperCase();
+			return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+		});
+	},
+
+	sortByCountry: (state) => {
+		state.organizations = state.organizations.sort(function(a, b) {
+			var textA = a.country.toUpperCase();
+			var textB = b.country.toUpperCase();
+			return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+		});
+	},
+
+	sortByIndustry: (state) => {
+		state.organizations = state.organizations.sort(function(a, b) {
+			var textA = a.industry.toUpperCase();
+			var textB = b.industry.toUpperCase();
+			return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+		});
+	},
 };
 
 const actions = {
@@ -113,6 +145,24 @@ const actions = {
 
 		commit("setSearchCompleted");
 
+	},
+
+	sortSearchResults: ({state, commit}, sortKey) => {
+		if (state.organizations === null) return;
+
+		switch(sortKey) {
+		case SORT_KEYS.NAME:
+			commit("sortByName");
+			break;
+		case SORT_KEYS.COUNTRY:
+			commit("sortByCountry");
+			break;
+		case SORT_KEYS.INDUSTRY:
+			commit("sortByIndustry");
+			break;
+		default:
+			console.log("Default");
+		}
 	},
 
 	searchByMapCountry: async ({ commit }, country) => {
@@ -162,6 +212,12 @@ const getters = {
 				value: resultCountByCountryMapping[country],
 			};
 		});
+	},
+
+	resultCount: state => {
+		if (state.organizations === null) return 0;
+
+		return state.organizations.length;
 	},
 
 	searchText: state => {
