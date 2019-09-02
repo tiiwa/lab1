@@ -313,36 +313,36 @@
 						</div>
 					</div>
 					
-					<!-- Sector -->
+					<!-- Industry -->
 					<div class="form-group row">
-						<label for="sector"
-							class="col-md-3 control-label">Sector</label>
+						<label for="industry"
+							class="col-md-3 control-label">Industry</label>
 						<div class="col-md-9 p-0">
 							<multiselect v-validate
-								id="sector"
-								v-model="orgForm.sector"
-								:options="org_sectors"
+								id="industry"
+								v-model="orgForm.industry"
+								:options="org_industries"
 								:show-labels="false"
-								name="sector"
-								placeholder="What sector does the organization operate in?"/>
+								name="industry"
+								placeholder="What industry does the organization operate in?"/>
 						</div>
 					</div>
 					
-					<!-- Services -->
+					<!-- Impact Areas -->
 					<div class="form-group row">
-						<label for="services"
-							class="col-md-3 control-label">Services</label>
+						<label for="impact_areas"
+							class="col-md-3 control-label">Impact Areas</label>
 						<textarea v-validate="'max:400'"
-							id="services"
-							v-model="orgForm.services"
-							name="services"
+							id="impact_areas"
+							v-model="orgForm.impact_areas"
+							name="impact_areas"
 							rows="4"
 							class="col-md-9 form-control"
-							placeholder="What services does the organization offer?"
+							placeholder="What areas does the organization impact?"
 						/>
-						<p v-if="errors.has('services')"
+						<p v-if="errors.has('impact_areas')"
 							class="validation-error text-danger col-md-9 offset-md-3">
-							{{ errors.first('services') }}
+							{{ errors.first('impact_areas') }}
 						</p>
 					</div>
 					
@@ -587,8 +587,8 @@ export default {
 				audience: null,
 				inception_date: null,
 				target_locations: null,
-				sector: null,
-				services: null,
+				industry: null,
+				impact_areas: null,
 				facebook_profile: null,
 				twitter_profile: null,
 				instagram_profile: null,
@@ -608,7 +608,7 @@ export default {
 			org_audiences: ["Other Businesses", "Consumer classes", "Government/Policy", "Underserved"],
 			org_funding_statuses: ["Fundraising", "Fully Funded", "Private Equity", "Public"],
 			org_funding_types: ["Grants", "Donations", "Debt"],
-			org_sectors: ["Graphic Design", "Professional Practice", "Finance & Investments",
+			org_industries: ["Graphic Design", "Professional Practice", "Finance & Investments",
 				"Metals & Base Metals", "Environmental Chemistry", "Computer Science", "Electrical & Electronics Engineering",
 				"Environmental Management", "Environmental Science", "World Trade Associations",],
 			org_operating_languages: ["English", "French", "Swahili", "Portuguese", "Arabic", "Amharic"],

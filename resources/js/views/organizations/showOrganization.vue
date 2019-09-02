@@ -81,7 +81,7 @@
 								<div class="col-md-12">
 									<p id="header-categories"
 										class="float-md-right">
-										Sector: {{ organization.sector }}
+										Industry: {{ organization.industry }}
 									</p>
 								</div>
 							</div>
@@ -134,10 +134,10 @@
 									id="audience"><b>Audience: </b>{{ organization.audience }}</p>
 								<p v-if="organization.inception_date"
 									id="inception_date"><b>Conception Date: </b>{{ organization.inception_date }}</p>
-								<p v-if="organization.sector"
-									id="sector"><b>Sector: </b>{{ organization.sector }}</p>
-								<p v-if="organization.services"
-									id="services"><b>Services: </b>{{ organization.services }}</p>
+								<p v-if="organization.industry"
+									id="industry"><b>Industry: </b>{{ organization.industry }}</p>
+								<p v-if="organization.impact_area"
+									id="impact_area"><b>Impact Area: </b>{{ organization.impact_area }}</p>
 								<p v-if="organization.funding_status"
 									id="funding_status"><b>Funding Status: </b>{{ organization.funding_status }}</p>
 								<p v-if="organization.funding_type"

@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\ImpactAreaEnum;
+use App\Enums\IndustryEnum;
 use Faker\Generator as Faker;
 
 /*
@@ -15,6 +17,10 @@ use Faker\Generator as Faker;
 
 $data = shell_exec('node resources/js/services/getCountries.js names');
 $this->countries = (array) json_decode($data);
+
+$this->industry = IndustryEnum::getValues();
+$this->impact_area = ImpactAreaEnum::getValues();
+
 $factory->define(App\Organization::class, function (Faker $faker) {
     $company = $faker->company;
 
@@ -30,10 +36,8 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'summary_of_needs' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'audience' => $faker->randomElement($array = ['Other Businesses', 'Consumer classes', 'Government/Policy', 'Underserved']),
         'inception_date' => $faker->name,
-        'sector' => $faker->randomElement($array = ['Graphic Design', 'Professional Practice', 'Finance & Investments',
-            'Metals & Base Metals', 'Environmental Chemistry', 'Computer Science', 'Electrical & Electronics Engineering',
-            'Environmental Management', 'Environmental Science', 'World Trade Associations', ]),
-        'services' => $faker->realText($maxNbChars = 200, $indexSize = 2),
+        'industry' => $faker->randomElement($this->industry),
+        'impact_area' => $faker->randomElement($this->impact_area),
         'facebook_profile' => 'https://www.facebook.com/'.$company,
         'twitter_profile' => 'https://twitter.com/'.$company,
         'instagram_profile' => 'https://instagram.com/'.$company,
@@ -43,7 +47,6 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'method_of_collection' => $faker->randomElement($array = ['Personal Contact ', 'Company Hub', 'Online Resource']),
         'approved' => $faker->randomElement($array = [true, false]),
         'address' => $faker->address,
-        'country' => $faker->randomElement($array = ['Ghana', 'Nigeria', 'South Africa', 'Kenya']),
         'country' => $faker->randomElement($array = $this->countries),
     ];
 });
