@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import searchFilterBar from "../../modules/searchFilterBar"
+import searchFilterBar from "../../modules/searchFilterBar";
 import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
 import discoverMapContainer from "../../modules/discoverMapContainer";
