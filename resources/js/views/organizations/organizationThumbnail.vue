@@ -33,7 +33,7 @@
 						<div class="row">
 							<div class="col-md-9">
 								<p class="organization-categories float-md-left">
-									{{ organization.sector }}
+									{{ organization.industry }}
 								</p>
 							</div>
 							<div class="col-md-3 my-auto">

@@ -3,11 +3,8 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { createNamespacedHelpers } from "vuex";
-import Component from "vue-class-component";
 import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
@@ -66,7 +63,9 @@ export default {
 			this.chart.geodata = am4geodata_worldHigh;
 		}
 		catch (e) {
-			this.chart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
+			this.chart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest " +
+				"<a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents " +
+				"into the same directory as your amCharts files."));
 		}
 
 		this.chart.projection = new am4maps.projections.Mercator();
@@ -85,6 +84,7 @@ export default {
 		...mapActions([
 			"searchByMapCountry",
 			"searchByText",
+			"searchByFiltering",
 		]),
 
 		disableScrolling: function() {
@@ -174,15 +174,13 @@ export default {
 
 			this.focusPolygon.invalidateData();
 
-			console.log(this.focusPolygon, this.focusPolygon.data);
+			// console.log(this.focusPolygon, this.focusPolygon.data);
 		},
 
 		countrySelected(event) {
 			const countryContext = event.target.dataItem.dataContext;
-
-			console.log(countryContext);
-			this.searchByMapCountry(countryContext.id);
-			this.searchByText(countryContext.name);
+			
+			this.searchByMapCountry(countryContext);
 		},
 	},
 };
@@ -192,6 +190,7 @@ export default {
 .discover-map {
 	position: absolute;
 	right: 0;
+	float: right;
 	width: 60%;
 	min-width: 600px;
 	height: 800px;

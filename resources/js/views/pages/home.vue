@@ -1,16 +1,17 @@
 <template>
 	<div class="home">
-		<search-bar/>
+		<search-bar class="search-bar"/>
 		<section>
+			
+			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
+				<organization-search-results-container :results="orgs" />
+				<filter-box v-if="isEmpty"/>
+			</div>
+			
 			<discover-map-container
 				:is-disabled="mapDisabled"
 				:on-map-mode-change-requested="onMapModeChangeRequested"
 			/>
-
-			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
-				<filter-box/>
-				<organization-search-results-container :results="orgs" />
-			</div>
 
 		</section>
 	</div>
@@ -24,7 +25,6 @@ import organizationSearchResultsContainer from "../../modules/organizationSearch
 import { createNamespacedHelpers } from "vuex";
 
 const { mapState, mapGetters } = createNamespacedHelpers("search");
-
 
 export default {
 	name: "Home",
@@ -43,8 +43,10 @@ export default {
 	},
 
 	computed: {
+		
 		...mapState({
 			orgs: state => state.organizations,
+			isEmpty: state => state.isEmpty,
 		}),
 	},
 
@@ -59,6 +61,8 @@ export default {
 
 <style lang="scss" scoped>
 	.home-content {
+		position: absolute;
+		z-index: 10;
 		width: 420px;
 		transition: all 250ms ease;
 	}

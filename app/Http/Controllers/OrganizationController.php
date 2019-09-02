@@ -23,8 +23,8 @@ class OrganizationController extends Controller
         'audience' => 'nullable',
         'inception_date' => 'nullable',
         'target_locations' => 'nullable',
-        'sector' => 'nullable',
-        'services' => 'nullable',
+        'industry' => 'nullable',
+        'impact_area' => 'nullable',
         'facebook_profile' => 'nullable',
         'twitter_profile' => 'nullable',
         'instagram_profile' => 'nullable',
@@ -75,6 +75,25 @@ class OrganizationController extends Controller
         return OrganizationResource::collection($orgs);
     }
 
+    public function filter(Request $request)
+    {
+        $orgs = (new Organization())->newQuery();
+
+        if ($request->has('searchFilter.country') && null != $request->input('searchFilter.country')) {
+            $orgs->where('country', $request->input('searchFilter.country'));
+        }
+
+        if ($request->has('searchFilter.industry') && null != $request->input('searchFilter.industry')) {
+            $orgs->where('industry', $request->input('searchFilter.industry'));
+        }
+
+        if ($request->has('searchFilter.impact_area') && null != $request->input('searchFilter.impact_area')) {
+            $orgs->where('impact_area', $request->input('searchFilter.impact_area'));
+        }
+
+        return OrganizationResource::collection($orgs->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -114,8 +133,8 @@ class OrganizationController extends Controller
             'audience' => $request->audience,
             'inception_date' => $request->inception_date,
             'target_locations' => $request->target_locations,
-            'sector' => $request->sector,
-            'services' => $request->services,
+            'industry' => $request->industry,
+            'impact_area' => $request->services,
             'facebook_profile' => $request->facebook_profile,
             'twitter_profile' => $request->twitter_profile,
             'instagram_profile' => $request->instagram_profile,
@@ -151,7 +170,7 @@ class OrganizationController extends Controller
 
         return response()->json([
             'message' => 'Organization updated!',
-            'data' => new OrganizationResource($device->load(['group', 'contents', 'events', 'logs'])),
+            'data' => new OrganizationResource($organization->load(['group', 'contents', 'events', 'logs'])),
         ]);
     }
 

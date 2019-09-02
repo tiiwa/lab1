@@ -1,8 +1,8 @@
 <template>
-	<div :tabindex="tabIndex" 
-		:class="['filter-box-select', ...classes]" 
-		@focus="onSelectBoxFocus" 
-		@click="onSelectBoxFocus" 
+	<div :tabindex="tabIndex"
+		:class="['filter-box-select', ...classes]"
+		@focus="onSelectBoxFocus"
+		@click="onSelectBoxFocus"
 		@blur="onSelectBoxBlur">
 		<div :class="[isActive ? 'active': '', 'filter-box-select-styled']">{{ selectDisplayValue }}</div>
 		<ul :class="[showOptions ? 'active': '', 'filter-box-select-options']">
@@ -58,7 +58,7 @@ export default {
 		 * empty option to the mix.
 		 */
 		selectOptions: function() {
-			return [this.placeholder, ...this.options];
+			return [...this.options];
 		},
 
 		/**
@@ -166,11 +166,10 @@ $select-height: 36px;
 	border: 1px solid $select-background;
 
 	li {
-		height: 42px;
-		padding: 12px 0;
+		padding: 7px 20px;
 		margin: 0;
+		line-height: 1.5;
 		color: darken($select-color, 10);
-		text-indent: 15px;
 
 		&:hover {
 			color: $blue;

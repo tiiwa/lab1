@@ -14,22 +14,22 @@
 						placeholder="LOCATION"/>
 					and working in
 					<filter-box-select
-						id="sector"
+						id="industry"
 						:class="['filter-box-select']"
-						:value="filterData.sector"
-						:options="sectorOptions"
-						:on-select="onSectorSelect"
-						placeholder="SECTOR"/>.
+						:value="filterData.industry"
+						:options="industryOptions"
+						:on-select="onIndustrySelect"
+						placeholder="INDUSTRY"/>.
 				</h5>
 				<h5 id="filter-box-b">
 					Bringing
 					<filter-box-select
-						id="services"
+						id="impact_area"
 						:class="['filter-box-select']"
-						:value="filterData.services"
-						:options="servicesOptions"
-						:on-select="onServicesSelect"
-						placeholder="SERVICES"/>
+						:value="filterData.impact_area"
+						:options="impactAreaOptions"
+						:on-select="onImpactAreaSelect"
+						placeholder="IMPACT AREA"/>
 					to Africa.
 				</h5>
 
@@ -47,8 +47,8 @@
 import { createNamespacedHelpers } from "vuex";
 import filterBoxSelect from "./filterBoxSelect";
 import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
-import companySectors from "../services/companySectors";
-import companyServices from "../services/companyServices";
+import companyIndustries from "../services/organizationIndustries";
+import companyServices from "../services/organizationImpactAreas";
 
 const { mapActions } = createNamespacedHelpers("search");
 
@@ -66,11 +66,11 @@ export default {
 		return {
 			filterData: {
 				country: null,
-				sector: null,
-				services: null,
+				industry: null,
+				impact_area: null,
 			},
-			sectorOptions: companySectors.toArray(),
-			servicesOptions: companyServices.toArray(),
+			industryOptions: companyIndustries.toArray(),
+			impactAreaOptions: companyServices.toArray(),
 		};
 	},
 
@@ -97,24 +97,21 @@ export default {
 			this.filterData.country = country;
 		},
 
-		onSectorSelect(sector) {
-			this.filterData.sector = sector;
+		onIndustrySelect(industry) {
+			this.filterData.industry = industry;
 		},
 
-		onServicesSelect(services) {
-			this.filterData.services = services;
+		onImpactAreaSelect(impact_area) {
+			this.filterData.impact_area = impact_area;
 		},
 	}
 };
 </script>
 
-
-
 <style lang="scss" scoped>
 
 	#filter-box-container {
 		padding: 50px;
-		margin: 20px 0;
 		background: $white;
 		border-radius: 2px;
 	}

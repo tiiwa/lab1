@@ -1,12 +1,12 @@
 <template>
 	<div class="discover-map-container">
-		<div :aria-label="altText" 
-			class="map-control-container card-shadow" 
-			role="text" 
+		<div :aria-label="altText"
+			class="map-control-container card-shadow"
+			role="text"
 			@click="onMapControlClicked">
-			<i v-if="isDisabled" 
+			<i v-if="isDisabled"
 				class="far fa-eye"/>
-			<i v-else 
+			<i v-else
 				class="far fa-eye-slash"/>
 		</div>
 
@@ -58,6 +58,7 @@ export default {
 <style lang="scss" scoped>
 .discover-map-container {
 	position: relative;
+	margin: 20px 0;
 }
 
 .map-control-container {

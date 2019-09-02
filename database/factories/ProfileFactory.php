@@ -19,7 +19,7 @@ $factory->define(App\Profile::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'gender' => $faker->randomElement($array = ['Male', 'Female']),
         'date_of_birth' => $faker->dateTime($max = 'now'),
-        'contact_email' => $faker->email,
+        'contact_email' => $faker->unique()->email,
         'avatar' => $faker->imageUrl(400, 400),
         'facebook_profile' => 'https://www.facebook.com/'.$faker->word,
         'twitter_profile' => 'https://twitter.com/'.$faker->word,
