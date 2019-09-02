@@ -180,7 +180,7 @@ class OrganizationController extends Controller
             'inception_date' => $request->inception_date,
             'target_locations' => $request->target_locations,
             'industry' => $request->industry,
-            'impact_area' => $request->services,
+            'impact_area' => $request->impact_area,
             'facebook_profile' => $request->facebook_profile,
             'twitter_profile' => $request->twitter_profile,
             'instagram_profile' => $request->instagram_profile,

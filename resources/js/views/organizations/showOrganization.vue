@@ -19,9 +19,9 @@
 							<h4 v-if="organization.name"
 								id="name">{{ organization.name }}
 							</h4>
-							<p v-if="organization.location"
-								id="location">
-								{{ organization.location }}
+							<p v-if="organization.address"
+								id="address">
+								{{ organization.address }}
 							</p>
 							<img :src="organizationFlagUrl">
 						</div>
