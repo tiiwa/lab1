@@ -25,6 +25,7 @@ class OrganizationResource extends Resource
             'phone' => $this->phone,
             'email' => $this->email,
             'website' => $this->website,
+            'logo' => $this->logo,
             'size_range' => $this->size_range,
             'legal_entity_type' => $this->legal_entity_type,
             'summary_of_needs' => $this->summary_of_needs,

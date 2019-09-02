@@ -6,13 +6,16 @@ use App\Http\Resources\OrganizationResource;
 use App\Organization;
 use App\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class OrganizationController extends Controller
 {
     protected $validationRules = [
         'name' => 'required',
-        'location' => 'required',
+        'logo' => 'nullable',
+        'address' => 'required',
+        'country' => 'required',
         'description' => 'required',
         'phone' => 'nullable',
         'email' => 'nullable|unique:organizations',
@@ -77,7 +80,7 @@ class OrganizationController extends Controller
 
     public function filter(Request $request)
     {
-        $orgs = (new Organization())->newQuery();
+        $orgs = ( new Organization() )->newQuery();
 
         if ($request->has('searchFilter.country') && null != $request->input('searchFilter.country')) {
             $orgs->where('country', $request->input('searchFilter.country'));
@@ -92,6 +95,42 @@ class OrganizationController extends Controller
         }
 
         return OrganizationResource::collection($orgs->get());
+    }
+
+    private function generateFileName(String $orgName, String $fileType)
+    {
+        // Replace white space and comma with underscore in organization name
+        $orgName = preg_replace('/\s+/', '', $orgName);
+        $orgName = str_replace(',', '', $orgName);
+
+        // Generate file name
+        $fileName = 'Logo_'.$orgName.date('_m-d-Y_hi').'.'.$fileType;
+
+        return $fileName;
+    }
+
+    private function saveLogo(String $logoBase64, String $orgName)
+    {
+        $url = null;
+
+        if (preg_match('/^data:image\/(\w+);base64,/', $logoBase64)) {
+            // Seperate image data from image type
+            list($fileMimeType, $data) = explode(';', $logoBase64);
+            $data = substr($data, strpos($data, ',') + 1);
+            $fileType = substr($fileMimeType, strpos($fileMimeType, '/') + 1);
+
+            $data = base64_decode($data); // Decode image from base64
+            $fileType = strtolower($fileType); // jpg, png, gif
+            $fileName = $this->generateFileName($orgName, $fileType); // Generate filename
+
+            // Store organization logo on disk
+            Storage::put($fileName, $data);
+
+            // Retrieve url to store in database
+            $url = Storage::url($fileName);
+        }
+
+        return $url;
     }
 
     /**
@@ -119,8 +158,15 @@ class OrganizationController extends Controller
             'contact_email' => $request->director_email,
         ]);
 
+        // Attempt to store logo and get url
+        $logoUrl = null;
+        if (null != $request->logo) {
+            $logoUrl = $this->saveLogo($request->logo, $request->name);
+        }
+
         $organization = Organization::create([
             'name' => $request->name,
+            'logo' => $logoUrl,
             'address' => $request->address,
             'country' => $request->country,
             'description' => $request->description,
@@ -134,7 +180,7 @@ class OrganizationController extends Controller
             'inception_date' => $request->inception_date,
             'target_locations' => $request->target_locations,
             'industry' => $request->industry,
-            'impact_area' => $request->services,
+            'impact_area' => $request->impact_area,
             'facebook_profile' => $request->facebook_profile,
             'twitter_profile' => $request->twitter_profile,
             'instagram_profile' => $request->instagram_profile,

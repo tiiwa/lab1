@@ -48,5 +48,6 @@ $factory->define(App\Organization::class, function (Faker $faker) {
         'approved' => $faker->randomElement($array = [true, false]),
         'address' => $faker->address,
         'country' => $faker->randomElement($array = $this->countries),
+        'logo' => $faker->randomElement($array = [$faker->imageUrl(100, 100), null]),
     ];
 });

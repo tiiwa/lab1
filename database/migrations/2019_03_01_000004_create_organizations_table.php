@@ -13,12 +13,13 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->index()->nullable();
+            $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->text('description')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
+            $table->string('logo')->nullable();
             $table->string('size_range')->nullable();
             $table->string('legal_entity_type')->nullable();
             $table->text('summary_of_needs')->nullable();

@@ -3,19 +3,19 @@
 		<div id="org_form"
 			class="row">
 			<div class="page-section col-md-8 offset-md-2">
-				
+
 				<h1>Nominate a Company</h1>
 				<p>If you know any African Companies that are doing impactful work on the continent, please fill out
 				the form with their information and a few words about why you're nominating them. </p>
-				
+
 				<br>
-				
+
 				<form enctype="multipart/form-data"
 					@submit.prevent="submitOrg">
-					
+
 					<h3>Your Information</h3>
 					<br>
-					
+
 					<!-- POC First Name -->
 					<div class="form-group row">
 						<label for="poc_first_name"
@@ -33,7 +33,7 @@
 						<p v-if="errors.has('poc_first_name')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('poc_first_name') }}</p>
 					</div>
-					
+
 					<!-- POC Last Name -->
 					<div class="form-group row">
 						<label for="poc_last_name"
@@ -51,7 +51,7 @@
 						<p v-if="errors.has('poc_last_name')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('poc_last_name') }}</p>
 					</div>
-					
+
 					<!-- POC Email -->
 					<div class="form-group row">
 						<label for="poc_email"
@@ -70,17 +70,17 @@
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('poc_email')
 							}}</p>
 					</div>
-					
+
 					<br>
 					<hr>
 					<br>
-					
+
 					<h3>Organization Information</h3>
 					<br>
-					
+
 					<b>Basic Information</b>
 					<hr>
-					
+
 					<!-- Name -->
 					<div class="form-group row">
 						<label for="name"
@@ -97,24 +97,39 @@
 						<p v-if="errors.has('name')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('name') }}</p>
 					</div>
-					
-					<!-- Location -->
+
+					<!-- Address -->
 					<div class="form-group row">
-						<label for="location"
-							class="col-md-3 control-label">Location <span class="required">*</span></label>
+						<label for="address"
+							class="col-md-3 control-label">Address <span class="required">*</span></label>
 						<input v-validate="'required'"
-							id="location"
-							:class="{'has-error': errors.has('location') }"
-							v-model="orgForm.location"
-							name="location"
+							id="address"
+							:class="{'has-error': errors.has('address') }"
+							v-model="orgForm.address"
+							name="address"
 							type="text"
 							class="col-md-9 form-control"
 							placeholder="Where is the organization run from?"
 						>
-						<p v-if="errors.has('location')"
-							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('location') }}</p>
+						<p v-if="errors.has('address')"
+							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('address') }}</p>
 					</div>
-					
+
+					<!-- Country -->
+					<div class="form-group row">
+						<label for="country"
+							class="col-md-3 control-label">Country <span class="required">*</span></label>
+						<div class="col-md-9 p-0">
+							<multiselect v-validate
+								id="country"
+								v-model="orgForm.country"
+								:options="org_countries"
+								:show-labels="false"
+								name="country"
+								placeholder="Select Country?"/>
+						</div>
+					</div>
+
 					<!-- Description -->
 					<div class="form-group row">
 						<label for="description"
@@ -132,12 +147,44 @@
 						<p v-if="errors.has('description')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('description') }}</p>
 					</div>
-					
+
+					<!-- Logo -->
+					<div class="form-group row">
+						<label class="col-md-3 control-label mx-auto my-auto">Logo</label>
+						<div v-if="!orgForm.logo"
+							class="col-md-9 text-center"
+						>
+							<label class="btn btn-primary">
+								Click to Upload
+								<input type="file"
+									style="display: none;"
+									accept="image/*"
+									@change="addLogo"
+								>
+							</label>
+						</div>
+						<div v-else
+							class="col-md-9 text-center"
+						>
+							<div class="logo-display mx-auto">
+								<img :src="orgForm.logo"
+									class="mx-auto d-block">
+							</div>
+							<br>
+							<button type="button"
+								class="btn btn-secondary"
+								@click="removeLogo"
+							>
+								Remove Logo
+							</button>
+						</div>
+					</div>
+
 					<br>
 					<b>Contact</b>
 					<p>Fill in at least one of the following: <span class="required">*</span></p>
 					<hr>
-					
+
 					<!-- Email -->
 					<div class="form-group row">
 						<label for="email"
@@ -154,7 +201,7 @@
 						<p v-if="errors.has('email')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('email') }}</p>
 					</div>
-					
+
 					<!-- Phone -->
 					<div class="form-group row">
 						<label for="phone"
@@ -171,7 +218,7 @@
 						<p v-if="errors.has('phone')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('phone') }}</p>
 					</div>
-					
+
 					<!-- Website -->
 					<div class="form-group row">
 						<label for="website"
@@ -188,11 +235,11 @@
 						<p v-if="errors.has('website')"
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('website') }}</p>
 					</div>
-					
+
 					<br>
 					<b>Social</b>
 					<hr>
-					
+
 					<!-- Facebook -->
 					<div class="form-group row">
 						<label for="facebook_profile"
@@ -212,7 +259,7 @@
 							class="validation-error text-danger col-md-9 offset-md-3">
 							{{ errors.first('facebook_profile') }}</p>
 					</div>
-					
+
 					<!-- Twitter -->
 					<div class="form-group row">
 						<label for="twitter_profile"
@@ -233,7 +280,7 @@
 							{{ errors.first('twitter_profile') }}
 						</p>
 					</div>
-					
+
 					<!-- Instagram -->
 					<div class="form-group row">
 						<label for="instagram_profile"
@@ -254,11 +301,11 @@
 							{{ errors.first('instagram_profile') }}
 						</p>
 					</div>
-					
+
 					<br>
 					<b>Profile</b>
 					<hr>
-					
+
 					<!-- Inception Date -->
 					<div class="form-group row">
 						<label for="inception_date"
@@ -280,7 +327,7 @@
 						class="validation-error text-danger col-md-9 offset-md-3">
 						{{ errors.first('inception_date') }}
 					</p>
-					
+
 					<!-- Operating Languages -->
 					<div class="form-group row">
 						<label for="operating_language"
@@ -297,7 +344,7 @@
 								placeholder="What languages does this organization operate in?"/>
 						</div>
 					</div>
-					
+
 					<!-- Size Range -->
 					<div class="form-group row">
 						<label for="size_range"
@@ -345,7 +392,7 @@
 							{{ errors.first('impact_areas') }}
 						</p>
 					</div>
-					
+
 					<!-- Audience -->
 					<div class="form-group row">
 						<label for="audience"
@@ -360,7 +407,7 @@
 								placeholder="Who does this organization cater to?"/>
 						</div>
 					</div>
-					
+
 					<!-- Target Location -->
 					<div class="form-group row">
 						<label for="target_locations"
@@ -379,7 +426,7 @@
 							{{ errors.first('target_locations') }}
 						</p>
 					</div>
-					
+
 					<!-- Legal Entity Type -->
 					<div class="form-group row">
 						<label for="legal_entity_type"
@@ -394,7 +441,7 @@
 								placeholder="How is the organization operated?"/>
 						</div>
 					</div>
-					
+
 					<!-- Funding Status -->
 					<div class="form-group row">
 						<label for="funding_status"
@@ -409,7 +456,7 @@
 								placeholder="What is the current status of the organizations funding?"/>
 						</div>
 					</div>
-					
+
 					<!-- Funding Type -->
 					<div class="form-group row">
 						<label for="funding_type"
@@ -424,7 +471,7 @@
 								placeholder="How is the organization funded?"/>
 						</div>
 					</div>
-					
+
 					<!-- Summary of Needs -->
 					<div class="form-group row">
 						<label for="summary_of_needs"
@@ -438,7 +485,7 @@
 							placeholder="How can this organization be helped?"
 						/>
 					</div>
-					
+
 					<!-- Method of Collection -->
 					<div class="form-group row"
 						hidden>
@@ -458,12 +505,12 @@
 							{{ errors.first('method_of_collection') }}
 						</p>
 					</div>
-					
-					
+
+
 					<br>
 					<b>People</b>
 					<hr>
-					
+
 					<b style="font-weight: 600;">Director</b>
 					<!-- Director First Name-->
 					<div class="form-group row">
@@ -483,7 +530,7 @@
 							{{ errors.first('director_first_name') }}
 						</p>
 					</div>
-					
+
 					<!-- Director Surname-->
 					<div class="form-group row">
 						<label for="director_last_name"
@@ -502,7 +549,7 @@
 							{{ errors.first('director_last_name') }}
 						</p>
 					</div>
-					
+
 					<!-- Director Email -->
 					<div class="form-group row">
 						<label for="director_email"
@@ -521,7 +568,7 @@
 							class="validation-error text-danger col-md-9 offset-md-3">{{ errors.first('director_email')
 							}}</p>
 					</div>
-					
+
 					<!-- Page action buttons -->
 					<div class="row">
 						<div class="col-md-12 form-group">
@@ -550,9 +597,9 @@
 							</button>
 						</div>
 					</div>
-				
+
 				</form>
-			
+
 			</div>
 		</div>
 	</div>
@@ -561,22 +608,26 @@
 <script>
 
 import Multiselect from "vue-multiselect";
+import { nameToCountryMapping } from "../../services/africanCountries";
+const COUNTRIES = Array.from(nameToCountryMapping.keys()).sort();
 
 export default {
-	
+
 	name: "OrganizationForm",
-	
+
 	components: {
 		Multiselect,
 	},
-	
+
 	data() {
 		return {
 			organization: null,
 			orgForm: new Form({
 				autoReset: false,
+				logo: null,
 				name: null,
-				location: null,
+				address: null,
+				country: null,
 				description: null,
 				phone: null,
 				email: null,
@@ -612,33 +663,34 @@ export default {
 				"Metals & Base Metals", "Environmental Chemistry", "Computer Science", "Electrical & Electronics Engineering",
 				"Environmental Management", "Environmental Science", "World Trade Associations",],
 			org_operating_languages: ["English", "French", "Swahili", "Portuguese", "Arabic", "Amharic"],
+			org_countries: COUNTRIES,
 			isSaving: false,
 			isDeleting: false,
 		};
 	},
-	
+
 	computed: {
-		
+
 		isEmailRequired() {
 			return this.orgForm.phone === "" && this.orgForm.website === "";
 		},
-		
+
 		isPhoneRequired() {
 			return this.orgForm.email === "" && this.orgForm.website === "";
 		},
-		
+
 		isWebsiteRequired() {
 			return this.orgForm.phone === "" && this.orgForm.email === "";
 		},
-		
+
 		formatted_inception_date() {
-			
+
 			if (this.orgForm.inception_date) {
 				const monthNames = ["January", "February", "March", "April", "May", "June",
 					"July", "August", "September", "October", "November", "December"
 				];
-				
-				
+
+
 				let i = this.orgForm.inception_date.getDate(),
 					j = i % 10,
 					k = i % 100,
@@ -652,22 +704,22 @@ export default {
 				if (j === 3 && k !== 13) {
 					sufx = + "rd";
 				}
-				
+
 				return i + sufx + " " +
 					(monthNames[this.orgForm.inception_date.getMonth()]) + " " +
 						this.orgForm.inception_date.getFullYear();
 			}
 		},
-		
+
 		changed() {
 			return Object.keys(this.fields).some(key => this.fields[key].dirty);
 		}
 	},
-	
+
 	mounted() {
 		// this.fetch();
 	},
-	
+
 	methods: {
 		submitOrg() {
 			this.isSaving = true;
@@ -683,8 +735,28 @@ export default {
 					this.isSaving = false;
 				});
 		},
-		
-		
+
+		addLogo(event) {
+			var files = event.target.files || event.dataTransfer.files;
+			var file = files[0];
+
+			if (files.length>0) {
+				var reader = new FileReader();
+
+				// Define a callback function to run, when FileReader finishes its job
+				reader.onload = (e) => {
+					// Read image as base64 and set to logo object
+					this.orgForm.logo = e.target.result;
+				};
+
+				// Start the reader job - read file as a data url (base64 format)
+				reader.readAsDataURL(file);
+			}
+		},
+
+		removeLogo(e) {
+			this.orgForm.logo = null;
+		},
 		// Delete lesson
 		deleteOrg() {
 			this.isDeleting = true;
@@ -705,10 +777,18 @@ export default {
 			}
 		},
 	}
-	
+
 };
 </script>
 
 <style lang="scss" scoped>
+	.logo-display {
+		float: none;
+		width: 70%;
+		border-radius: 50%;
 
+		img {
+			width: 100%;
+		}
+	}
 </style>
