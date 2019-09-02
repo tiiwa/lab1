@@ -3,14 +3,23 @@
 		id="search-filter-container"
 	>
 		<p>Select multiple tags to filter results</p>
-		<!-- <br> -->
+
 		<filter-box-select
+<<<<<<< HEAD
 			id="search-filter-industry"
 			:class="['filter-box-select']"
 			:value="filterData.industry"
 			:options="industryOptions"
 			:on-select="onIndustrySelect"
 			placeholder="INDUSTRY"
+=======
+			id="search-filter-sector"
+			:class="['filter-box-select', 'my-auto']"
+			:value="filterData.sector"
+			:options="sectorOptions"
+			:on-select="onSectorSelect"
+			placeholder="SECTOR"
+>>>>>>> Style modifications for search filter bar
 		/>
 		<filter-box-select
 			id="search-filter-impact_areas"
@@ -38,7 +47,7 @@
 			:value="sortKey"
 			:options="sortKeys"
 			:on-select="onSortBySelect"
-			placeholder="Companies By ...."
+			placeholder="Companies By ..."
 		/>
 	</div>
 </template>
@@ -83,6 +92,10 @@ export default {
 		]),
 
 		onSortBySelect(sortKey) {
+
+			if (sortKey == null) {
+				sortKey = "...";
+			}
 			this.sortKey = "Companies by "+sortKey;
 			this.sortSearchResults(sortKey);
 		},
@@ -101,39 +114,62 @@ export default {
 
 
 
+// top: 252px;
+// left: 138px;
+
+
 <style lang="scss">
+<<<<<<< HEAD
 	#search-filter-industry {
 		margin-right: 14px;
 		font-size: 12px;
+=======
+	#search-filter-sector {
+		display: inline-block;
+		margin-right: 25px;
+		font-size: 10px;
+>>>>>>> Style modifications for search filter bar
 
 		.filter-box-select-styled {
-			height: 24px;
-			padding: 3px 35px 0 10px;
+			top: 12px;
+			min-width: 88px;
+			height: 23px;
+			padding: 5px 30px 0 15px;
 			color: #050810;
-			background-color: #d3d3d3;
-			border-radius: 4px;
+			background: #e2e1e2 0% 0% no-repeat padding-box;
+			border-radius: 3px;
+			opacity: 1;
 
 			&::after {
 				top: 10px;
-				border-color: #050810 transparent transparent transparent;
+				border-color: #2d2d2d transparent transparent transparent;
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	#search-filter-impact_areas {
 		margin-right: 14px;
 		font-size: 12px;
+=======
+	#search-filter-services {
+		margin-right: 31px;
+		font-size: 10px;
+>>>>>>> Style modifications for search filter bar
 
 		.filter-box-select-styled {
-			height: 24px;
-			padding: 3px 35px 0 10px;
-			color: #050810;
-			background-color: #d3d3d3;
-			border-radius: 4px;
+			min-width: 88px;
+			height: 23px;
+			padding: 5px 30px 0 15px;
+			color: #2d2d2d;
+			background: #e2e1e2 0% 0% no-repeat padding-box;
+			border-radius: 3px;
+			opacity: 1;
 
 			&::after {
 				top: 10px;
-				border-color: #050810 transparent transparent transparent;
+				border: 5px solid transparent;
+				border-color: #2d2d2d transparent transparent transparent;
 			}
 		}
 	}
@@ -142,15 +178,15 @@ export default {
 		font-size: 14px;
 
 		.filter-box-select-styled {
-			height: 24px;
+			min-width: 150px;
+			height: 23px;
 			padding: 3px 35px 0 10px;
-			color: #050810;
+			color: #2d2d2d;
 			background: none;
 			border-radius: 4px;
 
 			&::after {
-				top: 12px;
-				border-color: #050810 transparent transparent transparent;
+				top: 10px;
 			}
 		}
 	}
@@ -165,21 +201,21 @@ export default {
 
 	#count {
 		display: inline-block;
-		padding: 1px;
-		padding-right: 5px;
-		padding-left: 5px;
-		color: #050810;
-		background-color: #d3d3d3;
-		border-radius: 4px;
+		width: 40px;
+		height: 23px;
+		color: #2d2d2d;
+		text-align: center;
+		background: #e2e1e2 0% 0% no-repeat padding-box;
+		border-radius: 3px;
+		opacity: 1;
 	}
 
 	#sort-text {
-		font-size: 14px;
+		font-size: 15px;
 	}
 
 	.sort-text {
-		margin-right: 5px;
-		margin-left: 5px;
+		margin-right: 7px;
 	}
 
 </style>
