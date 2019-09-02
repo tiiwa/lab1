@@ -16,7 +16,7 @@
 			id="search-filter-impact_areas"
 			:class="['filter-box-select']"
 			:value="filterData.impact_areas"
-			:options="impact_areasOptions"
+			:options="impactAreaOptions"
 			:on-select="onImpactAreasSelect"
 			placeholder="IMPACT_AREAS"
 		/>
@@ -45,9 +45,9 @@
 
 <script>
 import filterBoxSelect from "./filterBoxSelect";
-import companyIndustrys from "../impact_areas/companyIndustrys";
-import companyImpactAreas from "../impact_areas/companyImpactAreas";
-import sortKeys from "../impact_areas/sortKeys"
+import companySectors from "../services/companyIndustrys";
+import companyServices from "../services/companyImpactAreas";
+import { sortKeys } from "../services/sortKeys"
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapGetters } = createNamespacedHelpers("search");
 
@@ -66,8 +66,8 @@ export default {
 			},
 			sortKey: null,
 			industryOptions: companyIndustrys.toArray(),
-			impact_areasOptions: companyImpactAreas.toArray(),
-			sortKeys: sortKeys.toArray(),
+			impactAreaOptions: companyImpactAreas.toArray(),
+			sortKeys: sortKeys,
 		};
 	},
 

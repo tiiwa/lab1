@@ -1,8 +1,10 @@
-import { List } from "immutable";
+const SORT_KEYS = {
+	NAME: "Name",
+	COUNTRY: "Country",
+	INDUSTRY: "Industry",
+	IMPACT_AREA: "Impact Area"
+};
 
-export default List([
-	"Name",
-	"Country",
-	"Industry",
-	"Impact Area"
-]);
+
+export const sortKeys = Object.values(SORT_KEYS);
+export const sortKeysMap =  SORT_KEYS;

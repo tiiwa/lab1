@@ -1,18 +1,12 @@
 import createPersistedState from "vuex-persistedstate";
 import axios from "axios";
 import { nameToCountryMapping } from "../../services/africanCountries";
+import { sortKeysMap } from "../../services/sortKeys";
 
 const SEARCH_SOURCES = {
 	SEARCH_BAR: "searchBar",
 	FILTER_BOX: "filterBox",
 	MAP: "map",
-};
-
-const SORT_KEYS = {
-	NAME: "Name",
-	COUNTRY: "Country",
-	INDUSTRY: "Industry",
-	IMPACT_AREA: "Services"
 };
 
 const EMPTY_STATE = {
@@ -150,19 +144,24 @@ const actions = {
 	sortSearchResults: ({state, commit}, sortKey) => {
 		if (state.organizations === null) return;
 
-		switch(sortKey) {
-		case SORT_KEYS.NAME:
+		switch (sortKey) {
+		case sortKeysMap.NAME:
 			commit("sortByName");
 			break;
-		case SORT_KEYS.COUNTRY:
+		case sortKeysMap.COUNTRY:
 			commit("sortByCountry");
 			break;
-		case SORT_KEYS.INDUSTRY:
+		case sortKeysMap.INDUSTRY:
 			commit("sortByIndustry");
 			break;
 		default:
 			console.log("Default");
 		}
+	},
+
+	searchByFiltering: ({commit}, searchFilter) => {
+		commit("setSearchSource", SEARCH_SOURCES.FILTER_BOX);
+		console.log("searchByFiltering", searchFilter);
 	},
 
 	searchByMapCountry: async ({ commit }, country) => {
