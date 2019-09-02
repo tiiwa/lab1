@@ -6,7 +6,6 @@ use App\Http\Resources\OrganizationResource;
 use App\Organization;
 use App\Profile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -83,10 +82,10 @@ class OrganizationController extends Controller
     {
         // Replace white space and comma with underscore in organization name
         $orgName = preg_replace('/\s+/', '', $orgName);
-        $orgName = str_replace(",", '', $orgName);
+        $orgName = str_replace(',', '', $orgName);
 
         // Generate file name
-        $fileName = "Logo_".$orgName.date('_m-d-Y_hi').'.'.$fileType;
+        $fileName = 'Logo_'.$orgName.date('_m-d-Y_hi').'.'.$fileType;
 
         return $fileName;
     }
@@ -96,7 +95,6 @@ class OrganizationController extends Controller
         $url = null;
 
         if (preg_match('/^data:image\/(\w+);base64,/', $logoBase64)) {
-
             // Seperate image data from image type
             list($fileMimeType, $data) = explode(';', $logoBase64);
             $data = substr($data, strpos($data, ',') + 1);
