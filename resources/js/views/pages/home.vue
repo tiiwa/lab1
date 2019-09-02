@@ -4,6 +4,7 @@
 		<section>
 			
 			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
+				<search-filter-bar/>
 				<organization-search-results-container :results="orgs" />
 				<filter-box v-if="isEmpty"/>
 			</div>
@@ -12,12 +13,12 @@
 				:is-disabled="mapDisabled"
 				:on-map-mode-change-requested="onMapModeChangeRequested"
 			/>
-
 		</section>
 	</div>
 </template>
 
 <script>
+import searchFilterBar from "../../modules/searchFilterBar"
 import searchBar from "../../modules/searchBar";
 import filterBox from "../../modules/filterBox";
 import discoverMapContainer from "../../modules/discoverMapContainer";
@@ -31,6 +32,7 @@ export default {
 
 	components: {
 		searchBar,
+		searchFilterBar,
 		filterBox,
 		discoverMapContainer,
 		organizationSearchResultsContainer,
