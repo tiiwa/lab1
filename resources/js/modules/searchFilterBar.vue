@@ -15,10 +15,10 @@
 		<filter-box-select
 			id="search-filter-impact-areas"
 			:class="['filter-box-select']"
-			:value="filterData.impact_areas"
+			:value="filterData.impact_area"
 			:options="impactAreaOptions"
-			:on-select="onImpactAreasSelect"
-			placeholder="IMPACT_AREAS"
+			:on-select="onImpactAreaSelect"
+			placeholder="IMPACT AREA"
 		/>
 		<span id="sort-text">
 			<span class="sort-text">
@@ -28,9 +28,6 @@
 			<span id="count">
 				{{ resultCount }}
 			</span>
-			<!-- <span class="sort-text">
-				Companies by
-			</span> -->
 		</span>
 		<filter-box-select
 			id="search-filter-sorter"
@@ -62,7 +59,7 @@ export default {
 		return {
 			filterData: {
 				industry: null,
-				impact_areas: null,
+				impact_area: null,
 			},
 			sortKey: null,
 			industryOptions: companyIndustries.toArray(),
@@ -80,10 +77,11 @@ export default {
 	methods: {
 		...mapActions([
 			"sortSearchResults",
+			"filterSearchResultsByImpactArea",
+			"filterSearchResultsByIndustry",
 		]),
 
 		onSortBySelect(sortKey) {
-
 			if (sortKey == null) {
 				sortKey = "...";
 			}
@@ -93,10 +91,12 @@ export default {
 
 		onIndustrySelect(industry) {
 			this.filterData.industry = industry;
+			this.filterSearchResultsByIndustry(industry);
 		},
 
-		onImpactAreasSelect(impact_areas) {
-			this.filterData.impact_areas = impact_areas;
+		onImpactAreaSelect(impact_area) {
+			this.filterData.impact_area = impact_area;
+			this.filterSearchResultsByImpactArea(impact_area);
 		},
 
 	}
@@ -179,7 +179,7 @@ export default {
 	}
 
 	#search-filter-header {
-		margin-top: 25px;
+		margin-top: 10px;
 		margin-bottom: 5px;
 		font-size: 15px;
 	}

@@ -14,7 +14,12 @@ const EMPTY_STATE = {
 		searchSource: SEARCH_SOURCES.SEARCH_BAR,
 		searchText: "",
 	},
+	filter: {
+		industry: null,
+		impact_area: null
+	},
 	organizations: null,
+	organizations_unfiltered: null,
 	countryInFocus: null,
 	page: 1,
 	numPages: 1,
@@ -41,8 +46,8 @@ const mutations = {
 	},
 
 	setSearchResults: (state, searchResults) => {
-		state.organizations = searchResults;
-
+		state.organizations_unfiltered = searchResults;
+		state.organizations = JSON.parse(JSON.stringify(state.organizations_unfiltered));;
 		// For now hard code this. The search Results Response
 		// should provide these values.
 		state.numPages = 1;
@@ -57,7 +62,11 @@ const mutations = {
 		state.query.searchText = EMPTY_STATE.query.searchText;
 		state.query.searchSource = EMPTY_STATE.query.searchSource;
 
+		state.filter.industry = EMPTY_STATE.filter.industry;
+		state.filter.impact_area = EMPTY_STATE.filter.impact_area;
+
 		state.organizations = EMPTY_STATE.organizations;
+		state.organizations_filtered = EMPTY_STATE.organizations_filtered;
 		state.type = EMPTY_STATE.type;
 		state.page = EMPTY_STATE.page;
 		state.numPages = EMPTY_STATE.numPages;
@@ -72,6 +81,29 @@ const mutations = {
 
 	setCountryInFocus: (state, countryCode) => {
 		state.countryInFocus = countryCode;
+	},
+
+	setFilterIndustry: (state, industry) => {
+		state.filter.industry = industry;
+	},
+
+	setFilterImpactArea: (state, impact_area) => {
+		state.filter.impact_area = impact_area;
+	},
+
+	filterSearch: (state) => {
+		var organizations = state.organizations_unfiltered;
+		if( state.filter.industry != null)
+		{
+			organizations = organizations.filter(orgs => orgs.industry.toLowerCase() == state.filter.industry.toLowerCase());
+		}
+
+		if( state.filter.impact_area != null)
+		{
+			organizations = organizations.filter(orgs => orgs.impact_area.toLowerCase() == state.filter.impact_area.toLowerCase());
+		}
+
+		state.organizations = organizations;
 	},
 
 	sortByName: (state) => {
@@ -147,6 +179,26 @@ const actions = {
 
 		commit("setSearchCompleted");
 
+	},
+
+	filterSearchResults: ({state, commit}, industry, impact_area) => {
+		if (state.organizations === null) return;
+
+		commit("filter");
+	},
+
+	filterSearchResultsByIndustry: ({state, commit}, industry) => {
+		if (state.organizations === null) return;
+
+		commit("setFilterIndustry", industry);
+		commit("filterSearch");
+	},
+
+	filterSearchResultsByImpactArea: ({state, commit}, impact_area) => {
+		if (state.organizations === null) return;
+
+		commit("setFilterImpactArea", impact_area);
+		commit("filterSearch");
 	},
 
 	sortSearchResults: ({state, commit}, sortKey) => {
