@@ -4,7 +4,7 @@
 		<section>
 			
 			<div :class="['home-content', mapDisabled ? 'no-map-mode' : '']">
-				<search-filter-bar/>
+				<search-filter-bar v-if="!isEmpty"/>
 				<organization-search-results-container :results="orgs" />
 				<filter-box v-if="isEmpty"/>
 			</div>
