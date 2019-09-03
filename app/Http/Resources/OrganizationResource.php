@@ -33,7 +33,7 @@ class OrganizationResource extends Resource
             'inception_date' => $this->inception_date,
             'target_locations' => $this->target_locations,
             'industry' => $this->industry,
-            'impact_area' => $this->impact_areas,
+            'impact_area' => $this->impact_area,
             'facebook_profile' => $this->facebook_profile,
             'twitter_profile' => $this->twitter_profile,
             'instagram_profile' => $this->instagram_profile,
