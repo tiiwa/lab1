@@ -98,6 +98,14 @@ const mutations = {
 			return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 		});
 	},
+
+	sortByImpactArea: (state) => {
+		state.organizations = state.organizations.sort(function(a, b) {
+			var textA = a.impact_area.toUpperCase();
+			var textB = b.impact_area.toUpperCase();
+			return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+		});
+	},
 };
 
 const actions = {
@@ -154,14 +162,11 @@ const actions = {
 		case sortKeysMap.INDUSTRY:
 			commit("sortByIndustry");
 			break;
+		case sortKeysMap.IMPACT_AREA:
+			commit("sortByImpactArea");
 		default:
 			console.log("Default");
 		}
-	},
-
-	searchByFiltering: ({commit}, searchFilter) => {
-		commit("setSearchSource", SEARCH_SOURCES.FILTER_BOX);
-		console.log("searchByFiltering", searchFilter);
 	},
 
 	searchByMapCountry: async ({ commit }, country) => {
