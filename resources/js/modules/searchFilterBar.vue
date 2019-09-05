@@ -7,16 +7,16 @@
 		<filter-box-select
 			id="search-filter-industry"
 			:class="['filter-box-select', 'my-auto']"
-			:value="filterData.industry"
-			:options="industryOptions"
+			:value="filterDataIndustry"
+			:options="disableIndustryFilter ? [] : industryOptions"
 			:on-select="onIndustrySelect"
 			placeholder="INDUSTRY"
 		/>
 		<filter-box-select
 			id="search-filter-impact-areas"
 			:class="['filter-box-select']"
-			:value="filterData.impact_area"
-			:options="impactAreaOptions"
+			:value="filterDataImpactArea"
+			:options="disableImpactAreaFilter ? [] : impactAreaOptions"
 			:on-select="onImpactAreaSelect"
 			placeholder="IMPACT AREA"
 		/>
@@ -37,30 +37,42 @@
 			:on-select="onSortBySelect"
 			placeholder="Companies By ..."
 		/>
+		<!-- <div class="filter-sorter">
+			<multiselect
+				v-model="sortKey"
+				:options="sortKeys"
+				:searchable="true"
+				:close-on-select="true"
+				:block-keys="['Tab', 'Enter']"
+				:custom-label="customLabel"
+				:show-labels="false"
+				placeholder="Companies By ..."
+				@input="onSortBySelect">
+			</multiselect>
+		</div> -->
 	</div>
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
 import filterBoxSelect from "./filterBoxSelect";
 import companyIndustries from "../services/organizationIndustries";
 import companyImpactAreas from "../services/organizationImpactAreas";
+import search from "../store/modules/search";
 import { sortKeys } from "../services/sortKeys";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapGetters } = createNamespacedHelpers("search");
+const { mapActions, mapGetters, mapState } = createNamespacedHelpers("search");
 
 export default {
 	name: "SearchFilterBar",
 
 	components: {
 		filterBoxSelect,
+		Multiselect
 	},
 
 	data() {
 		return {
-			filterData: {
-				industry: null,
-				impact_area: null,
-			},
 			sortKey: null,
 			industryOptions: companyIndustries.toArray(),
 			impactAreaOptions: companyImpactAreas.toArray(),
@@ -71,7 +83,15 @@ export default {
 	computed: {
 		...mapGetters([
 			"resultCount",
+			"searchSource",
 		]),
+
+		...mapState({
+			disableIndustryFilter: state => state.filterBoxSources.industry,
+			disableImpactAreaFilter: state => state.filterBoxSources.impactArea,
+			filterDataIndustry: state => state.filter.industry,
+			filterDataImpactArea: state => state.filter.impactArea,
+		}),
 	},
 
 	methods: {
@@ -90,26 +110,22 @@ export default {
 		},
 
 		onIndustrySelect(industry) {
-			this.filterData.industry = industry;
 			this.filterSearchResultsByIndustry(industry);
 		},
 
-		onImpactAreaSelect(impact_area) {
-			this.filterData.impact_area = impact_area;
-			this.filterSearchResultsByImpactArea(impact_area);
+		onImpactAreaSelect(impactArea) {
+			this.filterSearchResultsByImpactArea(impactArea);
 		},
 
 	}
 };
 </script>
 
-
-
-// top: 252px;
-// left: 138px;
-
-
 <style lang="scss">
+	$select-color: #d3d3d3;
+	$select-background: #f6f6f6;
+	$select-height: 36px;
+
 	#search-filter-industry {
 		display: inline-block;
 		margin-right: 25px;
@@ -171,6 +187,88 @@ export default {
 			}
 		}
 	}
+
+	// .filter-sorter {
+	// 	display: inline-block;
+	// 	// height: 23px;
+
+	// 	.multiselect {
+	// 		display: inline-block;
+	// 		width: unset;
+	// 		// height: 23px;
+	// 		// min-height: unset;
+	// 		// ;
+	// 		font-size: 14px;
+	// 		color: #2d2d2d;
+
+	// 		.multiselect__tags {
+	// 			min-width: 100px;
+	// 			padding: 3px 30px 0 10px;
+	// 			color: #2d2d2d;
+	// 			background: none;
+	// 			border-width: 0;
+	// 			border-radius: 4px;
+
+	// 			.multiselect__single {
+	// 				background: none;
+	// 			}
+
+	// 			.multiselect__input {
+	// 				width: unset;
+	// 				background: none;
+	// 			}
+
+	// 			.multiselect__placeholder {
+	// 				color: #2d2d2d;
+	// 			}
+	// 		}
+
+	// 		.multiselect__content-wrapper {
+	// 			width: unset;
+
+	// 			.multiselect__content {
+	// 				// position: absolute;
+	// 				// top: 36px;
+	// 				z-index: 1;
+	// 				// display: none;
+	// 				width: 300px;
+	// 				// max-height: 300px;
+	// 				// padding: 0;
+	// 				// margin: 0 auto;
+	// 				// overflow: scroll;
+	// 				list-style: none;
+	// 				background-color: white;
+	// 				border: 1px solid $select-background;
+
+	// 				.multiselect__element {
+	// 					margin: 0;
+	// 					line-height: 1.5;
+	// 					color: darken($select-color, 10);
+
+	// 					.multiselect__option {
+	// 						margin: 0;
+	// 						line-height: 1.5;
+	// 					}
+
+	// 					// &:hover {
+	// 					// 	color: $blue;
+	// 					// 	background: $select-background;
+	// 					// }
+
+	// 					&:not(:first-child) {
+	// 						border-top: 1px solid $select-background;
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+
+	// 		.multiselect__select {
+	// 			&::before {
+	// 				top: 10px;
+	// 			}
+	// 		}
+	// 	}
+	// }
 </style>
 
 <style lang="scss" scoped>

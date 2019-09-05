@@ -14,12 +14,19 @@ const EMPTY_STATE = {
 		searchSource: SEARCH_SOURCES.SEARCH_BAR,
 		searchText: "",
 	},
+
+	// Used to track what search filter bar options to disable
+	filterBoxSources: {
+		industry: false,
+		impactArea: false
+	},
+
 	filter: {
 		industry: null,
-		impact_area: null
+		impactArea: null
 	},
 	organizations: null,
-	organizations_unfiltered: null,
+	organizationsUnfiltered: null,
 	countryInFocus: null,
 	page: 1,
 	numPages: 1,
@@ -46,8 +53,8 @@ const mutations = {
 	},
 
 	setSearchResults: (state, searchResults) => {
-		state.organizations_unfiltered = searchResults;
-		state.organizations = JSON.parse(JSON.stringify(state.organizations_unfiltered));;
+		state.organizationsUnfiltered = searchResults;
+		state.organizations = JSON.parse(JSON.stringify(state.organizationsUnfiltered));;
 		// For now hard code this. The search Results Response
 		// should provide these values.
 		state.numPages = 1;
@@ -63,7 +70,7 @@ const mutations = {
 		state.query.searchSource = EMPTY_STATE.query.searchSource;
 
 		state.filter.industry = EMPTY_STATE.filter.industry;
-		state.filter.impact_area = EMPTY_STATE.filter.impact_area;
+		state.filter.impactArea = EMPTY_STATE.filter.impactArea;
 
 		state.organizations = EMPTY_STATE.organizations;
 		state.organizations_filtered = EMPTY_STATE.organizations_filtered;
@@ -87,27 +94,31 @@ const mutations = {
 		state.filter.industry = industry;
 	},
 
-	setFilterImpactArea: (state, impact_area) => {
-		state.filter.impact_area = impact_area;
+	setFilterImpactArea: (state, impactArea) => {
+		state.filter.impactArea = impactArea;
 	},
 
-	filterSearch: (state) => {
-		var organizations = state.organizations_unfiltered;
+	updateFilterBoxSources: (state) => {
+		state.filterBoxSources.industry = state.filter.industry != null;
+		state.filterBoxSources.impactArea = state.filter.impactArea != null;
+	},
+
+	filterSearchResult: (state) => {
+		var organizations = state.organizationsUnfiltered;
 		if( state.filter.industry != null)
 		{
 			organizations = organizations.filter(orgs => orgs.industry.toLowerCase() == state.filter.industry.toLowerCase());
 		}
 
-		if( state.filter.impact_area != null)
+		if( state.filter.impactArea != null)
 		{
-			organizations = organizations.filter(orgs => orgs.impact_area.toLowerCase() == state.filter.impact_area.toLowerCase());
+			organizations = organizations.filter(orgs => orgs.impact_area.toLowerCase() == state.filter.impactArea.toLowerCase());
 		}
 
 		state.organizations = organizations;
 	},
 
 	sortByName: (state) => {
-		console.log("Sorting");
 		state.organizations = state.organizations.sort(function(a, b) {
 			var textA = a.name.toUpperCase();
 			var textB = b.name.toUpperCase();
@@ -133,8 +144,8 @@ const mutations = {
 
 	sortByImpactArea: (state) => {
 		state.organizations = state.organizations.sort(function(a, b) {
-			var textA = a.impact_area.toUpperCase();
-			var textB = b.impact_area.toUpperCase();
+			var textA = a.impactArea.toUpperCase();
+			var textB = b.impactArea.toUpperCase();
 			return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 		});
 	},
@@ -142,6 +153,7 @@ const mutations = {
 
 const actions = {
 	searchByText: async ({commit}, searchText) => {
+		commit("setEmptyState");
 		commit("setSearchSource", SEARCH_SOURCES.SEARCH_BAR);
 
 		if (!searchText || searchText.trim() === "") {
@@ -166,6 +178,9 @@ const actions = {
 	searchByFiltering: async ({commit}, searchFilter) => {
 		commit("setEmptyState");
 		commit("setSearchSource", SEARCH_SOURCES.FILTER_BOX);
+		commit("setFilterIndustry", searchFilter.industry);
+		commit("setFilterImpactArea", searchFilter.impactArea);
+		commit("updateFilterBoxSources");
 		commit("setCountryInFocus", searchFilter.country);
 		commit("setPerformingSearch");
 
@@ -181,24 +196,18 @@ const actions = {
 
 	},
 
-	filterSearchResults: ({state, commit}, industry, impact_area) => {
-		if (state.organizations === null) return;
-
-		commit("filter");
-	},
-
 	filterSearchResultsByIndustry: ({state, commit}, industry) => {
 		if (state.organizations === null) return;
 
 		commit("setFilterIndustry", industry);
-		commit("filterSearch");
+		commit("filterSearchResult");
 	},
 
-	filterSearchResultsByImpactArea: ({state, commit}, impact_area) => {
+	filterSearchResultsByImpactArea: ({state, commit}, impactArea) => {
 		if (state.organizations === null) return;
 
-		commit("setFilterImpactArea", impact_area);
-		commit("filterSearch");
+		commit("setFilterImpactArea", impactArea);
+		commit("filterSearchResult");
 	},
 
 	sortSearchResults: ({state, commit}, sortKey) => {
@@ -217,7 +226,7 @@ const actions = {
 		case sortKeysMap.IMPACT_AREA:
 			commit("sortByImpactArea");
 		default:
-			console.log("Default");
+			pass;
 		}
 	},
 
@@ -278,6 +287,10 @@ const getters = {
 
 	searchText: state => {
 		return state.query.searchText;
+	},
+
+	searchSource: state => {
+		return state.query.searchSource;
 	},
 };
 
