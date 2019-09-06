@@ -30,4 +30,10 @@
 		</div>
 	</body>
 
+	<script type="text/javascript">
+		var data = @json($data);
+		var organizationIndustries = data.industry;
+		var organizationImpactAreas = data.impact_area;
+	</script>
+
 </html>
