@@ -47,8 +47,6 @@
 import { createNamespacedHelpers } from "vuex";
 import filterBoxSelect from "./filterBoxSelect";
 import { iso2CodeToCountryMapping, nameToCountryMapping } from "../services/africanCountries";
-import companyIndustries from "../services/organizationIndustries";
-import companyServices from "../services/organizationImpactAreas";
 
 const { mapActions } = createNamespacedHelpers("search");
 
@@ -69,8 +67,8 @@ export default {
 				industry: null,
 				impact_area: null,
 			},
-			industryOptions: companyIndustries.toArray(),
-			impactAreaOptions: companyServices.toArray(),
+			industryOptions: organizationIndustries,
+			impactAreaOptions: organizationImpactAreas,
 		};
 	},
 

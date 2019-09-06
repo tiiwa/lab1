@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ImpactAreaEnum;
+use App\Enums\IndustryEnum;
+
 class HomeController extends Controller
 {
     /**
@@ -9,7 +12,12 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('home');
+        $data = [
+            'industry' => IndustryEnum::getValues(),
+            'impact_area' => ImpactAreaEnum::getValues()
+        ];
+
+        return view('home', compact('data'));
     }
 
     /**

@@ -56,8 +56,6 @@
 <script>
 import Multiselect from 'vue-multiselect'
 import filterBoxSelect from "./filterBoxSelect";
-import companyIndustries from "../services/organizationIndustries";
-import companyImpactAreas from "../services/organizationImpactAreas";
 import search from "../store/modules/search";
 import { sortKeys } from "../services/sortKeys";
 import { createNamespacedHelpers } from "vuex";
@@ -74,8 +72,8 @@ export default {
 	data() {
 		return {
 			sortKey: null,
-			industryOptions: companyIndustries.toArray(),
-			impactAreaOptions: companyImpactAreas.toArray(),
+			industryOptions: organizationIndustries,
+			impactAreaOptions: organizationImpactAreas,
 			sortKeys: sortKeys,
 		};
 	},
